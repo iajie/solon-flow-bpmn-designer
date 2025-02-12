@@ -1,0 +1,17 @@
+import {AbstractToolBarMenuButton} from "../../AbstractToolBarMenuButton.ts";
+
+export class Redo extends AbstractToolBarMenuButton {
+
+    constructor() {
+        super();
+        this.template = `<div>
+            <svg t="1739256800677" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5318" width="200" height="200"><path d="M489.813333 341.333333a442.453333 442.453333 0 0 1 298.666667 109.653334l103.253333-103.253334a20.906667 20.906667 0 0 1 13.226667-6.4h12.373333a21.333333 21.333333 0 0 1 21.333334 21.333334v298.666666a21.333333 21.333333 0 0 1-21.333334 21.333334h-298.666666a21.333333 21.333333 0 0 1-21.333334-21.333334v-12.373333a20.906667 20.906667 0 0 1 6.4-15.36l107.52-107.52a337.066667 337.066667 0 0 0-221.44-78.08c-156.586667 0-285.44 95.146667-298.666666 215.466667A20.906667 20.906667 0 0 1 170.666667 682.666667H106.666667a21.333333 21.333333 0 0 1-21.333334-23.04C99.413333 481.706667 275.2 341.333333 489.813333 341.333333z" p-id="5319"></path></svg>
+        </div>`;
+        this.registerClickListener();
+    }
+
+    onClick() {
+        const commandStack = this.modeler?.get("commandStack") as any;
+        commandStack.redo();
+    }
+}

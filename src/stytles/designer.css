@@ -1,0 +1,89 @@
+.easy-bpmn-designer-container-designer {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+
+    .djs-palette {
+        background: transparent;
+        border: 1px solid var(--easy-bpmn-designer-border-color) !important;
+        border-radius: 4px;
+        top: 50px !important;
+        left: 1px !important;
+    }
+
+    .djs-palette .entry, .djs-palette .djs-palette-toggle{
+        color: var(--easy-bpmn-designer-text-color);
+    }
+
+    .djs-palette:hover {
+        background: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .djs-container {
+        background-color: transparent !important;
+    }
+
+    .djs-context-pad .entry {
+        background-color: transparent;
+        box-shadow: 0 0 0 0;
+    }
+    .djs-context-pad .entry:hover {
+        background-color: var(--easy-bpmn-designer-border-color);
+    }
+    .djs-minimap {
+        div.toggle {
+            display: none;
+        }
+        right: unset;
+        top: unset;
+        left: 80px;
+        bottom: 30px;
+    }
+
+    /* 添加模拟器相关样式 */
+    .bts-toggle-mode {
+        display: none !important;
+    }
+
+    .bts-simulation-header {
+        background: linear-gradient(to right, #f8f9fa, #fff) !important;
+        padding: 8px 16px !important;
+    }
+
+    .bts-simulation-header button {
+        background: transparent !important;
+        border: 1px solid !important;
+        border-radius: 4px !important;
+        padding: 4px 8px !important;
+        transition: all 0.3s !important;
+    }
+
+    .bts-simulation-header button:hover {
+    }
+
+    .bts-simulation-header button.active {
+        color: white !important;
+    }
+
+    .token-simulation-palette {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
+        border-radius: 8px !important;
+        padding: 8px !important;
+    }
+
+    .token-simulation-palette button {
+        border-radius: 4px !important;
+        transition: all 0.3s !important;
+    }
+
+    .token-simulation-palette button:hover {
+    }
+}
+
+.djs-palette-column {
+    .djs-palette.two-column.open {
+        width: 47px;
+    }
+}

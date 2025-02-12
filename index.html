@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>easy-bpmn-designer</title>
+    <script>
+        let isDark = false;
+        function changeTheme() {
+            document.body.style.background = isDark ? "" : "#1a1b1e"
+            document.querySelector("#easy-bpmn-designer").style.color = isDark ? "" : "#eee"
+            easyBpmnDesigner.changeTheme();
+            isDark = !isDark;
+        }
+    </script>
+</head>
+<body>
+<div style="padding: 10px 20px;font-size: 30px" id="title">
+    <a href="https://easy-flowable.online" target="_blank">访问官网</a>
+    <button onclick="changeTheme()">切换主题</button>
+</div>
+<div id="easy-bpmn-designer"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
