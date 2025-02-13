@@ -11,4 +11,8 @@ export const en = {
     'reset': 'Reset size',
     'simulation': 'Simulation',
     'minimap': 'Minimap',
+
+    'basic': 'Basic',
+    'assignee': 'Assignee',
+    'buttons': 'Buttons',
 }

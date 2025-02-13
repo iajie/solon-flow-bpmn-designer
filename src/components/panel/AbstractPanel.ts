@@ -1,0 +1,64 @@
+import BpmnModeler from "bpmn-js/lib/Modeler";
+import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
+import {DesignerEventListener} from "../../core/EasyBpmnDesigner.ts";
+import { BpmnElement } from "bpmn-js";
+
+export class AbstractPanel extends HTMLElement implements DesignerEventListener {
+
+    template: string = '';
+    modeler?: BpmnModeler;
+    options?: EasyBpmnDesignerOptions;
+    originalElement?: BpmnElement;
+    element?: BpmnElement & any;
+
+    protected constructor() {
+        super();
+    }
+
+    protected registerClickListener() {
+        this.addEventListener("click", () => {
+            this.onClick();
+        })
+    }
+
+    connectedCallback() {
+        this.innerHTML = this.template;
+    }
+
+    onClick() {
+
+    }
+
+    // @ts-ignore
+    onChange(element: BpmnElement) {
+
+    }
+
+    onCreate(modeler: BpmnModeler, options: EasyBpmnDesignerOptions): void {
+        this.modeler = modeler;
+        this.options = options;
+        if (!this.element) {
+            const elementRegistry = modeler?.get("elementRegistry") as any;
+            this.element = elementRegistry.find((el: any) => el.type === "bpmn:Process");
+            this.onChange(this.element);
+        }
+        // 先移除旧的监听器
+        modeler.off("selection.changed", (e: any) => this.handleSelectionChange(e, modeler));
+        // 添加新的监听器
+        modeler.on("selection.changed", (e: any) => this.handleSelectionChange(e, modeler));
+    }
+
+    handleSelectionChange(e: { newSelection: BpmnElement[] }, modeler: BpmnModeler) {
+        let element = e.newSelection[0] || null;
+        // 保存原始元素引用
+        if (element) {
+            this.originalElement = element;
+            this.element = element;
+        } else {
+            const elementRegistry = modeler?.get("elementRegistry") as any;
+            this.element = elementRegistry.find((el: any) => el.type === "bpmn:Process");
+        }
+        this.onChange(this.element);
+    }
+
+}

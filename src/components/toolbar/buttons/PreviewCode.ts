@@ -1,4 +1,4 @@
-import {AbstractToolBarMenuButton} from "../../AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "../AbstractToolBar.ts";
 import highlight from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
 import {EasyBpmnDialog} from "../../EasyBpmnDialog.ts";
@@ -7,7 +7,7 @@ import {t} from "i18next";
 
 defineCustomElement('easy-bpmn-designer-dialog', EasyBpmnDialog);
 
-export class PreviewCode extends AbstractToolBarMenuButton {
+export class PreviewCode extends AbstractToolBar {
 
     constructor() {
         super();

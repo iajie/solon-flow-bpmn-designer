@@ -180,4 +180,8 @@ export const zh = {
     'reset': '重置缩放',
     'simulation': '流程模拟',
     'minimap': '小地图',
+
+    'basic': '基础设置',
+    'assignee': '任务处理人',
+    'buttons': '按钮设置',
 } as any;

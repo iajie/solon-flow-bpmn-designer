@@ -1,7 +1,7 @@
-import {AbstractToolBarMenuButton} from "../../AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "../AbstractToolBar.ts";
 import {Canvas} from "bpmn-js/lib/features/context-pad/ContextPadProvider";
 
-export class ZoomIn extends AbstractToolBarMenuButton {
+export class ZoomIn extends AbstractToolBar {
 
     constructor() {
         super();

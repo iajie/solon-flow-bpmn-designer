@@ -1,7 +1,7 @@
-import {AbstractToolBarMenuButton} from "../AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "./AbstractToolBar.ts";
 import {CustomMenu} from "../../types/easy-bpmn-designer.ts";
 
-export class Custom extends AbstractToolBarMenuButton {
+export class Custom extends AbstractToolBar {
 
     config?: CustomMenu;
 

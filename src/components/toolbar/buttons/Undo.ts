@@ -1,6 +1,6 @@
-import {AbstractToolBarMenuButton} from "../../AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "../AbstractToolBar.ts";
 
-export class Undo extends AbstractToolBarMenuButton {
+export class Undo extends AbstractToolBar {
 
     constructor() {
         super();

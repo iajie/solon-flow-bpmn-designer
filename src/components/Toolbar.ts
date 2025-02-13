@@ -1,4 +1,4 @@
-import {AbstractToolBarMenuButton} from "./AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "./toolbar/AbstractToolBar.ts";
 import {DesignerEventListener} from "../core/EasyBpmnDesigner.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
@@ -8,22 +8,22 @@ import { Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initToolbarKeys} from "../utils/initToolbarKeys.ts";
 
-defineCustomElement('easy-bpmn-designer-divider', Divider);
-defineCustomElement('easy-bpmn-designer-import', Import);
-defineCustomElement('easy-bpmn-designer-download', Download);
-defineCustomElement('easy-bpmn-designer-preview-xml', PreviewXml);
-defineCustomElement('easy-bpmn-designer-preview-json', PreviewJson);
-defineCustomElement('easy-bpmn-designer-undo', Undo);
-defineCustomElement('easy-bpmn-designer-redo', Redo);
-defineCustomElement('easy-bpmn-designer-zoom-in', ZoomIn);
-defineCustomElement('easy-bpmn-designer-zoom-out', ZoomOut);
-defineCustomElement('easy-bpmn-designer-reset', Reset);
-defineCustomElement('easy-bpmn-designer-simulation', Simulation);
-defineCustomElement('easy-bpmn-designer-minimap', MiniMap);
+defineCustomElement('easy-bpmn-designer-toolbar-divider', Divider);
+defineCustomElement('easy-bpmn-designer-toolbar-import', Import);
+defineCustomElement('easy-bpmn-designer-toolbar-download', Download);
+defineCustomElement('easy-bpmn-designer-toolbar-preview-xml', PreviewXml);
+defineCustomElement('easy-bpmn-designer-toolbar-preview-json', PreviewJson);
+defineCustomElement('easy-bpmn-designer-toolbar-undo', Undo);
+defineCustomElement('easy-bpmn-designer-toolbar-redo', Redo);
+defineCustomElement('easy-bpmn-designer-toolbar-zoom-in', ZoomIn);
+defineCustomElement('easy-bpmn-designer-toolbar-zoom-out', ZoomOut);
+defineCustomElement('easy-bpmn-designer-toolbar-reset', Reset);
+defineCustomElement('easy-bpmn-designer-toolbar-simulation', Simulation);
+defineCustomElement('easy-bpmn-designer-toolbar-minimap', MiniMap);
 
 export class Toolbar extends HTMLElement implements DesignerEventListener {
 
-    toolbars: AbstractToolBarMenuButton[] = [];
+    toolbars: AbstractToolBar[] = [];
 
     constructor() {
         super();

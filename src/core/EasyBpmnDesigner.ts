@@ -41,7 +41,7 @@ defineCustomElement('easy-bpmn-designer-toolbar', Toolbar);
 defineCustomElement('easy-bpmn-designer-panel', Panel);
 
 export interface DesignerEventListener {
-    onCreate: (modeler: BpmnModeler, options: EasyBpmnDesignerOptions) => void
+    onCreate: (modeler: BpmnModeler, options: EasyBpmnDesignerOptions) => void;
 }
 
 /**

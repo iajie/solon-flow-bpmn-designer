@@ -1,8 +1,8 @@
 import BpmnModeler from "bpmn-js/lib/Modeler";
-import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
-import {DesignerEventListener} from "../core/EasyBpmnDesigner.ts";
+import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
+import {DesignerEventListener} from "../../core/EasyBpmnDesigner.ts";
 
-export class AbstractToolBarMenuButton extends HTMLElement implements DesignerEventListener {
+export class AbstractToolBar extends HTMLElement implements DesignerEventListener {
 
     template: string = '';
     modeler?: BpmnModeler;

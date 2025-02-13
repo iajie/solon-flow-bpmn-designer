@@ -1,6 +1,6 @@
 import {CustomMenu, EasyBpmnDesignerOptions, MenuGroup} from "../types/easy-bpmn-designer.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
-import {AbstractToolBarMenuButton} from "../components/AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "../components/toolbar/AbstractToolBar.ts";
 import {t} from "i18next";
 import tippy from "tippy.js";
 import {Group} from "../components/toolbar/Group.ts";
@@ -8,7 +8,7 @@ import {Custom} from "../components/toolbar/Custom.ts";
 
 export const initToolbarKeys = (modeler: BpmnModeler,
                                 options: EasyBpmnDesignerOptions,
-                                menuButtons: AbstractToolBarMenuButton[],
+                                menuButtons: AbstractToolBar[],
                                 toolbarKeys: (string | CustomMenu | MenuGroup)[]) => {
     for (let i = 0; i < toolbarKeys.length; i++) {
         let toolbarKey = toolbarKeys[i];
@@ -20,7 +20,7 @@ export const initToolbarKeys = (modeler: BpmnModeler,
                 if (toolbarKey === "|") {
                     toolbarKey = "divider";
                 }
-                const menuButton = document.createElement(`easy-bpmn-designer-${toolbarKey}`) as AbstractToolBarMenuButton;
+                const menuButton = document.createElement(`easy-bpmn-designer-toolbar-${toolbarKey}`) as AbstractToolBar;
                 menuButton.classList.add("easy-bpmn-designer-menu-item");
                 if (i === 0) {
                     menuButton.classList.add('first');

@@ -1,7 +1,7 @@
-import {AbstractToolBarMenuButton} from "../../AbstractToolBarMenuButton.ts";
+import {AbstractToolBar} from "../AbstractToolBar.ts";
 import ToggleMode from "bpmn-js-token-simulation/lib/features/toggle-mode/modeler/ToggleMode";
 
-export class Simulation extends AbstractToolBarMenuButton {
+export class Simulation extends AbstractToolBar {
 
     constructor() {
         super();
