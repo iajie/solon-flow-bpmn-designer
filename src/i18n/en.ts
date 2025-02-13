@@ -15,4 +15,6 @@ export const en = {
     'basic': 'Basic',
     'assignee': 'Assignee',
     'buttons': 'Buttons',
+
+    'Simulation Log': 'Simulation Log',
 }

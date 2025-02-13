@@ -101,6 +101,7 @@ export type EasyBpmnDesignerOptions = {
     toolbarKeys?: (string | CustomMenu | MenuGroup)[],
     toolbarExcludeKeys?: DefaultToolbarKey[];
     toolbarSize: string | 'small' | 'medium' | 'large';
+    panelTabs?: string[];
     /**
      * @description 监听选择节点变化
      * @param bpmnModeler

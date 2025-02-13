@@ -184,4 +184,6 @@ export const zh = {
     'basic': '基础设置',
     'assignee': '任务处理人',
     'buttons': '按钮设置',
+
+    'Simulation Log': '模拟日志',
 } as any;
