@@ -3,6 +3,8 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+import { isUndo, isRedo } from 'diagram-js/lib/features/keyboard/KeyboardUtil';
+import { event as domEvent } from 'min-dom';
 import { ModdleExtensions } from "bpmn-js/lib/BaseViewer";
 type ModuleDeclaration = import("didi").ModuleDeclaration;
 import {Toolbar} from "../components/Toolbar.ts";
@@ -36,6 +38,7 @@ import flowableModdleDescriptor from "../modules/descriptor/flowableDescriptor.j
 import { defineCustomElement } from "../utils/domUtils.ts";
 import {initModelerStr} from "../utils/bpmnUtils.ts";
 import { EasyBpmnDesignerOptions } from "../types/easy-bpmn-designer.ts";
+import {CommandStack, EventBus } from 'bpmn-js';
 
 defineCustomElement('easy-bpmn-designer-toolbar', Toolbar);
 defineCustomElement('easy-bpmn-designer-panel', Panel);
@@ -183,7 +186,8 @@ export class EasyBpmnDesigner {
             minimap,
             tokenSimulation,
         });
-
+        // 绑定快捷键
+        this.setupKeyboard(this.designer);
         // 工具栏
         this.toolbar = new Toolbar();
         this.eventComponents.push(this.toolbar);
@@ -220,6 +224,33 @@ export class EasyBpmnDesigner {
         if (this.options.onCreated) {
             this.options.onCreated(this);
         }
+    }
+
+    setupKeyboard(designer: HTMLDivElement) {
+        const eventBus = this.bpmnModeler.get('eventBus') as EventBus;
+        const commandStack = this.bpmnModeler.get('commandStack') as CommandStack;
+        const cancel = (event: any) => {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        const handleKeys = (event: any) => {
+            if (isUndo(event)) {
+                commandStack.undo();
+                return cancel(event);
+            }
+            if (isRedo(event)) {
+                commandStack.redo();
+                return cancel(event);
+            }
+        }
+
+        eventBus.on('keyboard.bind', function() {
+            domEvent.bind(designer, 'keydown', handleKeys);
+        });
+
+        eventBus.on('keyboard.unbind', function() {
+            domEvent.unbind(designer, 'keydown', handleKeys);
+        });
     }
 
     /**

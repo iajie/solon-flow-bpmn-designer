@@ -10,7 +10,7 @@ export class Tabs extends AbstractPanel {
 
     constructor() {
         super();
-        this.template = `<div class="tab-item active">${t('basic')}</div>`;
+        this.template = `<div class="tab-item active">${t('basic')}</div>`
     }
 
     onChange(element: BpmnElement) {
@@ -35,9 +35,5 @@ export class Tabs extends AbstractPanel {
             });
             this.appendChild(dom);
         }
-    }
-
-    onClickDom() {
-        console.log('clicked');
     }
 }

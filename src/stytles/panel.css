@@ -100,4 +100,25 @@
             }
         }
     }
+
+    .panel-content {
+        padding: 5px;
+        flex: 1;
+        overflow: auto;
+        /*添加网格对齐基准*/
+        display: grid;
+        grid-row-gap: 16px;
+    }
+
+    .tab-content {
+        padding: 16px;
+
+        .property-group {
+            margin-bottom: 16px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
 }

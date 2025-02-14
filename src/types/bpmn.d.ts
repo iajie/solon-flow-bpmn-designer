@@ -21,6 +21,8 @@ declare module 'bpmn-js' {
   export interface EventBus {
     on(event: string, callback: Function, priority?: number): void;
     off(event: string, callback: Function): void;
+    preventDefault: () => void;
+    stopPropagation: () => void;
   }
 
   export interface Modeling {

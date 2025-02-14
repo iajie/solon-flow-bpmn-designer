@@ -15,10 +15,12 @@ export class Switch extends AbstractPanel {
         const toolbar = document.querySelector('.easy-bpmn-designer-container-toolbar');
         if (panel?.classList.contains('panel-collapsed')) {
             panel.classList.remove('panel-collapsed');
-            toolbar?.classList.remove('toolbar-width')
+            toolbar?.classList.remove('toolbar-width');
+            this.children[0].classList.remove('icon-collapsed');
         } else {
             panel?.classList.add('panel-collapsed');
             toolbar?.classList.add('toolbar-width');
+            this.children[0].classList.add('icon-collapsed');
         }
     }
 
