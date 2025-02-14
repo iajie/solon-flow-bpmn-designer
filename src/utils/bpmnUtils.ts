@@ -1,3 +1,4 @@
+// @ts-ignore
 import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
 import { Create, ElementFactory } from "bpmn-js/lib/features/palette/PaletteProvider";
 

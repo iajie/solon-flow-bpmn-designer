@@ -1,5 +1,4 @@
 import {AbstractPanel} from "./AbstractPanel.ts";
-import {BpmnElement} from "bpmn-js";
 
 export class Property extends AbstractPanel {
 
@@ -7,7 +6,12 @@ export class Property extends AbstractPanel {
         super();
     }
 
-    onChange(element: BpmnElement) {
-        console.log(element);
+    onActiveKeyChange(activeKey: string) {
+        if (this.innerHTML) {
+            this.innerHTML = ``;
+        }
+
+        console.log('active key', activeKey);
     }
+
 }

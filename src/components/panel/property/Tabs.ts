@@ -36,4 +36,5 @@ export class Tabs extends AbstractPanel {
             this.appendChild(dom);
         }
     }
+
 }

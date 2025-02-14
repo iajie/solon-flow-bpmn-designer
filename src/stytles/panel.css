@@ -108,6 +108,7 @@
         /*添加网格对齐基准*/
         display: grid;
         grid-row-gap: 16px;
+        scrollbar-width: thin;
     }
 
     .tab-content {

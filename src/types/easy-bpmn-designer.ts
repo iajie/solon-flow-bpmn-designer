@@ -20,6 +20,15 @@ export interface MenuGroup {
     toolbarKeys: (string | CustomMenu | MenuGroup)[],
 }
 
+export interface PanelGroup {
+    title: string;
+    items: {
+        label: string;
+        type: string;
+        onChange: (value: any, callback: (key: string, value: any) => void) => void;
+    }[];
+}
+
 export type EasyBpmnDesignerOptions = {
     /**
      * @description 挂载dom/id
