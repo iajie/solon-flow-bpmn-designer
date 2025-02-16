@@ -54,6 +54,13 @@
   --easy-bpmn-designer-content-link-a-visited-color:purple;
   --easy-bpmn-designer-content-link-a-active-color:green;
 
+  --easy-bpmn-designer-panel-header-bg-color: #f0f2f5;
+  --easy-bpmn-designer-panel-header-svg: #000;
+  --easy-bpmn-designer-panel-content-item-label: #606266;
+  --easy-bpmn-designer-panel-content-item-header-bg-color: #f0f2f5;
+  --easy-bpmn-designer-panel-content-item-header-text-color: #1f2f3d;
+  --easy-bpmn-designer-panel-toggle-hover: #e6e8eb;
+  --easy-bpmn-designer-panel-toggle-color: #f0f2f5;
 }
 
 :root .easy-bpmn-designer-theme-dark {
@@ -110,4 +117,12 @@
   --easy-bpmn-designer-content-link-a-hover-color:rgb(255, 79, 79);
   --easy-bpmn-designer-content-link-a-visited-color:rgb(255, 0, 255);
   --easy-bpmn-designer-content-link-a-active-color:rgb(0, 255, 0);
+
+  --easy-bpmn-designer-panel-header-bg-color: #515157;
+  --easy-bpmn-designer-panel-header-svg: #fffefe;
+  --easy-bpmn-designer-panel-content-item-label: #fff;
+  --easy-bpmn-designer-panel-content-item-header-bg-color: #515157;
+  --easy-bpmn-designer-panel-content-item-header-text-color: #dddddda0;
+  --easy-bpmn-designer-panel-toggle-hover: rgba(197, 197, 197, 0.63);
+  --easy-bpmn-designer-panel-toggle-color: #c6c6d1;
 }

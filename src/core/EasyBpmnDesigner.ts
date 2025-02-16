@@ -47,6 +47,7 @@ export interface DesignerEventListener {
     onCreate: (modeler: BpmnModeler, options: EasyBpmnDesignerOptions) => void;
 }
 
+
 /**
  * @description 默认属性
  */

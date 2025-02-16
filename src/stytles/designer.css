@@ -15,8 +15,12 @@
         color: var(--easy-bpmn-designer-text-color);
     }
 
+    .entry .bpmn-icon-hand-tool:hover{
+        background-color: var(--easy-bpmn-designer-button-bg-color);
+    }
+
     .djs-palette:hover {
-        background: rgba(255, 255, 255, 0.9) !important;
+        background: var(--easy-bpmn-designer-bg-color) !important;
     }
 
     .djs-container {
