@@ -6,11 +6,16 @@ import {defineCustomElement} from "../../utils/domUtils.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import { EasyBpmnDesignerOptions } from "../../types/easy-bpmn-designer.ts";
 import {AbstractPanel} from "./AbstractPanel.ts";
+import { PanelContent } from "./property/Content.ts";
+import { TabGroup } from "./property/TabGroup.ts";
+import { defaultPanelKeys } from "./DefaultPanelTabs.ts";
 
 defineCustomElement('easy-bpmn-designer-panel-switch', Switch);
 defineCustomElement('easy-bpmn-designer-panel-bpmn-icon', BpmnIcon);
 defineCustomElement('easy-bpmn-designer-panel-tabs', Tabs);
 defineCustomElement('easy-bpmn-designer-panel-property', Property);
+defineCustomElement('easy-bpmn-designer-panel-property-content', PanelContent);
+defineCustomElement('easy-bpmn-designer-panel-property-group', TabGroup);
 
 export const initPanelKeys = (modeler: BpmnModeler,
                               options: EasyBpmnDesignerOptions, panelDom: AbstractPanel[]) => {
@@ -40,5 +45,23 @@ export const initPanelKeys = (modeler: BpmnModeler,
         });
     } catch (e) {
         console.log('属性面板创建失败', e);
+    }
+}
+
+export const initPanelContent = (modeler: BpmnModeler,
+                                 options: EasyBpmnDesignerOptions, property: Property) => {
+    try {
+        const panelTabs = defaultPanelKeys?.concat(options?.panelTabs || []) || [];
+        for (let panelTab of panelTabs) {
+            const panelContent = document.createElement('easy-bpmn-designer-panel-property-content') as PanelContent;
+            panelContent.setProperty(property);
+            panelContent.onCreate(modeler, options);
+            panelContent.style.display = panelTab.key === property.activeKey ? 'block' : 'none';
+            panelContent.setAttribute('id', panelTab.key);
+            panelContent.initGroup(modeler, options, panelTab.group);
+            property.content.push(panelContent);
+        }
+    } catch (e) {
+        console.log('tab-content创建失败', e);
     }
 }

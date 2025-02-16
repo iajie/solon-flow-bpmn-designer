@@ -1,6 +1,8 @@
 // @ts-ignore
 import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
 import { Create, ElementFactory } from "bpmn-js/lib/features/palette/PaletteProvider";
+import BpmnModeler from "bpmn-js/lib/Modeler";
+import { BpmnElement, BpmnFactory, Modeling } from "bpmn-js";
 
 export const initModelerStr = (key?: string, name?: string, type?: EasyBpmnDesignerOptions['prefix']) => {
     const timestamp = Date.now();
@@ -98,4 +100,74 @@ export const downloadFile = (content: string, filename: string, type = 'text/xml
     link.download = filename
     link.click()
     window.URL.revokeObjectURL(url)
+}
+
+export const updateProperty = (key: string, value: any, element?: BpmnElement, modeler?: BpmnModeler) => {
+    if (!element || !modeler) return;
+    const modeling = modeler.get("modeling") as Modeling;
+    try {
+        const updateObj: Record<string, any> = {};
+        updateObj[key] = value;
+        // 使用原始元素进行更新
+        modeling.updateProperties(element, updateObj);
+        // 更新本地状态
+    } catch (error) {
+        console.error("Failed to update property:", error);
+    }
+}
+
+export const updateMultiInstance = (type: string, element?: BpmnElement, modeler?: BpmnModeler) => {
+    if (!element || !modeler) return;
+    const bpmnFactory = modeler.get("bpmnFactory") as BpmnFactory;
+    const modeling = modeler.get("modeling") as Modeling;
+    try {
+        if (type) {
+            // 创建多实例特性
+            const loopCharacteristics = bpmnFactory.create(
+                "bpmn:MultiInstanceLoopCharacteristics",
+                { isSequential: type === "sequential" }
+            );
+            modeling.updateProperties(element, {
+                loopCharacteristics: loopCharacteristics,
+            });
+        } else {
+            // 移除多实例特性
+            modeling.updateProperties(element, {
+                loopCharacteristics: null,
+            });
+        }
+    } catch (error) {
+        console.error("Failed to update multi-instance:", error);
+    }
+}
+
+/**
+ * 添加更新条件表达式的方法
+ * @param type
+ * @param expression
+ * @param element
+ * @param modeler
+ */
+export const updateCondition = (type: string, expression: string = "", element?: BpmnElement, modeler?: BpmnModeler) => {
+    if (!element || !modeler) return;
+    const bpmnFactory = modeler.get("bpmnFactory") as BpmnFactory;
+    const modeling = modeler.get("modeling") as Modeling;
+    try {
+        if (type === "expression" && expression) {
+            // 创建条件表达式
+            const conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {
+                body: expression,
+            });
+            modeling.updateProperties(element, {
+                conditionExpression: conditionExpression,
+            });
+        } else {
+            // 移除条件表达式
+            modeling.updateProperties(element, {
+                conditionExpression: null,
+            });
+        }
+    } catch (error) {
+        console.error("Failed to update condition:", error);
+    }
 }

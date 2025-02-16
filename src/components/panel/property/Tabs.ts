@@ -1,8 +1,8 @@
 import {AbstractPanel} from "../AbstractPanel.ts";
 import {BpmnElement} from "bpmn-js";
 import {t} from "i18next";
-
-const defaultPanelTabs = ['basic', 'assignee', 'buttons'];
+import {defaultPanelKeys} from "../DefaultPanelTabs.ts";
+import { EasyBpmnDesignerOptions } from "../../../types/easy-bpmn-designer.ts";
 
 export class Tabs extends AbstractPanel {
 
@@ -13,11 +13,18 @@ export class Tabs extends AbstractPanel {
         this.template = `<div class="tab-item active">${t('basic')}</div>`
     }
 
+    getTabKey(tabs: EasyBpmnDesignerOptions['panelTabs'], element: BpmnElement) {
+        return tabs?.filter(i => i.hideIn = () => element.type === 'bpmn:UserTask')
+            .map(i => i.title);
+    }
+
     onChange(element: BpmnElement) {
         if (this.innerHTML) {
             this.innerHTML = ``;
         }
-        for (let defaultPanelTab of defaultPanelTabs.concat(this.options?.panelTabs || [])) {
+        const panelTab = (this.getTabKey(defaultPanelKeys, element) || [])
+            .concat(this.getTabKey(this.options?.panelTabs, element) || []);
+        for (let defaultPanelTab of panelTab) {
             const dom = document.createElement('div');
             if (defaultPanelTab === 'basic') {
                 dom.classList.add('active');

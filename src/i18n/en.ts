@@ -13,8 +13,44 @@ export const en = {
     'minimap': 'Minimap',
 
     'basic': 'Basic',
+    'id': 'ID',
+    'name': 'NAME',
+
     'assignee': 'Assignee',
     'buttons': 'Buttons',
+    'assigneeProps': 'Assignee props',
+    'buttonProps': 'Button props',
+    'buttonAuto': 'Automatic agreement',
+
+    'formProps': 'Form props',
+    'formPrimaryKey': 'Form identification',
+    'allowEditing': 'Allow editing',
+
+    'conditionProps': 'Condition props',
+    'conditionExpression': 'Condition expression',
+    'conditionType': 'conditionType',
+    'noCondition': 'No condition',
+
+    'multiInstanceProps': 'multiInstance Props',
+    'multiInstance': 'multiInstance',
+    no: 'No',
+    parallel: 'Parallel',
+    sequential: 'Sequential',
+    'loopCardinality': 'loopCardinality',
+    'completionCondition': 'completionCondition',
+
+    'timeoutProps': 'Timeout settings',
+    'timeout': 'Timeout',
+    'timeoutStrategy': 'timeoutStrategy',
+    pleaseSelect: 'Please select',
+    auto_pass: 'Auto pass',
+    auto_reject: 'Auto reject',
+    alert: 'Alert',
+
+    'advancedProps': 'Advanced setting',
+    'assigneeEmpty': 'assigneeEmpty',
+    'returnSetting': 'returnSetting',
+    'reApprove': 'Re approve',
 
     'Simulation Log': 'Simulation Log',
 }
