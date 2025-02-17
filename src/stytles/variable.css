@@ -62,6 +62,9 @@
   --easy-bpmn-designer-panel-toggle-hover: #e6e8eb;
   --easy-bpmn-designer-panel-toggle-color: #f0f2f5;
 
+  --easy-bpmn-designer-panel-button-config-bg-color: #f8f9fb;
+  --easy-bpmn-designer-panel-button-config-bg-hover-color: #f0f2f5;
+
   --easy-bpmn-designer-dialog-bg-color: white;
   --easy-bpmn-designer-dialog-title-color: black;
   --easy-bpmn-designer-dialog-content-bg-color: #f5f5f5;
@@ -130,6 +133,9 @@
   --easy-bpmn-designer-panel-content-item-header-text-color: #dddddda0;
   --easy-bpmn-designer-panel-toggle-hover: rgba(197, 197, 197, 0.63);
   --easy-bpmn-designer-panel-toggle-color: #c6c6d1;
+
+  --easy-bpmn-designer-panel-button-config-bg-color: #1e2022;
+  --easy-bpmn-designer-panel-button-config-bg-hover-color: #353535;
 
   --easy-bpmn-designer-dialog-bg-color: #535151;
   --easy-bpmn-designer-dialog-title-color: white;
