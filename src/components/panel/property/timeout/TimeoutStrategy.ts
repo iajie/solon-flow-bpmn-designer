@@ -1,19 +1,21 @@
-import { PanelInput } from "../PanelInput.ts";
-import { t } from "i18next";
+import {PanelInput} from "../PanelInput.ts";
+import {t} from "i18next";
 import Modeler from "bpmn-js/lib/Modeler";
-import { updateCondition } from "../../../../utils/bpmnUtils.ts";
-import { BpmnElement } from "bpmn-js";
+import {updateProperty} from "../../../../utils/bpmnUtils.ts";
+import {BpmnElement} from "bpmn-js";
 
 const options = [
-    {label: 'noCondition', value: ''},
-    {label: 'conditionExpression', value: 'expression'}
+    {label: 'pleaseSelect', value: ''},
+    {label: 'autoPass', value: 'auto_pass'},
+    {label: 'autoReject', value: 'auto_reject'},
+    {label: 'alert', value: 'alert'},
 ];
 
-export class ConditionType extends PanelInput {
+export class TimeoutStrategy extends PanelInput {
 
     constructor() {
         super();
-        this.inputLabel = 'conditionType';
+        this.inputLabel = 'timeoutStrategy';
         this.init();
     }
 
@@ -30,11 +32,11 @@ export class ConditionType extends PanelInput {
 
     onChange(element: BpmnElement) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.conditionExpression ? "expression" : "");
+        this.inputElement && (this.inputElement.value = element.businessObject.timeoutStrategy || "");
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
         const value = (e.target as HTMLInputElement).value;
-        updateCondition(value, '', element, modeler);
+        updateProperty('timeoutStrategy', value, element, modeler);
     }
 }

@@ -43,8 +43,8 @@ export const en = {
     'timeout': 'Timeout',
     'timeoutStrategy': 'timeoutStrategy',
     pleaseSelect: 'Please select',
-    auto_pass: 'Auto pass',
-    auto_reject: 'Auto reject',
+    autoPass: 'Auto pass',
+    autoReject: 'Auto reject',
     alert: 'Alert',
 
     'advancedProps': 'Advanced setting',
@@ -53,4 +53,16 @@ export const en = {
     'reApprove': 'Re approve',
 
     'Simulation Log': 'Simulation Log',
+
+    'days': 'Days',
+    'hours': 'Hours',
+    'minutes': 'Minutes',
+    'clear': 'Clear',
+    'confirm': 'Confirm',
+
+    'candidateUsers': 'candidateUsers',
+    'candidateGroups': 'candidateGroups',
+
+    'availableButtons': 'Available buttons',
+    'autoSkipOptions': 'Auto skip',
 }

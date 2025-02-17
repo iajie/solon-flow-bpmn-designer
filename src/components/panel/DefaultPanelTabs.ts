@@ -36,13 +36,13 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
         {
             title: 'timeoutProps',
             items: [],
-            // easy: ['timeout', 'timeoutStrategy'],
+            easy: ['timeout', 'timeout-strategy'],
             show: 'UserTask',
         },
         {
             title: 'advancedProps',
             items: [],
-            // easy: ['assigneeEmpty', 'returnSetting'],
+            easy: ['assignee-empty', 'return-setting'],
             show: 'UserTask',
         },
     ]
@@ -53,7 +53,7 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
         {
             title: 'assigneeProps',
             items: [],
-            // easy: ['assignee', 'candidateUsers', 'candidateGroups'],
+            easy: ['assignee', 'candidate-users', 'candidate-groups'],
             show: 'UserTask',
         }
     ]
@@ -64,13 +64,13 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
         {
             title: 'buttonProps',
             items: [],
-            // easy: ['availableButtons'],
+            easy: ['available-buttons'],
             show: 'UserTask',
         },
         {
             title: 'buttonAuto',
             items: [],
-            // easy: ['starter', 'lastHandler', 'approved'],
+            easy: ['auto-skip-options'],
             show: 'UserTask',
         },
     ]

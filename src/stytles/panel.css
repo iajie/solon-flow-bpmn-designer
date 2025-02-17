@@ -103,13 +103,8 @@
     }
 
     .panel-content {
-        padding: 5px;
-        flex: 1;
         overflow: auto;
-        /*添加网格对齐基准*/
-        display: grid;
-        grid-row-gap: 16px;
-
+        display: flex;
         &::-webkit-scrollbar { width: 8px; height: 8px; }
         &::-webkit-scrollbar-track-piece { background-color: var(--easy-bpmn-designer-content-scrollbar-track-piece) ; }  /* 轨道颜色 */
         &::-webkit-scrollbar-thumb {   border-radius: 10px;  background-color: var(--easy-bpmn-designer-content-scrollbar-thumb);  }
@@ -355,6 +350,139 @@
                 background-color: white;
                 transition: 0.3s;
                 border-radius: 50%;
+            }
+        }
+    }
+
+    .timeout-picker {
+        position: relative;
+        width: 100%;
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            input {
+                width: 100%;
+                height: 32px;
+                padding-right: 30px;
+            }
+
+            .picker-trigger {
+                position: absolute;
+                right: 8px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #999;
+
+                &:hover {
+                    color: #409eff;
+                }
+
+                .icon {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+
+        .picker-panel {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            margin-top: 4px;
+            padding: 12px;
+
+            .panel-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 8px;
+
+                .label {
+                    font-size: 13px;
+                    color: #606266;
+                }
+
+                .number-input {
+                    display: flex;
+                    align-items: center;
+
+                    input {
+                        width: 50px;
+                        text-align: center;
+                        margin: 0 4px;
+                        height: 28px;
+                        border: 1px solid #dcdfe6;
+                        border-radius: 4px;
+
+                        &::-webkit-inner-spin-button {
+                            display: none;
+                        }
+                    }
+
+                    button {
+                        width: 28px;
+                        height: 28px;
+                        border: 1px solid #dcdfe6;
+                        background: #f5f7fa;
+                        color: #606266;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 4px;
+
+                        &:hover {
+                            background: #ecf5ff;
+                            color: #409eff;
+                        }
+                    }
+                }
+            }
+
+            .panel-footer {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 12px;
+                gap: 8px;
+
+                button {
+                    padding: 6px 12px;
+                    border-radius: 4px;
+                    border: 1px solid #dcdfe6;
+                    cursor: pointer;
+                    font-size: 12px;
+
+                    &.btn-clear {
+                        background: #fff;
+                        color: #606266;
+
+                        &:hover {
+                            color: #409eff;
+                            border-color: #c6e2ff;
+                            background-color: #ecf5ff;
+                        }
+                    }
+
+                    &.btn-confirm {
+                        background: #409eff;
+                        color: white;
+                        border-color: #409eff;
+
+                        &:hover {
+                            background: #66b1ff;
+                        }
+                    }
+                }
             }
         }
     }

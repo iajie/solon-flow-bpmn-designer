@@ -29,6 +29,7 @@ export class Property extends AbstractPanel {
 
     onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions) {
         super.onCreate(modeler, options);
+        this.style.height = `calc(${this.options?.height} - 90px)`;
         initPanelContent(modeler, options, this);
     }
 

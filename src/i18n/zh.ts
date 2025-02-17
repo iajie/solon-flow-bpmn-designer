@@ -1,173 +1,4 @@
 export const zh = {
-    // 左侧工具栏
-    'Activate hand tool': '激活抓手工具',
-    'Activate lasso tool': '激活套索工具',
-    'Activate global connect tool': '全局节点连接工具',
-    'Activate create/remove space tool': '激活创建/删除空间工具',
-    'Create start event': '创建开始事件',
-    'Create end event': '创建结束事件',
-    'Create gateway': '创建网关',
-    'Create expanded sub-process': '创建可折叠子流程',
-    'Create intermediate/boundary event': '创建中间抛出/边界事件',
-    'Create pool/participant': '创建泳道',
-    'Empty pool/participant (removes content)': '空泳道',
-    'Expanded pool/participant': '泳道(展开)',
-    'Participant multiplicity': '参与者多重性',
-    'Create task': '创建任务',
-    'Create data object reference': '创建数据对象引用',
-    'Create data store reference': '创建数据存储引用',
-    'Create group': '创建组',
-
-    'Sub-process': '可折叠子流程',
-    'Event sub-process': '事件子流程',
-    Participant: '泳道',
-    ExpandedSubProcess: '可折叠子流程',
-    EventSubProcess: '事件子流程',
-    Group: '组',
-
-    // 点击提示栏
-    'Append end event': '追加结束事件',
-    'Append gateway': '追加网关',
-    'Append task': '追加任务',
-    'Append mail task': '追加邮件任务',
-    'Add text annotation': '文本注释',
-    'Connect to other element': '连接其他节点',
-    'Change element': '切换节点',
-    'Append intermediate/boundary event': '追加中间/边界事件',
-    'Delete': '删除节点',
-
-    // 提示栏具体信息-多实例
-    'Parallel multi-instance': '并行多实例',
-    'Sequential multi-instance': '串行多实例',
-    'Loop': '循环',
-
-    // 任务
-    'Task': '任务',
-    'Send task': '发送任务',
-    'Mail task': '邮件任务',
-    'Receive task': '接收任务',
-    'User task': '用户任务',
-    'Manual task': '手动任务',
-    'Business rule task': '业务规则任务',
-    'Service task': '服务任务',
-    'Script task': '脚本任务',
-    'Call activity': '引用流程',
-    'Sub-process (collapsed)': '可折叠子流程',
-    'Sub-process (expanded)': '可展开子流程',
-
-    // 事件-开始
-    'Intermediate throw event': '中间抛出事件',
-    'End event': '结束事件',
-    'Message start event': '消息启动事件',
-    'Timer start event': '定时启动事件',
-    'Conditional start event': '条件启动事件',
-    'Signal start event': '信号启动事件',
-    'Start event': '开始事件',
-
-    'IntermediateThrowEvent': '中间抛出事件',
-    'EndEvent': '结束事件',
-    'MessageStartEvent': '消息启动事件',
-    'TimerStartEvent': '定时启动事件',
-    'ConditionalStartEvent': '条件启动事件',
-    'SignalStartEvent': '信号启动事件',
-    'StartEvent': '开始事件',
-
-
-    // 事件-结束
-    'Message end event': '结束消息事件',
-    'Escalation end event': '结束升级事件',
-    'Error end event': '结束错误事件',
-    'Compensation end event': '结束补偿事件',
-    'Signal end event': '结束信号事件',
-    'Terminate end event': '终止边界事件',
-
-    'MessageEndEvent': '结束消息事件',
-    'EscalationEndEvent': '结束升级事件',
-    'ErrorEndEvent': '结束错误事件',
-    'CompensateEndEvent': '结束补偿事件',
-    'SignalEndEvent': '结束信号事件',
-    'TerminateEndEvent': '终止边界事件',
-
-    // 事件-中间抛出
-    'Message intermediate catch event': '中间消息捕获事件',
-    'Message intermediate throw event': '中间消息抛出事件',
-    'Timer intermediate catch event': '中间定时捕获事件',
-    'Escalation intermediate throw event': '中间升级抛出事件',
-    'Conditional intermediate catch event': '中间条件捕获事件',
-    'Link intermediate catch event': '中间链接捕获事件',
-    'Link intermediate throw event': '中间链接抛出事件',
-    'Compensation intermediate throw event': '中间补偿抛出事件',
-    'Signal intermediate catch event': '中间信号捕获事件',
-    'Signal intermediate throw event': '中间信号抛出事件',
-
-    'MessageIntermediateCatchEvent': '中间消息捕获事件',
-    'MessageIntermediateThrowEvent': '中间消息抛出事件',
-    'TimerIntermediateCatchEvent': '中间定时捕获事件',
-    'EscalationIntermediateThrowEvent': '中间升级抛出事件',
-    'ConditionalIntermediateCatchEvent': '中间条件捕获事件',
-    'LinkIntermediateCatchEvent': '中间链接捕获事件',
-    'LinkIntermediateThrowEvent': '中间链接抛出事件',
-    'CompensateIntermediateThrowEvent': '中间补偿抛出事件',
-    'SignalIntermediateCatchEvent': '中间信号捕获事件',
-    'SignalIntermediateThrowEvent': '中间信号抛出事件',
-
-    // 网关
-    'Exclusive gateway': '串行网关',
-    'Parallel gateway': '并行网关',
-    'Inclusive gateway': '包容网关',
-    'Complex gateway': '复杂网关',
-    'Event-based gateway': '事件网关',
-
-    'ExclusiveGateway': '串行网关',
-    'ParallelGateway': '并行网关',
-    'InclusiveGateway': '包容网关',
-    'ComplexGateway': '复杂网关',
-    'EventBasedGateway': '事件网关',
-
-    // 事件网关后
-    'Append receive task': '追加接收任务',
-    'Append message intermediate catch event': '追加中间消息捕获事件',
-    'Append timer intermediate catch event': '追加中间定时捕获事件',
-    'Append conditional intermediate catch event': '追加中间条件捕获事件',
-    'Append signal intermediate catch event': '追加中间信号捕获事件',
-
-    // 数据源
-    'Data store reference': '数据存储参考',
-    'Data object reference': '数据对象参考',
-
-    'DataStoreReference': '数据存储参考',
-    'DataObjectReference': '数据对象参考',
-
-    // 文本
-    'Connect using association': '文本关联',
-    'Connect using data input association': '连接到需要数据源的地方',
-    'Process': '业务流程',
-    Tasks: '任务',
-    'Start Event': '开始事件',
-    'Intermediate Throw Event': '中间事件',
-    'End Event': '结束事件',
-    SendTask: '发送任务',
-    ReceiveTask: '接收任务',
-    UserTask: '用户任务',
-    ManualTask: '手工任务',
-    BusinessRuleTask: '业务规则任务',
-    ServiceTask: '服务任务',
-    ScriptTask: '脚本任务',
-    CallActivity: '调用活动',
-    SubProcess: '子流程',
-    'Sub-processes': '子流程',
-    'Event Sub-process': '事件子流程',
-    Transaction: '事务',
-    'SequenceFlow': '普通流转路径',
-    'TextAnnotation': '文本注释',
-
-    'Add lane above': '在上面添加道',
-    'Divide into two lanes': '分割成两个道',
-    'Divide into three lanes': '分割成三个道',
-    'Add lane below': '在下面添加道',
-    'Create element': '创建元素',
-    'Set color': '设置节点颜色',
-
     'import': '导入流程文件',
     'download': '下载流程文件',
     'preview-xml': '预览 XML',
@@ -212,8 +43,8 @@ export const zh = {
     'timeout': '超时时间',
     'timeoutStrategy': '超时策略',
     pleaseSelect: '请选择',
-    auto_pass: '自动通过',
-    auto_reject: '自动拒绝',
+    autoPass: '自动通过',
+    autoReject: '自动拒绝',
     alert: '仅提醒',
 
     'advancedProps': '高级设置',
@@ -222,4 +53,16 @@ export const zh = {
     'reApprove': '重新审批',
 
     'Simulation Log': '模拟日志',
+
+    'days': '天数',
+    'hours': '小时',
+    'minutes': '分钟',
+    'clear': '清空',
+    'confirm': '确定',
+
+    'candidateUsers': '候选用户',
+    'candidateGroups': '候选组',
+
+    'availableButtons': '可用按钮',
+    'autoSkipOptions': '自动同意',
 } as any;

@@ -16,6 +16,15 @@ import { LoopCardinality } from "./multiInstance/LoopCardinality.ts";
 import { CompletionCondition } from "./multiInstance/CompletionCondition.ts";
 import { ConditionType } from "./sequenceFlow/ConditionType.ts";
 import { ConditionExpression } from "./sequenceFlow/ConditionExpression.ts";
+import { Timeout } from "./timeout/Timeout.ts";
+import { TimeoutStrategy } from "./timeout/TimeoutStrategy.ts";
+import { AssigneeEmpty } from "./advanced/AssigneeEmpty.ts";
+import { ReturnSetting } from "./advanced/ReturnSetting.ts";
+import { Assignee } from "./assignee/Assignee.ts";
+import { CandidateUsers } from "./assignee/CandidateUsers.ts";
+import { CandidateGroups } from "./assignee/CandidateGroups.ts";
+import { AvailableButtons } from "./buttons/AvailableButtons.ts";
+import { AutoSkipOptions } from "./buttons/AutoSkipOptions.ts";
 
 defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);
@@ -27,6 +36,16 @@ defineCustomElement('easy-panel-loop-cardinality', LoopCardinality);
 defineCustomElement('easy-panel-completion-condition', CompletionCondition);
 defineCustomElement('easy-panel-condition-type', ConditionType);
 defineCustomElement('easy-panel-condition-expression', ConditionExpression);
+defineCustomElement('easy-panel-timeout', Timeout);
+defineCustomElement('easy-panel-timeout-strategy', TimeoutStrategy);
+defineCustomElement('easy-panel-assignee-empty', AssigneeEmpty);
+defineCustomElement('easy-panel-return-setting', ReturnSetting);
+defineCustomElement('easy-panel-assignee', Assignee);
+defineCustomElement('easy-panel-candidate-users', CandidateUsers);
+defineCustomElement('easy-panel-candidate-groups', CandidateGroups);
+defineCustomElement('easy-panel-available-buttons', AvailableButtons);
+defineCustomElement('easy-panel-auto-skip-options', AutoSkipOptions);
+
 
 export class PanelContent extends AbstractPanel {
 
