@@ -2,6 +2,8 @@ import { PanelInput } from "../PanelInput.ts";
 import Modeler from "bpmn-js/lib/Modeler";
 import { updateProperty } from "../../../../utils/bpmnUtils.ts";
 import { BpmnElement } from "bpmn-js";
+import { t } from "i18next";
+import tippy from "tippy.js";
 
 const availableButtons = [
     {
@@ -71,15 +73,46 @@ export class AvailableButtons extends PanelInput {
     constructor() {
         super();
         this.inputLabel = 'availableButtons';
+        this.init();
+    }
+
+    init() {
+        const container = document.querySelector('.easy-bpmn-designer-container') || undefined;
+        const buttonConfig = document.createElement('div');
+        buttonConfig.classList.add('button-config');
+        for (let availableButton of availableButtons) {
+            const label = document.createElement('label');
+            label.classList.add('button-item');
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'availableButtons';
+            checkbox.value = availableButton.type;
+            checkbox.onchange = (e) => this.onChangeValue(e, this.element, this.modeler);
+            label.appendChild(checkbox);
+
+            const span = document.createElement('span');
+            span.innerText = t(availableButton.label);
+            label.appendChild(span);
+
+            tippy(label, {
+                appendTo: container,
+                content: availableButton.tooltip,
+                theme: 'easy-bpmn-designer-tip',
+                arrow: true,
+            });
+            buttonConfig.appendChild(label);
+        }
+
+        this.customElement = buttonConfig;
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
-        console.log(availableButtons);
         updateProperty('buttonConfig', (e.target as HTMLInputElement).value || '', element, modeler);
     }
 
     onChange(element: BpmnElement) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.buttonConfig || '[]');
+        this.selectedButtons = JSON.parse(element.businessObject.buttonConfig || '[]');
     }
 }

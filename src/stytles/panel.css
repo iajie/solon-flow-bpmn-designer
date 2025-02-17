@@ -105,11 +105,33 @@
     .panel-content {
         overflow: auto;
         display: grid;
-        &::-webkit-scrollbar { width: 8px; height: 8px; }
-        &::-webkit-scrollbar-track-piece { background-color: var(--easy-bpmn-designer-content-scrollbar-track-piece) ; }  /* 轨道颜色 */
-        &::-webkit-scrollbar-thumb {   border-radius: 10px;  background-color: var(--easy-bpmn-designer-content-scrollbar-thumb);  }
-        &::-webkit-scrollbar-thumb:hover { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-hover);  }
-        &::-webkit-scrollbar-thumb:active { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-active);  }
+        border-bottom: 1px solid var(--easy-bpmn-designer-button-bg-color);
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        &::-webkit-scrollbar-track-piece {
+            background-color: var(--easy-bpmn-designer-content-scrollbar-track-piece);
+        }
+
+        /* 轨道颜色 */
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: var(--easy-bpmn-designer-content-scrollbar-thumb);
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            border-radius: 10px;
+            background-color: var(--easy-bpmn-designer-content-scrollbar-thumb-hover);
+        }
+
+        &::-webkit-scrollbar-thumb:active {
+            border-radius: 10px;
+            background-color: var(--easy-bpmn-designer-content-scrollbar-thumb-active);
+        }
     }
 
     .tab-content {
@@ -429,12 +451,15 @@
                         background-color: var(--easy-bpmn-designer-input-bg-color);
                         border: 1px solid var(--easy-bpmn-designer-input-border-color);
                         border-radius: 4px;
+
                         &:hover {
                             background-color: var(--easy-bpmn-designer-button-hover-bg-color);
                         }
+
                         &:focus {
                             border-color: var(--easy-bpmn-designer-input-focus-bg-color);
                         }
+
                         &::-webkit-inner-spin-button {
                             display: none;
                         }
@@ -532,6 +557,102 @@
             span {
                 font-size: 12px;
                 color: var(--easy-bpmn-designer-dialog-title-color);
+            }
+        }
+    }
+
+    .button-config {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /*减小最小宽度*/
+        gap: 4px; /*减小间距*/
+        padding: 8px; /*减小内边距*/
+        background: #f8f9fb;
+        border-radius: 4px;
+        margin: 4px 0;
+
+        .button-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 6px; /*减小内边距*/
+            border-radius: 3px;
+            transition: background-color 0.2s;
+            position: relative; /*添加相对定位*/
+            cursor: pointer; /*添加手型光标*/
+            user-select: none; /*防止文字被选中*/
+
+            input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                margin: 0 6px 0 0; /*减小右边距*/
+                position: relative;
+                cursor: pointer;
+                border: 1px solid #dcdfe6;
+                border-radius: 2px;
+                background-color: #fff;
+                transition: all 0.3s;
+
+                &:checked {
+                    background-color: #409eff;
+                    border-color: #409eff;
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        left: 4px;
+                        top: 1px;
+                        width: 6px;
+                        height: 9px;
+                        border: 2px solid #fff;
+                        border-left: 0;
+                        border-top: 0;
+                        transform: rotate(45deg);
+                    }
+                }
+
+                &:hover {
+                    border-color: #409eff;
+                }
+            }
+
+            span {
+                font-size: 12px; /*稍微减小字号*/
+                color: #606266;
+                white-space: nowrap;
+                cursor: pointer; /*添加手型光标*/
+            }
+
+            &:hover {
+                background-color: #f0f2f5;
+            }
+        }
+    }
+
+    .auto-skip-config {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 6px;
+        background: #f8f9fb;
+        border-radius: 4px;
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 4px 6px;
+
+            &:hover {
+                background: #f0f2f5;
+            }
+
+            input[type="checkbox"] {
+                margin: 0;
+            }
+
+            span {
+                font-size: 12px;
+                color: #606266;
             }
         }
     }
