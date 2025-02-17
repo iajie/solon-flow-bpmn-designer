@@ -109,7 +109,12 @@
         /*添加网格对齐基准*/
         display: grid;
         grid-row-gap: 16px;
-        scrollbar-width: thin;
+
+        &::-webkit-scrollbar { width: 8px; height: 8px; }
+        &::-webkit-scrollbar-track-piece { background-color: var(--easy-bpmn-designer-content-scrollbar-track-piece) ; }  /* 轨道颜色 */
+        &::-webkit-scrollbar-thumb {   border-radius: 10px;  background-color: var(--easy-bpmn-designer-content-scrollbar-thumb);  }
+        &::-webkit-scrollbar-thumb:hover { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-hover);  }
+        &::-webkit-scrollbar-thumb:active { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-active);  }
     }
 
     .tab-content {

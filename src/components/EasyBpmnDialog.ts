@@ -47,21 +47,23 @@ export class EasyBpmnDialog extends HTMLElement {
             const el = document.createElement('div');
             el.id = this.dialogId;
             el.innerHTML = dialogContainer;
-            document.body.appendChild(el);
-            const content = document.querySelector('.preview-content');
-            if (content) {
-                content.innerHTML = this.options.content;
-            }
-            if (this.options.clickMaskClose) {
-                const mask = document.querySelector('.preview-mask');
-                if (mask) {
-                    mask.addEventListener('click', () => this.onClose());
+            const dom = document.getElementById('easy-bpmn-designer');
+            if (dom) {
+                dom.appendChild(el);
+                const content = document.querySelector('.preview-content');
+                if (content) {
+                    content.innerHTML = this.options.content;
                 }
-            }
-
-            const iconClose = document.querySelector('.icon-close');
-            if (iconClose) {
-                iconClose.addEventListener('click', () => this.onClose());
+                if (this.options.clickMaskClose) {
+                    const mask = document.querySelector('.preview-mask');
+                    if (mask) {
+                        mask.addEventListener('click', () => this.onClose());
+                    }
+                }
+                const iconClose = document.querySelector('.icon-close');
+                if (iconClose) {
+                    iconClose.addEventListener('click', () => this.onClose());
+                }
             }
         }
     }

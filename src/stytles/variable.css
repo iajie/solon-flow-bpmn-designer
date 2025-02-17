@@ -61,6 +61,11 @@
   --easy-bpmn-designer-panel-content-item-header-text-color: #1f2f3d;
   --easy-bpmn-designer-panel-toggle-hover: #e6e8eb;
   --easy-bpmn-designer-panel-toggle-color: #f0f2f5;
+
+  --easy-bpmn-designer-dialog-bg-color: white;
+  --easy-bpmn-designer-dialog-title-color: black;
+  --easy-bpmn-designer-dialog-content-bg-color: #f5f5f5;
+
 }
 
 :root .easy-bpmn-designer-theme-dark {
@@ -125,4 +130,8 @@
   --easy-bpmn-designer-panel-content-item-header-text-color: #dddddda0;
   --easy-bpmn-designer-panel-toggle-hover: rgba(197, 197, 197, 0.63);
   --easy-bpmn-designer-panel-toggle-color: #c6c6d1;
+
+  --easy-bpmn-designer-dialog-bg-color: #535151;
+  --easy-bpmn-designer-dialog-title-color: white;
+  --easy-bpmn-designer-dialog-content-bg-color: #4a4545;
 }

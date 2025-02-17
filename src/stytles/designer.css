@@ -11,13 +11,16 @@
         left: 1px !important;
     }
 
-    .djs-palette .entry, .djs-palette .djs-palette-toggle{
+    .djs-palette .entry, .djs-palette .djs-palette-toggle {
         color: var(--easy-bpmn-designer-text-color);
     }
-
-    .entry .bpmn-icon-hand-tool:hover{
-        background-color: var(--easy-bpmn-designer-button-bg-color);
+    .djs-palette .entry:hover, .djs-palette .djs-palette-toggle:hover{
+        color: var(--palette-entry-hover-color);
     }
+
+    /*.entry .bpmn-icon-hand-tool:hover{*/
+    /*    background-color: var(--easy-bpmn-designer-button-bg-color);*/
+    /*}*/
 
     .djs-palette:hover {
         background: var(--easy-bpmn-designer-bg-color) !important;

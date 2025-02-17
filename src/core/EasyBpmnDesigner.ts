@@ -63,9 +63,14 @@ const defaultOptions: Partial<EasyBpmnDesignerOptions> = {
         gridLineOpacity: 0.6,
         gridLineColor: '#ccc',
     },
-    bpmnRenderer: {
+    lightBpmnRenderer: {
         defaultLabelColor: '#000',
         defaultFillColor: '#eef4ff',
+        defaultStrokeColor: '#349afa'
+    },
+    darkBpmnRenderer: {
+        defaultLabelColor: '#eef4ff',
+        defaultFillColor: 'hsl(225, 10%, 15%)',
         defaultStrokeColor: '#349afa'
     },
     textRenderer: {
@@ -171,18 +176,17 @@ export class EasyBpmnDesigner {
         this.designer.classList.add("easy-bpmn-designer-container-designer");
 
         // 设计器内容
-        const { height, gridLine, value, bpmnRenderer, textRenderer, minimap, tokenSimulation } = this.options;
+        const { height, gridLine, value, textRenderer, minimap, tokenSimulation, lightBpmnRenderer, darkBpmnRenderer } = this.options;
         if ((height || 60) >= 60) {
             this.designer.classList.add("djs-palette-column");
         }
         this.bpmnModeler = new BpmnModeler({
             container: this.designer,
-            // keyboard: { bindTo: document },
             height: `${height}vh`,
             additionalModules: this.additionalModules(),
             moddleExtensions: this.moddleExtensions(),
             gridLine,
-            bpmnRenderer,
+            bpmnRenderer: this.options.theme === 'dark' ? darkBpmnRenderer : lightBpmnRenderer,
             textRenderer,
             minimap,
             tokenSimulation,
@@ -312,10 +316,12 @@ export class EasyBpmnDesigner {
         if (!theme) {
             theme = this.options.theme === "dark" ? "light" : "dark";
         }
-
+        this.destroy();
         rootEl.classList.remove(`easy-bpmn-designer-theme-${this.options.theme}`);
         rootEl.classList.add(`easy-bpmn-designer-theme-${theme}`);
         this.options.theme = theme;
+        this.initialize();
+        return this;
     }
 
     /**
