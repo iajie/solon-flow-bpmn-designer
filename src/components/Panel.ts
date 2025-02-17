@@ -17,7 +17,6 @@ export class Panel extends HTMLElement implements DesignerEventListener {
             return;
         }
         this.classList.add("easy-bpmn-designer-container-panel");
-
         for (let dom of this.panelDom) {
             this.appendChild(dom);
         }
@@ -25,6 +24,7 @@ export class Panel extends HTMLElement implements DesignerEventListener {
 
     onCreate(modeler: BpmnModeler, options: EasyBpmnDesignerOptions): void {
         initPanelKeys(modeler, options, this.panelDom);
+        this.style.maxHeight = `${options.height || '70'}vh`;
     }
 
 }

@@ -1,21 +1,19 @@
-import { PanelInput } from "../PanelInput.ts";
-import Modeler from "bpmn-js/lib/Modeler";
-import { updateProperty } from "../../../../utils/bpmnUtils.ts";
-import { BpmnElement } from "bpmn-js";
+import { AdvancedGroup } from "./AdvancedGroup.ts";
+import { t } from "i18next";
 
-export class ReturnSetting extends PanelInput {
+export class ReturnSetting extends AdvancedGroup {
 
     constructor() {
         super();
         this.inputLabel = 'returnSetting';
+        this.key = 'returnType';
+        this.defaultValue = 'restart';
+        this.option = [
+            { label: t('reApprove'), value: 'restart' },
+            { label: t('currentNode'), value: 'continue' },
+        ];
+
+        this.init();
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
-        updateProperty('returnType', (e.target as HTMLInputElement).value || '', element, modeler);
-    }
-
-    onChange(element: BpmnElement) {
-        super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.returnType || 'restart');
-    }
 }

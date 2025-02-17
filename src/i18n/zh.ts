@@ -51,6 +51,7 @@ export const zh = {
     'assigneeEmpty': '处理人为空',
     'returnSetting': '退回设置',
     'reApprove': '重新审批',
+    'currentNode': '从当前节点',
 
     'Simulation Log': '模拟日志',
 

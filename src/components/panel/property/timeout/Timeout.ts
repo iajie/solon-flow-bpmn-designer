@@ -3,11 +3,10 @@ import {t} from "i18next";
 
 export class Timeout extends PanelInput {
 
-    showPicker = false;
     days = 0;
     hours = 0;
     minutes = 0;
-
+    pickerPanel!: HTMLDivElement;
     constructor() {
         super();
         this.inputLabel = 'timeout';
@@ -22,6 +21,8 @@ export class Timeout extends PanelInput {
         const dom = document.createElement('input');
         dom.type = 'text';
         const span = document.createElement('span');
+        span.classList.add('picker-trigger');
+
         span.innerHTML = `<svg t="1739778338323" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4139" width="200" height="200"><path d="M512 960C265.6 960 64 758.4 64 512S265.6 64 512 64s448 201.6 448 448-201.6 448-448 448z m0-832C300.8 128 128 300.8 128 512s172.8 384 384 384 384-172.8 384-384S723.2 128 512 128z" p-id="4140"></path><path d="M736 480H544V224c0-17.6-14.4-32-32-32s-32 14.4-32 32v288c0 17.6 14.4 32 32 32h224c17.6 0 32-14.4 32-32s-14.4-32-32-32z" p-id="4141"></path></svg>`;
         inputWrapper.appendChild(dom);
         inputWrapper.appendChild(span);
@@ -29,15 +30,14 @@ export class Timeout extends PanelInput {
 
         const pickerPanel = document.createElement('div');
         pickerPanel.classList.add('picker-panel');
+        pickerPanel.style.display = 'none';
 
-        const panelRow = document.createElement('div');
-        panelRow.classList.add('panel-row');
-        this.createPanelRow('days', 'd', panelRow);
-        this.createPanelRow('hours', 'h', panelRow);
-        this.createPanelRow('minutes', 'm', panelRow);
-        pickerPanel.appendChild(panelRow);
-
-        timeoutPicker.appendChild(pickerPanel);
+        span.addEventListener('click', () => this.close(pickerPanel));
+        this.createPanelRow('days', 'd', pickerPanel);
+        this.createPanelRow('hours', 'h', pickerPanel);
+        this.createPanelRow('minutes', 'm', pickerPanel);
+        this.pickerPanel = pickerPanel;
+        timeoutPicker.appendChild(this.pickerPanel);
 
         const panelFooter = document.createElement('div');
         panelFooter.classList.add('panel-footer');
@@ -48,7 +48,7 @@ export class Timeout extends PanelInput {
             this.minutes = 0;
             this.days = 0;
             this.hours = 0;
-            this.showPicker = false;
+            this.close(pickerPanel);
         });
         panelFooter.appendChild(clear);
 
@@ -56,19 +56,30 @@ export class Timeout extends PanelInput {
         confirm.classList.add('btn-confirm');
         confirm.innerText = t('confirm');
         confirm.addEventListener('click', () => {
-            this.showPicker = false;
+            this.close(pickerPanel);
         });
         panelFooter.appendChild(confirm);
-        timeoutPicker.appendChild(panelFooter);
+        pickerPanel.appendChild(panelFooter);
 
         this.customElement = timeoutPicker;
     }
 
+    close(dom: HTMLDivElement) {
+        const display = dom.style.display;
+        if (display === 'block') {
+            dom.style.display = 'none';
+        } else {
+            dom.style.display = 'block';
+        }
+    }
+
     createPanelRow(title: string, unit: 'd' | 'h' | 'm', parent: HTMLDivElement) {
+        const panelRow = document.createElement('div');
+        panelRow.classList.add('panel-row');
         const span = document.createElement('span');
         span.classList.add('label');
         span.innerText = t(title);
-        parent.appendChild(span);
+        panelRow.appendChild(span);
 
         const numberInput = document.createElement('div');
         numberInput.classList.add('number-input');
@@ -90,7 +101,8 @@ export class Timeout extends PanelInput {
         button2.addEventListener('click', () => this.updateValue(unit, 1));
         numberInput.appendChild(button2);
 
-        parent.appendChild(numberInput);
+        panelRow.appendChild(numberInput);
+        parent.appendChild(panelRow);
     }
 
     handleNumberChange(unit: "d" | "h" | "m") {

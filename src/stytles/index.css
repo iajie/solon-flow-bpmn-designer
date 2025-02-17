@@ -193,13 +193,12 @@
             z-index: 100;
             flex: 1;
             overflow: auto;
-            /*scrollbar-width: thin;*/
             padding: 16px;
             margin: 0;
             font-family: monospace;
             font-size: 14px;
             line-height: 1.5;
-            background: var(--easy-bpmn-designer-dialog-content-bg-color);
+            background: var(--easy-bpmn-designer-content-pre-bg-color);
             max-height: 650px;
 
             &::-webkit-scrollbar { width: 8px; height: 8px; }

@@ -1,24 +1,21 @@
-import { PanelInput } from "../PanelInput.ts";
-import Modeler from "bpmn-js/lib/Modeler";
-import { updateProperty } from "../../../../utils/bpmnUtils.ts";
-import { BpmnElement } from "bpmn-js";
+import { AdvancedGroup } from "./AdvancedGroup.ts";
+import { t } from "i18next";
 
 /**
  * 高级设置-处理人为空时的处理方式
  */
-export class AssigneeEmpty extends PanelInput {
+export class AssigneeEmpty extends AdvancedGroup {
 
     constructor() {
         super();
         this.inputLabel = 'assigneeEmpty';
+        this.option = [
+            { label: t('autoPass'), value: 'autoApprove' },
+            { label: t('autoReject'), value: 'autoReject' },
+        ];
+        this.key = 'emptyHandlerType';
+        this.defaultValue = 'autoApprove';
+        this.init();
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
-        updateProperty('emptyHandlerType', (e.target as HTMLInputElement).value || '', element, modeler);
-    }
-
-    onChange(element: BpmnElement) {
-        super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.emptyHandlerType || 'autoApprove');
-    }
 }

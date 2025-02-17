@@ -51,6 +51,7 @@ export const en = {
     'assigneeEmpty': 'assigneeEmpty',
     'returnSetting': 'returnSetting',
     'reApprove': 'Re approve',
+    'currentNode': 'Current node',
 
     'Simulation Log': 'Simulation Log',
 
