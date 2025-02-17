@@ -22,12 +22,7 @@ Easy-Bpmn-Designer 是一个基于bpmn重新加工的流程设计器，它基于
 
 ## Easy-Bpmn-Designer 的与众不同之处
 
-### 1、AI 驱动的编辑器
-Easy-Bpmn-Designer 的目标是打造一个完全由 AI 驱动的富文本编辑器，同时支持对接任意大模型，包括私有的大模型。允许用户使用自己私有的大模型 ApiKey。
-不仅如此，Easy-Bpmn-Designer 其所有的 AI 功能，都允许用户自定义自己的 prompt，以及扩展的 AI 菜单。
-
-
-### 2、简单、友好、易用
+### 简单、友好、易用
 
 Easy-Bpmn-Designer 基于 Web Component 开发，支持与任意主流的前端框架集成。Easy-Bpmn-Designer 使用更加友好的 LGPL 开源协议，通过 `npm i easy-bpmn-designer` 使用，
 不用担心 GPL 协议可能带来的 GPL 传染问题。
