@@ -5,7 +5,7 @@ export const zh = {
     'preview-json': '预览 JSON',
     'save': '保存流程 (Ctrl+S)',
     'undo': '撤销 (Ctrl+Z)',
-    'redo': '撤销 (Ctrl+Z)',
+    'redo': '重做 (Ctrl+Y)',
     'zoom-in': '放大 (+)',
     'zoom-out': '缩小 (-)',
     'reset': '重置缩放',
