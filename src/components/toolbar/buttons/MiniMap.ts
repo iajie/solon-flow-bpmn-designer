@@ -11,6 +11,9 @@ export class MiniMap extends AbstractToolBar {
     }
 
     onClick() {
+        const canvas = this.modeler?.get("canvas") as any;
+        // 先进行视口居中
+        canvas.scroll({ dx: 0, dy: 0 });
         const minimap = this.modeler?.get("minimap") as any;
         minimap.toggle();
     }

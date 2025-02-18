@@ -12,6 +12,8 @@ export class Reset extends AbstractToolBar {
 
     onClick() {
         const canvas = this.modeler?.get("canvas") as any;
-        canvas.zoom("fit-viewport");
+        // 先进行视口居中
+        canvas.scroll({ dx: 0, dy: 0 });
+        canvas.zoom('fit-viewport', 'auto');
     }
 }
