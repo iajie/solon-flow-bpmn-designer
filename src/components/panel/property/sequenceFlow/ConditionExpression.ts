@@ -12,8 +12,12 @@ export class ConditionExpression extends PanelInput {
     }
 
     onChange(element: BpmnElement) {
-        super.onChange(element);
+        this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
         this.inputElement && (this.inputElement.value = element.businessObject.conditionExpression?.body || "");
+    }
+
+    updateElement(element: BpmnElement) {
+        this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {

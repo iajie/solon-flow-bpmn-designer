@@ -12,10 +12,14 @@ export class LoopCardinality extends PanelInput {
     }
 
     onChange(element: BpmnElement) {
-        super.onChange(element);
         const loopCharacteristics = element.businessObject.loopCharacteristics;
-        this.show = loopCharacteristics ? loopCharacteristics.$type === "bpmn:MultiInstanceLoopCharacteristics" : false;
+        this.onShow(loopCharacteristics ? loopCharacteristics.$type === "bpmn:MultiInstanceLoopCharacteristics" : false)
         this.inputElement && (this.inputElement.value = loopCharacteristics?.loopCardinality?.body || "");
+    }
+
+    updateElement(element: BpmnElement) {
+        const loopCharacteristics = element.businessObject.loopCharacteristics;
+        this.onShow(loopCharacteristics ? loopCharacteristics.$type === "bpmn:MultiInstanceLoopCharacteristics" : false);
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {

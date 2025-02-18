@@ -26,7 +26,6 @@ export class MultiInstance extends PanelInput {
     }
 
     onChange(element: BpmnElement) {
-        super.onChange(element);
         const loopCharacteristics = element.businessObject.loopCharacteristics;
 
         this.inputElement && (this.inputElement.value = loopCharacteristics

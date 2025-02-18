@@ -8,6 +8,7 @@ export class PanelInput extends AbstractPanel {
 
     type!: string;
     inputLabel!: string;
+    labelElement!: AbstractPanel;
     inputElement!: HTMLInputElement | HTMLSelectElement;
     className!: string;
     customElement!: HTMLDivElement;
@@ -21,7 +22,6 @@ export class PanelInput extends AbstractPanel {
         if (this.children && this.children.length) {
             return;
         }
-        this.style.display = this.show ? "grid" : "none";
         this.classList.add('property-item');
         const label = document.createElement('label');
         label.innerText = t(this.inputLabel);
@@ -39,10 +39,10 @@ export class PanelInput extends AbstractPanel {
                 this.inputElement.type = this.type;
             }
             this.inputElement.onchange = (e) => this.onChangeValue(e, this.element, this.modeler);
-            this.inputElement.oninput = (e) => this.onChangeValue(e, this.element, this.modeler);
             dom.appendChild(this.inputElement);
             this.appendChild(dom);
         }
+        this.labelElement = this;
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: BpmnModeler) {
@@ -59,4 +59,9 @@ export class PanelInput extends AbstractPanel {
         // this.inputElement && (this.inputElement.value = element.id);
     }
 
+    onShow(open?: boolean) {
+        if (this.labelElement) {
+            this.labelElement.style.display = open ? 'grid' : 'none';
+        }
+    }
 }

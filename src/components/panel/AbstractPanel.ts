@@ -34,6 +34,9 @@ export class AbstractPanel extends HTMLElement implements DesignerEventListener 
 
     }
 
+    // @ts-ignore
+    updateElement(element: BpmnElement, oldProperties: any, properties: any) {}
+
     onCreate(modeler: BpmnModeler, options: EasyBpmnDesignerOptions): void {
         this.modeler = modeler;
         this.options = options;
@@ -46,6 +49,18 @@ export class AbstractPanel extends HTMLElement implements DesignerEventListener 
         modeler.off("selection.changed", (e: any) => this.handleSelectionChange(e, modeler));
         // 添加新的监听器
         modeler.on("selection.changed", (e: any) => this.handleSelectionChange(e, modeler));
+        // 先移除旧的监听器
+        modeler.off("commandStack.element.updateProperties.executed", (e: any) => this.elementChanged(e));
+        // 添加新的监听器
+        modeler.on("commandStack.element.updateProperties.executed", (e: any) => this.elementChanged(e));
+    }
+
+    /**
+     * 修改节点
+     * @param e
+     */
+    elementChanged(e: any) {
+        this.updateElement(e.context.element, e.context.oldProperties, e.context.properties);
     }
 
     handleSelectionChange(e: { newSelection: BpmnElement[] }, modeler: BpmnModeler) {

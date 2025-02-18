@@ -30,7 +30,7 @@ defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);
 defineCustomElement('easy-panel-form-primary-key', FormPrimaryKey);
 defineCustomElement('easy-panel-allow-editing', FormEditable);
-defineCustomElement('easy-panel-condition-expression', GatewayCondition);
+defineCustomElement('easy-panel-gateway-condition-expression', GatewayCondition);
 defineCustomElement('easy-panel-multi-instance', MultiInstance);
 defineCustomElement('easy-panel-loop-cardinality', LoopCardinality);
 defineCustomElement('easy-panel-completion-condition', CompletionCondition);
