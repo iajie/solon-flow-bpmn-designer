@@ -75,6 +75,8 @@ export const en = {
     'delegateTip': 'Delegate the task to someone else for processing, and it will automatically return to the delegated person after processing',
     'transfer': 'Transfer',
     'transferTip': 'Transfer the task to someone else for processing, and the process will continue after processing',
+    'revoke': 'Revoke',
+    'revokeTip': 'Once the task is transferred to the applicant, the applicant can revoke the task',
     'returnToNode': 'ReturnToNode',
     'returnToNodeTip': 'Return the task to any node that has already been processed',
     'returnToStarter': 'ReturnToStarter',

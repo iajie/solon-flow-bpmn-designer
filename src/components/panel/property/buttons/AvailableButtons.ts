@@ -27,6 +27,11 @@ const availableButtons = [
         tooltip: "transferTip",
     },
     {
+        type: "revoke",
+        label: "revoke",
+        tooltip: "revokeTip",
+    },
+    {
         type: "returnToNode",
         label: "returnToNode",
         tooltip: "returnToNodeTip",

@@ -75,6 +75,8 @@ export const zh = {
     'delegateTip': '将任务委派给其他人处理，处理后会自动回到委派人',
     'transfer': '转办',
     'transferTip': '将任务转交给其他人处理，处理后流程继续',
+    'revoke': '撤销',
+    'revokeTip': '任务流转到申请人后，申请人可撤销任务',
     'returnToNode': '退回到指定节点',
     'returnToNodeTip': '将任务退回到已经处理过的任意节点',
     'returnToStarter': '退回到发起人',
