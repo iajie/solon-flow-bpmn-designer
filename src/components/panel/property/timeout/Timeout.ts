@@ -1,16 +1,28 @@
 import {PanelInput} from "../PanelInput.ts";
-import {t} from "i18next";
+import { t } from "i18next";
+import { BpmnElement } from "bpmn-js";
+import { updateProperty } from "../../../../utils/bpmnUtils.ts";
 
 export class Timeout extends PanelInput {
 
-    days = 0;
-    hours = 0;
-    minutes = 0;
     pickerPanel!: HTMLDivElement;
+
+    timeElements: HTMLInputElement[] = [];
+
+    valueInput!: HTMLInputElement;
+
     constructor() {
         super();
         this.inputLabel = 'timeout';
         this.init();
+    }
+
+    handleClickOutside(event: MouseEvent, dom: HTMLDivElement) {
+        const target = event.target as HTMLElement;
+        if (!target.closest(".timeout-picker")) {
+            this.close(dom);
+            this.pickerPanel.style.display = "none";
+        }
     }
 
     init() {
@@ -20,6 +32,8 @@ export class Timeout extends PanelInput {
         inputWrapper.classList.add('input-wrapper');
         const dom = document.createElement('input');
         dom.type = 'text';
+        dom.readOnly = true;
+        this.valueInput = dom;
         const span = document.createElement('span');
         span.classList.add('picker-trigger');
 
@@ -45,9 +59,9 @@ export class Timeout extends PanelInput {
         clear.classList.add('btn-clear');
         clear.innerText = t('clear');
         clear.addEventListener('click', () => {
-            this.minutes = 0;
-            this.days = 0;
-            this.hours = 0;
+            for (let dom of this.timeElements) {
+                dom.value = '0';
+            }
             this.close(pickerPanel);
         });
         panelFooter.appendChild(clear);
@@ -62,6 +76,19 @@ export class Timeout extends PanelInput {
         pickerPanel.appendChild(panelFooter);
 
         this.customElement = timeoutPicker;
+
+        // 在组件外点击时关闭面板
+        document.addEventListener('click', (e) => this.handleClickOutside(e, pickerPanel));
+    }
+
+    onChangeValue(e: any) {
+        updateProperty('dueDate', e, this.element, this.modeler);
+    }
+
+    onChange(element: BpmnElement) {
+        const value = element.businessObject.dueDate || "";
+        this.valueInput && (this.valueInput.value = value);
+        this.parseTimeString(value);
     }
 
     close(dom: HTMLDivElement) {
@@ -91,9 +118,10 @@ export class Timeout extends PanelInput {
 
         const input = document.createElement('input');
         input.type = 'number';
-        input.value = `${this.days}`;
         input.min = '0';
-        input.onchange = () => this.handleNumberChange(unit);
+        input.oninput = (e) => this.handleNumberChange(unit, (e.target as HTMLInputElement).value);
+        input.id = `${unit}`;
+        this.timeElements.push(input);
         numberInput.appendChild(input);
 
         const button2 = document.createElement('button');
@@ -105,21 +133,49 @@ export class Timeout extends PanelInput {
         parent.appendChild(panelRow);
     }
 
-    handleNumberChange(unit: "d" | "h" | "m") {
-        if (unit === "h") {
-            this.hours = Math.min(Math.max(this.hours, 0), 23);
-        } else if (unit === "m") {
-            this.minutes = Math.min(Math.max(this.minutes, 0), 59);
+    handleNumberChange(unit: "d" | "h" | "m", number: string) {
+        this.updateValue(unit, Number(number), true);
+    }
+
+    updateValue(unit: "d" | "h" | "m", delta: number, eq?: boolean) {
+        for (let dom of this.timeElements) {
+            if (dom.id.endsWith(unit)) {
+                let value = Number(dom.value);
+                if (unit === "d") {
+                    value = eq ? delta : Math.max(0, value + delta);
+                } else if (unit === "h") {
+                    value = eq ? delta : Math.min(Math.max(0, value + delta), 23);
+                } else {
+                    value = eq ? delta : Math.min(Math.max(0, value + delta), 59);
+                }
+                dom.value = `${value}`;
+            }
+        }
+        const value = this.formatTime();
+        this.valueInput.value = value;
+        this.onChangeValue(value);
+    }
+
+    parseTimeString(timeStr: string) {
+        const d = timeStr.match(/(\d+)d/)?.[1] || "0";
+        const h = timeStr.match(/(\d+)h/)?.[1] || "0";
+        const m = timeStr.match(/(\d+)m/)?.[1] || "0";
+        for (let dom of this.timeElements) {
+            if (dom.id.endsWith('d')) {
+                dom.value = d;
+            } else if (dom.id.endsWith('h')) {
+                dom.value = h;
+            } else {
+                dom.value = m;
+            }
         }
     }
 
-    updateValue(unit: "d" | "h" | "m", delta: number) {
-        if (unit === "d") {
-            this.days = Math.max(0, this.days + delta);
-        } else if (unit === "h") {
-            this.hours = Math.min(Math.max(0, this.hours + delta), 23);
-        } else {
-            this.minutes = Math.min(Math.max(0, this.minutes + delta), 59);
+    formatTime () {
+        const parts = [];
+        for (let dom of this.timeElements) {
+            parts.push(`${dom.value}${dom.id}`);
         }
+        return parts.join(" ");
     }
 }
