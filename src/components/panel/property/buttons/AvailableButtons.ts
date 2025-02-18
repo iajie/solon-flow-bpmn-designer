@@ -8,58 +8,58 @@ import tippy from "tippy.js";
 const availableButtons = [
     {
         type: "approve",
-        label: "同意",
-        tooltip: "审批通过，流程继续",
+        label: "approve",
+        tooltip: "approveTip",
     },
     {
         type: "reject",
-        label: "拒绝",
-        tooltip: "审批拒绝，通过流程变量/流程线继续流转",
+        label: "reject",
+        tooltip: "rejectTip",
     },
     {
         type: "delegate",
-        label: "委派",
-        tooltip: "将任务委派给其他人处理，处理后会自动回到委派人",
+        label: "delegate",
+        tooltip: "delegateTip",
     },
     {
         type: "transfer",
-        label: "转办",
-        tooltip: "将任务转交给其他人处理，处理后流程继续",
+        label: "transfer",
+        tooltip: "transferTip",
     },
     {
         type: "returnToNode",
-        label: "退回到指定节点",
-        tooltip: "将任务退回到已经处理过的任意节点",
+        label: "returnToNode",
+        tooltip: "returnToNodeTip",
     },
     {
         type: "returnToStarter",
-        label: "退回到发起人",
-        tooltip: "将任务退回到流程发起人",
+        label: "returnToStarter",
+        tooltip: "returnToStarterTip",
     },
     {
         type: "terminate",
-        label: "驳回结束",
-        tooltip: "驳回任务，流程直接结束",
+        label: "terminate",
+        tooltip: "terminateTip",
     },
     {
         type: "addSign",
-        label: "加签",
-        tooltip: "添加临时审批人，临时审批人处理后回到当前节点",
+        label: "addSign",
+        tooltip: "addSignTip",
     },
     {
         type: "counterSignApprove",
-        label: "同意(会签)",
-        tooltip: "会签任务同意选项",
+        label: "counterSignApprove",
+        tooltip: "counterSignApproveTip",
     },
     {
         type: "counterSignReject",
-        label: "拒绝(会签)",
-        tooltip: "会签任务拒绝选项",
+        label: "counterSignReject",
+        tooltip: "counterSignRejectTip",
     },
     {
         type: "counterSignAbstain",
-        label: "弃权(会签)",
-        tooltip: "会签任务弃权选项",
+        label: "counterSignReject",
+        tooltip: "counterSignRejectTip",
     },
 ];
 
@@ -68,7 +68,7 @@ const availableButtons = [
  */
 export class AvailableButtons extends PanelInput {
 
-    selectedButtons: string[] = [];
+    selectedButtons: HTMLInputElement[] = [];
 
     constructor() {
         super();
@@ -89,6 +89,7 @@ export class AvailableButtons extends PanelInput {
             checkbox.name = 'availableButtons';
             checkbox.value = availableButton.type;
             checkbox.onchange = (e) => this.onChangeValue(e, this.element, this.modeler);
+            this.selectedButtons.push(checkbox);
             label.appendChild(checkbox);
 
             const span = document.createElement('span');
@@ -97,7 +98,7 @@ export class AvailableButtons extends PanelInput {
 
             tippy(label, {
                 appendTo: container,
-                content: availableButton.tooltip,
+                content: t(availableButton.tooltip),
                 theme: 'easy-bpmn-designer-tip',
                 arrow: true,
             });
@@ -107,12 +108,20 @@ export class AvailableButtons extends PanelInput {
         this.customElement = buttonConfig;
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
-        updateProperty('buttonConfig', (e.target as HTMLInputElement).value || '', element, modeler);
+    onChangeValue(_e: Event, element: BpmnElement, modeler?: Modeler) {
+        const arr = [];
+        for (let dom of this.selectedButtons) {
+            if (dom.checked) {
+                arr.push(dom.value);
+            }
+        }
+        updateProperty('buttonConfig', JSON.stringify(arr), element, modeler);
     }
 
     onChange(element: BpmnElement) {
-        super.onChange(element);
-        this.selectedButtons = JSON.parse(element.businessObject.buttonConfig || '[]');
+        const selectedButtons = JSON.parse(element.businessObject.buttonConfig || '[]') as string[];
+        for (let dom of this.selectedButtons) {
+            dom.checked = selectedButtons.includes(dom.value);
+        }
     }
 }

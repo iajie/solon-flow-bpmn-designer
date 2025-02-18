@@ -5,12 +5,14 @@ import { BpmnElement } from "bpmn-js";
 import { t } from "i18next";
 
 const autoSkipOptions = [
-    { value: "starter", label: "审批人为发起人" },
-    { value: "lastHandler", label: "审批人与上一审批节点处理人相同" },
-    { value: "approved", label: "审批人审批过" },
+    { value: "starter", label: "starter" },
+    { value: "lastHandler", label: "lastHandler" },
+    { value: "approved", label: "approved" },
 ];
 
 export class AutoSkipOptions extends PanelInput {
+
+    selectedButtons: HTMLInputElement[] = [];
 
     constructor() {
         super();
@@ -30,6 +32,7 @@ export class AutoSkipOptions extends PanelInput {
             input.type = 'checkbox';
             input.value = item.value;
             input.onchange = (e) => this.onChangeValue(e, this.element, this.modeler);
+            this.selectedButtons.push(input);
             label.appendChild(input);
 
             const span = document.createElement('span');
@@ -42,14 +45,21 @@ export class AutoSkipOptions extends PanelInput {
         this.customElement = autoSkipConfig;
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
-        console.log(e);
-        updateProperty('autoSkipType', (e.target as HTMLInputElement).value || '', element, modeler);
+    onChangeValue(_e: Event, element: BpmnElement, modeler?: Modeler) {
+        const arr = [];
+        for (let dom of this.selectedButtons) {
+            if (dom.checked) {
+                arr.push(dom.value);
+            }
+        }
+        updateProperty('autoSkipType', arr.join(','), element, modeler);
     }
 
     onChange(element: BpmnElement) {
-        super.onChange(element);
         const autoSkipType = element.businessObject.autoSkipType;
-        this.inputElement && (this.inputElement.value = autoSkipType ? autoSkipType.split(',') : []);
+        const selected = autoSkipType ? autoSkipType.split(',') : [];
+        for (let dom of this.selectedButtons) {
+            dom.checked = selected.includes(dom.value);
+        }
     }
 }
