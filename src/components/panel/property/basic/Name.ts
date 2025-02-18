@@ -13,9 +13,7 @@ export class Name extends PanelInput {
 
     onChange(element: BpmnElement) {
         super.onChange(element);
-        if (element.businessObject.name != null) {
-            this.inputElement && (this.inputElement.value = element.businessObject.name);
-        }
+        this.inputElement && (this.inputElement.value = element.businessObject.name || '');
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {

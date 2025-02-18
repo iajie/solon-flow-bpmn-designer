@@ -1,4 +1,7 @@
+import bpmnIcon from './bpmn-icon-zh.ts';
+
 export const zh = {
+    ...bpmnIcon,
     'import': '导入流程文件',
     'download': '下载流程文件',
     'preview-xml': '预览 XML',

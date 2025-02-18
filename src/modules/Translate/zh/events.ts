@@ -1,8 +1,6 @@
 export default {
   'Start event': '开始事件',
   'End event': '结束事件',
-  IntermediateThrowEvent: '中间抛出事件',
-  IntermediateCatchEvent: '中间捕获事件',
   'Message Start Event': '消息开始事件',
   'Timer Start Event': '定时开始事件',
   'Conditional Start Event': '条件开始事件',
@@ -46,4 +44,9 @@ export default {
   'Signal Boundary Event': '信号边界事件',
   'Signal Boundary Event (non-interrupting)': '信号边界事件（非中断）',
   'Compensation Boundary Event': '补偿边界事件',
+  'Append receive task': '追加接收任务',
+  'Append message intermediate catch event': '追加消息中间捕获事件',
+  'Append timer intermediate catch event': '追加定时中间捕获事件',
+  'Append conditional intermediate catch event': '追加条件中间捕获事件',
+  'Append signal intermediate catch event': '追加信号中间抛出事件',
 }
