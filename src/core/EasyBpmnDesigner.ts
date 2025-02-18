@@ -30,6 +30,9 @@ import BpmnColorPickerModule from "bpmn-js-color-picker";// 颜色选择器
 import 'bpmn-js-color-picker/colors/color-picker.css'
 import { CreateAppendAnythingModule } from 'bpmn-js-create-append-anything';
 import { EasyBpmnDesignerPalette } from '../modules/Palette';
+import { EasyBpmnDesignerContextPad } from '../modules/ContextPad';
+import { EasyBpmnDesignerPopupMenu } from '../modules/PopupMenu';
+import zhTranslate from '../modules/Translate';
 
 // 标签解析 Moddle
 import camundaModdleDescriptor from "../modules/descriptor/camundaDescriptor.json";
@@ -354,13 +357,18 @@ export class EasyBpmnDesigner {
     private additionalModules() {
         const Modules: ModuleDeclaration[] = [
             EasyBpmnDesignerPalette,
+            EasyBpmnDesignerContextPad,
+            EasyBpmnDesignerPopupMenu,
             CreateAppendAnythingModule,
             minimapModule,
             TokenSimulationModule,
             GridLineModule,
             BpmnColorPickerModule
         ];
-
+        // 汉化
+        if (this.options.lang === 'zh') {
+            Modules.push(zhTranslate);
+        }
         // 插入用户自定义扩展模块
         if (Object.prototype.toString.call(this.options.additionalModel) === "[object Array]") {
             Modules.push(...this.options.additionalModel);

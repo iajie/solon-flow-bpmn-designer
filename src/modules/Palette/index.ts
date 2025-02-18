@@ -4,24 +4,20 @@ import PaletteProvider, {
 } from 'bpmn-js/lib/features/palette/PaletteProvider';
 import { createAction } from '../../utils/bpmnUtils.ts';
 
-class EasyFlowablePaletteProvider extends PaletteProvider {
-    palette: Palette;
-    create: Create;
-    elementFactory: ElementFactory;
-    spaceTool: SpaceTool;
-    lassoTool: LassoTool;
-    handTool: HandTool;
-    globalConnect: GlobalConnect;
-    translate: Translate;
+class EasyBpmnPaletteProvider extends PaletteProvider {
+    private create: Create;
+    private elementFactory: ElementFactory;
+    private lassoTool: LassoTool;
+    private handTool: HandTool;
+    private globalConnect: GlobalConnect;
+    private translate: Translate;
     constructor(
         palette: Palette, create: Create, elementFactory: ElementFactory,
         spaceTool: SpaceTool, lassoTool: LassoTool, handTool: HandTool,
         globalConnect: GlobalConnect, translate: Translate) {
         super(palette, create, elementFactory, spaceTool, lassoTool, handTool, globalConnect, translate);
-        this.palette = palette;
         this.create = create;
         this.elementFactory = elementFactory;
-        this.spaceTool = spaceTool;
         this.lassoTool = lassoTool;
         this.handTool = handTool;
         this.globalConnect = globalConnect;
@@ -56,7 +52,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
             'hand-tool': {
                 group: 'tools',
                 className: 'bpmn-icon-hand-tool',
-                title: '手型工具',
+                title: this.translate('Activate hand tool'),
                 action: {
                     click: (event: any)=> {
                         this.handTool.activateHand(event)
@@ -66,7 +62,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
             'lasso-tool': {
                 group: 'tools',
                 className: 'bpmn-icon-lasso-tool',
-                title: '套索工具',
+                title: this.translate('Activate lasso tool'),
                 action: {
                     click: (event: MouseEvent)=> {
                         this.lassoTool.activateSelection(event)
@@ -76,7 +72,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
             'global-connect-tool': {
                 group: 'tools',
                 className: 'bpmn-icon-connection-multi',
-                title: '全局连线',
+                title: this.translate('Activate global connect tool'),
                 action: {
                     click: ()=> {
                         this.globalConnect.toggle()
@@ -93,7 +89,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
                 'bpmn:StartEvent',
                 'events',
                 'bpmn-icon-start-event-none',
-                '开始事件',
+                this.translate('Create start event'),
             ),
             'create.end-event': createAction(
                 this.elementFactory,
@@ -101,7 +97,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
                 'bpmn:EndEvent',
                 'events',
                 'bpmn-icon-end-event-none',
-                '结束事件',
+                this.translate('Create end event'),
             ),
             'events-separator': {
                 group: 'events',
@@ -113,7 +109,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
                 'bpmn:ExclusiveGateway',
                 'gateway',
                 'bpmn-icon-gateway-xor',
-                '网关',
+                this.translate('Create gateway'),
             ),
             'create.parallel-gateway': createAction(
                 this.elementFactory,
@@ -121,7 +117,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
                 'bpmn:ParallelGateway',
                 'gateway',
                 'bpmn-icon-gateway-parallel',
-                '并行网关',
+                this.translate('Parallel gateway'),
             ),
             // 'create.event-base-gateway': createAction(
             //   elementFactory,
@@ -141,7 +137,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
                 'bpmn:UserTask',
                 'activity',
                 'bpmn-icon-user-task',
-                '用户任务',
+                this.translate('Create user task'),
             ),
             // 'create.script-task': createAction(
             //   elementFactory,
@@ -162,7 +158,7 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
             'create.subprocess-expanded': {
                 group: 'activity',
                 className: 'bpmn-icon-subprocess-expanded',
-                title: '子流程',
+                title: this.translate('Create expanded sub-process'),
                 action: {
                     dragstart: createSubprocess,
                     click: createSubprocess,
@@ -176,5 +172,5 @@ class EasyFlowablePaletteProvider extends PaletteProvider {
 }
 
 export const EasyBpmnDesignerPalette = {
-    paletteProvider: ['type', EasyFlowablePaletteProvider],
+    paletteProvider: ['type', EasyBpmnPaletteProvider],
 };
