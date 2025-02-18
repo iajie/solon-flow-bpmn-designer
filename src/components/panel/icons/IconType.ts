@@ -6,6 +6,9 @@ import { Element } from 'bpmn-js/lib/model/Types';
 type BpmnElement = Element & { type: string };
 
 export const getBpmnIcon = (element: BpmnElement) => {
+    if (!element?.type) {
+        return '';
+    }
     const { type: elementType } = element;
 
     let type = getRawType(elementType);

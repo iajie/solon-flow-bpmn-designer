@@ -94,4 +94,7 @@ export default {
 
   'Parallel multi-instance': '并行多实例',
   'Sequential multi-instance': '串行多实例',
+
+  'Empty pool/participant (removes content)': '清空泳道（删除内容）',
+  'Participant multiplicity': '参与者多重性',
 }
