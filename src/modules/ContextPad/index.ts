@@ -80,18 +80,9 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
     }
 
     const actions: Record<string, any> = {};
-
-    // 为用户任务添加默认属性
-    const defaultUserTaskProperties = {
-      'formEditable': true,
-      'emptyHandlerType': 'autoApprove',
-      'returnType': 'restart',
-      'assigneeType': 'user',
-      'buttonConfig': JSON.stringify(['approve', 'reject'])
-    };
     const appendUserTask = (event: Event, element: Shape) => {
       const shape = this.elementFactory.createShape(
-        Object.assign({ type: "bpmn:UserTask" }, defaultUserTaskProperties)
+        Object.assign({ type: "bpmn:UserTask" })
       );
       this.create.start(event, shape, {
         source: element,
@@ -101,7 +92,7 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
     const append = this.autoPlace
       ? (_: any, element: Shape) => {
           const shape = this.elementFactory.createShape(
-            Object.assign({ type: "bpmn:UserTask" }, defaultUserTaskProperties)
+            Object.assign({ type: "bpmn:UserTask" })
           );
           this.autoPlace.append(element, shape);
         }
