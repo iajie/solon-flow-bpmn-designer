@@ -2,6 +2,7 @@ export default {
   'Append end event': '追加结束事件',
   'Append gateway': '追加网关',
   'Append task': '追加任务',
+  'Append user task': '追加用户任务',
   'Append intermediate/boundary event': '追加中间抛出事件/边界事件',
   'Activate global connect tool': '激活全局连接工具',
   'Append {type}': '添加 {type}',

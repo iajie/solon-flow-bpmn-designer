@@ -16,10 +16,10 @@ type Shape = import('bpmn-js/lib/model/Types').Shape
 
 class EasyBpmnContextPadProvider extends ContextPadProvider {
     private elementFactory: ElementFactory;
-    private autoPlace: any;
+    private readonly autoPlace: any;
     private create: Create;
     private appendPreview: AppendPreview;
-    private translate: Translate;
+    private readonly translate: Translate;
     constructor(config: ContextPadConfig, injector: Injector, eventBus: EventBus,
                 contextPad: ContextPad, modeling: Modeling, elementFactory: ElementFactory,
                 connect: Connect, create: Create, popupMenu: PopupMenu, canvas: Canvas,
@@ -36,7 +36,8 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
 
     getContextPadEntries(element: Element) {
         if (!element) return {};
-        const ignoreNode = ['SequenceFlow', 'Association', 'TextAnnotation'];
+        const ignoreNode = ['SequenceFlow', 'Association', 'TextAnnotation',
+            'DataStoreReference', 'DataObjectReference', 'EndEvent'];
         if (ignoreNode.some(i => element.type.endsWith(i))) {
             return {}
         }
@@ -64,10 +65,10 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
             }
         } : null;
         // 添加创建用户任务按钮
-        actions['append.append-user-task'] = {
+        actions['append.append-task'] = {
             group: 'model',
             className: 'bpmn-icon-user-task',
-            title: this.translate('User task'),
+            title: this.translate('Append user task'),
             action: {
                 dragstart: appendUserTask,
                 click: append,

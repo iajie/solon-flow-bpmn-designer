@@ -192,20 +192,24 @@
         .preview-content {
             z-index: 100;
             flex: 1;
-            overflow: auto;
             padding: 16px;
-            margin: 0;
             font-family: monospace;
             font-size: 14px;
             line-height: 1.5;
             background: var(--easy-bpmn-designer-content-pre-bg-color);
             max-height: 650px;
+            overflow-y: auto;
 
             &::-webkit-scrollbar { width: 8px; height: 8px; }
             &::-webkit-scrollbar-track-piece { background-color: var(--easy-bpmn-designer-content-scrollbar-track-piece) ; }  /* 轨道颜色 */
             &::-webkit-scrollbar-thumb {   border-radius: 10px;  background-color: var(--easy-bpmn-designer-content-scrollbar-thumb);  }
             &::-webkit-scrollbar-thumb:hover { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-hover);  }
             &::-webkit-scrollbar-thumb:active { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-active);  }
+
+            /* 代码自动换行 */
+            & pre {
+                white-space: pre-wrap;
+            }
         }
     }
 }
