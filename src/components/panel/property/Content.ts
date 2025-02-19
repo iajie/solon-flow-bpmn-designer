@@ -20,11 +20,15 @@ import { Timeout } from "./timeout/Timeout.ts";
 import { TimeoutStrategy } from "./timeout/TimeoutStrategy.ts";
 import { AssigneeEmpty } from "./advanced/AssigneeEmpty.ts";
 import { ReturnSetting } from "./advanced/ReturnSetting.ts";
-import { Assignee } from "./assignee/Assignee.ts";
-import { CandidateUsers } from "./assignee/CandidateUsers.ts";
-import { CandidateGroups } from "./assignee/CandidateGroups.ts";
+// 删除旧的导入
+// import { Assignee } from "./assignee/Assignee.ts";
+// import { CandidateUsers } from "./assignee/CandidateUsers.ts";
+// import { CandidateGroups } from "./assignee/CandidateGroups.ts";
 import { AvailableButtons } from "./buttons/AvailableButtons.ts";
 import { AutoSkipOptions } from "./buttons/AutoSkipOptions.ts";
+// 修正新的导入
+import { AssigneeType } from "./assignee/AssigneeType.ts";
+import { AssigneeSelector } from "./assignee/AssigneeSelector.ts";
 
 defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);
@@ -40,12 +44,15 @@ defineCustomElement('easy-panel-timeout', Timeout);
 defineCustomElement('easy-panel-timeout-strategy', TimeoutStrategy);
 defineCustomElement('easy-panel-assignee-empty', AssigneeEmpty);
 defineCustomElement('easy-panel-return-setting', ReturnSetting);
-defineCustomElement('easy-panel-assignee', Assignee);
-defineCustomElement('easy-panel-candidate-users', CandidateUsers);
-defineCustomElement('easy-panel-candidate-groups', CandidateGroups);
+// 删除旧的组件注册
+// defineCustomElement('easy-panel-assignee', Assignee);
+// defineCustomElement('easy-panel-candidate-users', CandidateUsers);
+// defineCustomElement('easy-panel-candidate-groups', CandidateGroups);
+// 添加新的组件注册
+defineCustomElement('easy-panel-assignee-type', AssigneeType);
+defineCustomElement('easy-panel-assignee-selector', AssigneeSelector);
 defineCustomElement('easy-panel-available-buttons', AvailableButtons);
 defineCustomElement('easy-panel-auto-skip-options', AutoSkipOptions);
-
 
 export class PanelContent extends AbstractPanel {
 
@@ -116,8 +123,8 @@ export class PanelContent extends AbstractPanel {
                     if (item.type) {
                         const panelInput = document.createElement('panel-input') as PanelInput;
                         panelInput.type = item.type;
-                        if (this.modeler && this.options) {
-                            panelInput.onCreate(this.modeler, this.options);
+                        if (this.modeler && this.assigneeOptions) {
+                            panelInput.onCreate(this.modeler, this.assigneeOptions);
                         }
                         groupItem.append(panelInput);
                     }

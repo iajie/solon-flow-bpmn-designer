@@ -31,7 +31,11 @@ const bpmnStr = (key: string, name: string, type: EasyBpmnDesignerOptions['prefi
     <bpmn2:startEvent id="Event_0fx15r3" name="开始">
       <bpmn2:outgoing>Flow_01qhgrr</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="ApplyUserTask" name="申请人" flowable:buttonConfig="[&#34;approve&#34;,&#34;revoke&#34;]" flowable:emptyHandlerType="autoApprove" flowable:returnType="restart">
+    <bpmn2:userTask id="ApplyUserTask" name="申请人" 
+      flowable:assigneeType="user" 
+      flowable:buttonConfig="[&#34;approve&#34;,&#34;revoke&#34;]" 
+      flowable:emptyHandlerType="autoApprove" 
+      flowable:returnType="restart">
       <bpmn2:incoming>Flow_01qhgrr</bpmn2:incoming>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="Flow_01qhgrr" sourceRef="Event_0fx15r3" targetRef="ApplyUserTask" />
@@ -67,7 +71,20 @@ export const createAction = (
     options?: Object
 ) => {
     const createListener = (event: any) => {
-        const shape = elementFactory.createShape(Object.assign({ type: type }, options))
+        // 为用户任务添加默认属性
+        const defaultUserTaskProperties = type === 'bpmn:UserTask' ? {
+            formEditable: true,              // 允许编辑
+            emptyHandlerType: 'autoApprove', // 处理人为空时自动通过
+            returnType: 'restart',           // 退回时重新审批
+            assigneeType: 'user',            // 处理人类型默认为用户
+            buttonConfig: JSON.stringify(['approve', 'reject']), // 默认按钮
+        } : {};
+
+        const shape = elementFactory.createShape(Object.assign(
+            { type: type },
+            defaultUserTaskProperties,
+            options
+        ));
 
         if (options) {
             !shape.businessObject.di && (shape.businessObject.di = {})

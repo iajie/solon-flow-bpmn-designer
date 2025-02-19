@@ -22,16 +22,20 @@ export class Tabs extends AbstractPanel {
         if (this.innerHTML) {
             this.innerHTML = ``;
         }
+        // 重置 activeKey 为 basic
+        this.activeKey = 'basic';
+        
         const panelTab = (this.getTabKey(defaultPanelKeys, element) || [])
             .concat(this.getTabKey(this.options?.panelTabs, element) || []);
+        
         for (let defaultPanelTab of panelTab) {
             const dom = document.createElement('div');
-            if (defaultPanelTab === 'basic') {
-                dom.classList.add('active');
-            } else {
-                dom.style.display = element.type === 'bpmn:UserTask' ? 'block' : 'none';
-            }
+            // 根据重置后的 activeKey 设置激活状态
             dom.classList.add('tab-item');
+            if (defaultPanelTab === this.activeKey) {
+                dom.classList.add('active');
+            }
+            dom.style.display = element.type === 'bpmn:UserTask' ? 'block' : 'none';
             dom.innerText = t(defaultPanelTab);
             dom.addEventListener('click', () => {
                 for (let child of this.children) {
@@ -42,6 +46,12 @@ export class Tabs extends AbstractPanel {
             });
             this.appendChild(dom);
         }
+
+        // 触发 activeKey 更改事件
+        const event = new CustomEvent('tabChange', {
+            detail: { activeKey: this.activeKey }
+        });
+        this.dispatchEvent(event);
     }
 
 }

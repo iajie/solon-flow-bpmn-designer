@@ -42,7 +42,10 @@ export const initPanelKeys = (modeler: BpmnModeler,
         panelDom.push(property);
         tabs.addEventListener('click', () => {
             property.onActiveKeyChange(tabs.activeKey);
-        });
+        }) ;
+        tabs.addEventListener('tabChange', ((e: CustomEvent) => {
+            property.onActiveKeyChange(e.detail.activeKey);
+        })as EventListener);
     } catch (e) {
         console.log('属性面板创建失败', e);
     }

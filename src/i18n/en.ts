@@ -61,8 +61,8 @@ export const en = {
     'clear': 'Clear',
     'confirm': 'Confirm',
 
-    'candidateUsers': 'candidateUsers',
-    'candidateGroups': 'candidateGroups',
+    'assigneeValue': 'assigneeValue',
+    'assigneeType': 'assigneeType',
 
     'availableButtons': 'Available buttons',
     'autoSkipOptions': 'Auto skip',

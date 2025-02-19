@@ -63,9 +63,9 @@ export const zh = {
     'minutes': '分钟',
     'clear': '清空',
     'confirm': '确定',
-
-    'candidateUsers': '候选用户',
-    'candidateGroups': '候选组',
+    
+    'assigneeValue': '处理人',
+    'assigneeType': '处理人类型',
 
     'availableButtons': '可用按钮',
     'autoSkipOptions': '自动同意',

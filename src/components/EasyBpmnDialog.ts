@@ -1,4 +1,4 @@
-import '../stytles/index.css';
+import '../styles/index.css';
 
 interface EasyBpmnDialogProps {
     content: string;

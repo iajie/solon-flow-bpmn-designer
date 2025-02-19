@@ -1,8 +1,5 @@
 import { AdvancedGroup } from "./AdvancedGroup.ts";
 import { t } from "i18next";
-import { BpmnElement } from "bpmn-js";
-import { updateProperty } from "../../../../utils/bpmnUtils.ts";
-import Modeler from "bpmn-js/lib/Modeler";
 
 export class ReturnSetting extends AdvancedGroup {
 

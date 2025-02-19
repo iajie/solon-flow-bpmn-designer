@@ -53,7 +53,7 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
         {
             title: 'assigneeProps',
             items: [],
-            easy: ['assignee', 'candidate-users', 'candidate-groups'],
+            easy: ['assignee-type', 'assignee-selector'],
             show: 'UserTask',
         }
     ]

@@ -13,11 +13,11 @@ import { en } from '../i18n/en.ts';
 import { zh } from '../i18n/zh.ts';
 import i18next, {Resource} from "i18next";
 
-import '../stytles/variable.css';
-import '../stytles/designer.css';
-import '../stytles/toolbar.css';
-import '../stytles/panel.css';
-import '../stytles/index.css';
+import '../styles/variable.css';
+import '../styles/designer.css';
+import '../styles/toolbar.css';
+import '../styles/panel.css';
+import '../styles/index.css';
 
 
 import GridLineModule from 'diagram-js-grid-bg';
