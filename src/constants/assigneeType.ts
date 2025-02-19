@@ -15,7 +15,7 @@ export const ASSIGNEE_TYPE_LABELS = {
 } as const;
 
 // 添加默认选项
-export const DEFAULT_OPTIONS = {
+export const DEFAULT_OPTIONS: { [key: string]: AssigneeOption[] } = {
     [ASSIGNEE_TYPES.USER]: [
         { label: '张三', value: 'zhangsan' },
         { label: '李四', value: 'lisi' },
