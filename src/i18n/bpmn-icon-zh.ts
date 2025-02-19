@@ -48,7 +48,7 @@ export default {
     'ScriptTask': '脚本任务',
     'CallActivity': '调用活动',
     'SubProcess': '子流程',
-    'Transaction': '事务',
+    'Transaction': '事务子流程',
     'SequenceFlow': '普通流转路径',
     'TextAnnotation': '文本注释',
     'Association': '关联',

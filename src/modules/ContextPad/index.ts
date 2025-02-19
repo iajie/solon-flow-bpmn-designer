@@ -36,7 +36,8 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
 
     getContextPadEntries(element: Element) {
         if (!element) return {};
-        const ignoreNode = ['SequenceFlow', 'Association', 'TextAnnotation'];
+        const ignoreNode = ['SequenceFlow', 'Association', 'TextAnnotation',
+            'DataStoreReference', 'DataObjectReference', 'EndEvent'];
         if (ignoreNode.some(i => element.type.endsWith(i))) {
             return {}
         }

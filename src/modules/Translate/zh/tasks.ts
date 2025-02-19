@@ -17,5 +17,5 @@ export default {
   'End Event': '结束事件',
   'Sub-processes': '子流程',
   'Event Sub-process': '事件子流程',
-  'Transaction': '事务',
+  'Transaction': '事务子流程',
 }
