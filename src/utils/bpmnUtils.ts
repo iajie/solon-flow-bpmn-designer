@@ -31,7 +31,7 @@ const bpmnStr = (key: string, name: string, type: EasyBpmnDesignerOptions['prefi
     <bpmn2:startEvent id="Event_0fx15r3" name="开始">
       <bpmn2:outgoing>Flow_01qhgrr</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="ApplyUserTask" name="申请人" flowable:buttonConfig="[&#34;approve&#34;,&#34;revoke&#34;]">
+    <bpmn2:userTask id="ApplyUserTask" name="申请人" flowable:buttonConfig="[&#34;approve&#34;,&#34;revoke&#34;]" flowable:emptyHandlerType="autoApprove" flowable:returnType="restart">
       <bpmn2:incoming>Flow_01qhgrr</bpmn2:incoming>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="Flow_01qhgrr" sourceRef="Event_0fx15r3" targetRef="ApplyUserTask" />

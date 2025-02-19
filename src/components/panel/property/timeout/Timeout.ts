@@ -157,9 +157,16 @@ export class Timeout extends PanelInput {
     }
 
     parseTimeString(timeStr: string) {
-        const d = timeStr.match(/(\d+)d/)?.[1] || "0";
-        const h = timeStr.match(/(\d+)h/)?.[1] || "0";
-        const m = timeStr.match(/(\d+)m/)?.[1] || "0";
+        if (!timeStr || !timeStr.startsWith('P')) {
+            // 设置默认值
+            this.timeElements.forEach(dom => dom.value = "0");
+            return;
+        }
+
+        const d = timeStr.match(/(\d+)D/)?.[1] || "0";
+        const h = timeStr.match(/(\d+)H/)?.[1] || "0";
+        const m = timeStr.match(/(\d+)M(?!.*D)/)?.[1] || "0"; // 使用负向前瞻确保匹配的是分钟而不是月份
+        
         for (let dom of this.timeElements) {
             if (dom.id.endsWith('d')) {
                 dom.value = d;
@@ -171,11 +178,40 @@ export class Timeout extends PanelInput {
         }
     }
 
-    formatTime () {
-        const parts = [];
+    formatTime() {
+        let days = 0, hours = 0, minutes = 0;
+        
         for (let dom of this.timeElements) {
-            parts.push(`${dom.value}${dom.id}`);
+            const value = parseInt(dom.value) || 0;
+            if (dom.id.endsWith('d')) {
+                days = value;
+            } else if (dom.id.endsWith('h')) {
+                hours = value;
+            } else {
+                minutes = value;
+            }
         }
-        return parts.join(" ");
+
+        // 如果所有值都是0，返回空字符串
+        if (days === 0 && hours === 0 && minutes === 0) {
+            return '';
+        }
+
+        let result = 'P';
+        if (days > 0) {
+            result += `${days}D`;
+        }
+        
+        if (hours > 0 || minutes > 0) {
+            result += 'T';
+            if (hours > 0) {
+                result += `${hours}H`;
+            }
+            if (minutes > 0) {
+                result += `${minutes}M`;
+            }
+        }
+
+        return result;
     }
 }

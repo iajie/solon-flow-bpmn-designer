@@ -382,6 +382,36 @@
                     "name": "multiinstance_condition",
                     "isAttr": true,
                     "type": "String"
+                },
+                {
+                    "name": "buttonConfig",
+                    "isAttr": true,
+                    "type": "String"
+                },
+                {
+                    "name": "autoSkipType",
+                    "isAttr": true,
+                    "type": "String"
+                },
+                {
+                  "name": "emptyHandlerType",
+                  "isAttr": true,
+                  "type": "String"
+                },
+                {
+                  "name": "returnType",
+                  "isAttr": true,
+                  "type": "String"
+                },
+                {
+                  "name": "formEditable",
+                  "isAttr": true,
+                  "type": "Boolean"
+                },
+                {
+                  "name": "timeoutStrategy",
+                  "isAttr": true,
+                  "type": "String"
                 }
             ]
         },

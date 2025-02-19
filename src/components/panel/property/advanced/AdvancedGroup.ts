@@ -42,6 +42,19 @@ export class AdvancedGroup extends PanelInput {
 
     onChange(element: BpmnElement) {
         super.onChange(element);
-        this.value && (this.value = element.businessObject[this.key] || this.defaultValue);
+        if (!element?.businessObject) {
+            return;
+        }
+        // 获取实际值或默认值
+        const value = element.businessObject[this.key] || this.defaultValue;
+        
+        // 找到对应的单选按钮并设置选中状态
+        const radioGroup = this.customElement as HTMLDivElement;
+        if (radioGroup) {
+            const radios = radioGroup.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.checked = radio.value === value;
+            });
+        }
     }
 }
