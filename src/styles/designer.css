@@ -9,34 +9,67 @@
         border-radius: 4px;
         top: 50px !important;
         left: 1px !important;
-    }
 
-    .djs-palette .entry, .djs-palette .djs-palette-toggle {
-        color: var(--easy-bpmn-designer-text-color);
-    }
-    .djs-palette .entry:hover, .djs-palette .djs-palette-toggle:hover{
-        color: var(--palette-entry-hover-color);
-    }
+        .entry, .djs-palette .djs-palette-toggle {
+            color: var(--easy-bpmn-designer-text-color);
+        }
 
-    /*.entry .bpmn-icon-hand-tool:hover{*/
-    /*    background-color: var(--easy-bpmn-designer-button-bg-color);*/
-    /*}*/
+        .entry:hover, .djs-palette .djs-palette-toggle:hover{
+            color: var(--palette-entry-hover-color);
+        }
 
-    .djs-palette:hover {
-        background: var(--easy-bpmn-designer-bg-color) !important;
+        &:hover {
+            background: var(--easy-bpmn-designer-bg-color) !important;
+        }
     }
 
     .djs-container {
         background-color: transparent !important;
+
+        .djs-popup {
+            color: var(--easy-bpmn-designer-text-color);
+            background-color: var(--easy-bpmn-designer-bg-color);
+
+            .entry.selected {
+                background-color: var(--easy-bpmn-designer-context-pad-selected-color);
+            }
+
+            button.entry {
+                color: var(--easy-bpmn-designer-text-color);
+            }
+        }
+
+        .djs-popup-body {
+            .entry-header {
+                color: var(--easy-bpmn-designer-text-color);
+            }
+
+            .entry {
+                color: var(--easy-bpmn-designer-text-color);
+            }
+        }
+
+        .djs-popup-search input {
+            border-color: var(--easy-bpmn-designer-input-border-color);
+            background-color: var(--easy-bpmn-designer-input-bg-color);
+            transition: all .1s cubic-bezier(0,0,1,1);
+
+            &:hover {
+                background-color: var(--easy-bpmn-designer-bg-color);
+            }
+        }
+
     }
 
     .djs-context-pad .entry {
         background-color: transparent;
         box-shadow: 0 0 0 0;
+
+        &:hover {
+            background-color: var(--easy-bpmn-designer-border-color);
+        }
     }
-    .djs-context-pad .entry:hover {
-        background-color: var(--easy-bpmn-designer-border-color);
-    }
+
     .djs-minimap {
         div.toggle {
             display: none;
@@ -55,21 +88,22 @@
     .bts-simulation-header {
         background: linear-gradient(to right, #f8f9fa, #fff) !important;
         padding: 8px 16px !important;
-    }
 
-    .bts-simulation-header button {
-        background: transparent !important;
-        border: 1px solid !important;
-        border-radius: 4px !important;
-        padding: 4px 8px !important;
-        transition: all 0.3s !important;
-    }
+        button {
+            background: transparent !important;
+            border: 1px solid !important;
+            border-radius: 4px !important;
+            padding: 4px 8px !important;
+            transition: all 0.3s !important;
 
-    .bts-simulation-header button:hover {
-    }
+            .active {
+                color: white !important;
+            }
+        }
 
-    .bts-simulation-header button.active {
-        color: white !important;
+        button:hover {
+        }
+
     }
 
     .token-simulation-palette {

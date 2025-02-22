@@ -18,4 +18,6 @@ export default {
   'Sub-processes': '子流程',
   'Event Sub-process': '事件子流程',
   'Transaction': '事务子流程',
+  'Ad-hoc sub-process (collapsed)': '临时子流程（折叠的）',
+  'Ad-hoc sub-process (expanded)': '临时子流程（展开的）',
 }

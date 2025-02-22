@@ -69,6 +69,8 @@
   --easy-bpmn-designer-dialog-title-color: black;
   --easy-bpmn-designer-dialog-content-bg-color: #f5f5f5;
 
+  --easy-bpmn-designer-context-pad-selected-color: #eae7e7;
+
 }
 
 :root .easy-bpmn-designer-theme-dark {
@@ -140,4 +142,6 @@
   --easy-bpmn-designer-dialog-bg-color: #535151;
   --easy-bpmn-designer-dialog-title-color: white;
   --easy-bpmn-designer-dialog-content-bg-color: #4a4545;
+
+  --easy-bpmn-designer-context-pad-selected-color: #1a1b1e;
 }
