@@ -6,14 +6,6 @@ export const ASSIGNEE_TYPES = {
     POST: 'post'
 } as const;
 
-export const ASSIGNEE_TYPE_LABELS = {
-    [ASSIGNEE_TYPES.USER]: '用户',
-    [ASSIGNEE_TYPES.USERS]: '用户组',
-    [ASSIGNEE_TYPES.ROLE]: '角色',
-    [ASSIGNEE_TYPES.DEPT]: '部门',
-    [ASSIGNEE_TYPES.POST]: '岗位'
-} as const;
-
 // 添加默认选项
 export const DEFAULT_OPTIONS: { [key: string]: AssigneeOption[] } = {
     [ASSIGNEE_TYPES.USER]: [

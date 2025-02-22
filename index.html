@@ -13,12 +13,21 @@
             easyBpmnDesigner.changeTheme();
             isDark = !isDark;
         }
+        function changeLanguage() {
+            const options = easyBpmnDesigner.getOptions();
+            if (options.lang == 'en') {
+                easyBpmnDesigner.changeLocal("zh");
+            } else {
+                easyBpmnDesigner.changeLocal("en");
+            }
+        }
     </script>
 </head>
 <body>
 <div style="padding: 10px 20px;font-size: 30px" id="title">
     <a href="https://easy-flowable.online" target="_blank">访问官网</a>
     <button onclick="changeTheme()">切换主题</button>
+    <button onclick="changeLanguage()">切换语言</button>
 </div>
 <div id="easy-bpmn-designer"></div>
 <script type="module" src="/src/main.ts"></script>

@@ -16,6 +16,8 @@ export const en = {
     'id': 'ID',
     'name': 'NAME',
 
+    'assigneeLabel': 'applicant',
+    'startLabel': 'start',
     'assignee': 'Assignee',
     'buttons': 'Buttons',
     'assigneeProps': 'Assignee props',
@@ -95,4 +97,10 @@ export const en = {
     'starter': 'The approver is the initiator',
     'lastHandler': 'The approver is the same as the previous approval node handler',
     'approved': 'Approved by the approver',
+
+    'user': 'User',
+    'users': 'Users',
+    'role': 'Role',
+    'dept': 'Dept',
+    'post': 'Post',
 }

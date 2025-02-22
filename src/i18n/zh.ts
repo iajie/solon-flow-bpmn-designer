@@ -19,6 +19,8 @@ export const zh = {
     'id': '节点标识',
     'name': '节点名称',
 
+    'assigneeLabel': '申请人',
+    'startLabel': '开始',
     'assignee': '任务处理人',
     'buttons': '按钮设置',
     'assigneeProps': '审批人属性',
@@ -98,4 +100,10 @@ export const zh = {
     'starter': '审批人为发起人',
     'lastHandler': '审批人与上一审批节点处理人相同',
     'approved': '审批人审批过',
+
+    'user': '用户',
+    'users': '用户组',
+    'role': '角色',
+    'dept': '部门',
+    'post': '岗位',
 } as any;

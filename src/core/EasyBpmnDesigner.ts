@@ -215,7 +215,7 @@ export class EasyBpmnDesigner {
     // 导入xml
     const xml = initModelerStr(
       "easy_bpmn_process_1",
-      "业务流程",
+      "Process",
       this.options.prefix
     );
     this.bpmnModeler

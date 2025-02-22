@@ -7,6 +7,7 @@ import {
 } from "../../../../constants/assigneeType.ts";
 import { updateProperty } from "../../../../utils/bpmnUtils.ts";
 import Modeler from "bpmn-js/lib/Modeler";
+import { t } from "i18next";
 
 export class AssigneeSelector extends PanelInput {
   select!: HTMLSelectElement;
@@ -43,7 +44,7 @@ export class AssigneeSelector extends PanelInput {
     // 添加空选项
     const emptyOption = document.createElement("option");
     emptyOption.value = "";
-    emptyOption.text = "请选择";
+    emptyOption.text = t('pleaseSelect');
     this.select.appendChild(emptyOption);
 
     // 获取选项列表（优先使用外部传入的选项）

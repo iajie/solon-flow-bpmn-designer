@@ -1,7 +1,7 @@
 import { PanelInput } from "../PanelInput.ts";
 import { BpmnElement } from "bpmn-js";
 import Modeler from "bpmn-js/lib/Modeler";
-import { ASSIGNEE_TYPES, ASSIGNEE_TYPE_LABELS } from "../../../../constants/assigneeType.ts";
+import { ASSIGNEE_TYPES } from "../../../../constants/assigneeType.ts";
 import { t } from "i18next";
 import { updateProperty } from "../../../../utils/bpmnUtils.ts";
 
@@ -19,7 +19,7 @@ export class AssigneeType extends PanelInput {
         radioGroup.classList.add('radio-group');
         
         // 添加单选按钮
-        Object.entries(ASSIGNEE_TYPE_LABELS).forEach(([value, label]) => {
+        Object.entries(ASSIGNEE_TYPES).forEach(([value, label]) => {
             const label_el = document.createElement('label');
             label_el.classList.add('radio-item');
             

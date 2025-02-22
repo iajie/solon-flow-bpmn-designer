@@ -6,6 +6,7 @@ import {
 } from "bpmn-js/lib/features/palette/PaletteProvider";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import { BpmnElement, BpmnFactory, Modeling } from "bpmn-js";
+import { t } from "i18next";
 
 export const initModelerStr = (
   key?: string,
@@ -38,11 +39,11 @@ const bpmnStr = (
   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
   id="diagram_${key}"
   targetNamespace="${TYPE_TARGET[type]}">
-  <bpmn2:process id="${key}" name="${name}" isExecutable="true">
-    <bpmn2:startEvent id="Event_0fx15r3" name="开始">
+  <bpmn2:process id="${key}" name="${t(name)}" isExecutable="true">
+    <bpmn2:startEvent id="Event_0fx15r3" name="${t('startLabel')}">
       <bpmn2:outgoing>Flow_01qhgrr</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="ApplyUserTask" name="申请人" 
+    <bpmn2:userTask id="ApplyUserTask" name="${t('assigneeLabel')}" 
       flowable:assigneeType="user" 
       flowable:buttonConfig="[&#34;approve&#34;,&#34;revoke&#34;]" 
       flowable:emptyHandlerType="autoApprove" 
