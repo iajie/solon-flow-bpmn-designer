@@ -152,11 +152,6 @@
             "extends": ["bpmn:ScriptTask"],
             "properties": [
                 {
-                    "name": "scriptFormat",
-                    "isAttr": true,
-                    "type": "String"
-                },
-                {
                     "name": "resultVariable",
                     "isAttr": true,
                     "type": "String"
