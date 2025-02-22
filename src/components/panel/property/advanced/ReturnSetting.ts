@@ -1,5 +1,4 @@
 import { AdvancedGroup } from "./AdvancedGroup.ts";
-import { t } from "i18next";
 
 export class ReturnSetting extends AdvancedGroup {
 
@@ -9,8 +8,8 @@ export class ReturnSetting extends AdvancedGroup {
         this.key = 'returnType';
         this.defaultValue = 'restart';  // 确保默认值为restart（重新审批）
         this.option = [
-            { label: t('reApprove'), value: 'restart' },
-            { label: t('currentNode'), value: 'continue' },
+            { label: 'reApprove', value: 'restart' },
+            { label: 'currentNode', value: 'continue', tip: '若流程为A->B->C,C退回至A，则C->A->C' },
         ];
 
         this.init();

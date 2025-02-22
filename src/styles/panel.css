@@ -287,24 +287,14 @@
                 justify-content: center;
                 width: 16px;
                 height: 16px;
-                cursor: pointer;
-                margin-left: 4px;
+                border-radius: 50%;
+                background: #909399;
+                color: white;
+                font-size: 12px;
+                font-style: normal;
 
-                .icon-question {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 16px;
-                    height: 16px;
-                    border-radius: 50%;
-                    background: #909399;
-                    color: white;
-                    font-size: 12px;
-                    font-style: normal;
-
-                    &:hover {
-                        background: #606266;
-                    }
+                &:hover {
+                    background: #606266;
                 }
             }
         }

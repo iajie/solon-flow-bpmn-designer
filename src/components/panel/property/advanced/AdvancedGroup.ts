@@ -2,10 +2,12 @@ import { PanelInput } from "../PanelInput.ts";
 import { BpmnElement } from "bpmn-js";
 import Modeler from "bpmn-js/lib/Modeler";
 import { updateProperty } from "../../../../utils/bpmnUtils.ts";
+import { t } from "i18next";
+import tippy from "tippy.js";
 
 export class AdvancedGroup extends PanelInput {
 
-    option: { label: string; value: string }[] = [];
+    option: { label: string; value: string; tip?: string }[] = [];
     key!: 'returnType' | 'emptyHandlerType';
     value!: string;
     defaultValue!: string;
@@ -28,8 +30,21 @@ export class AdvancedGroup extends PanelInput {
                 radio.onchange = (e) => this.onChangeValue(e, this.element, this.modeler)
                 label.appendChild(radio);
                 const span = document.createElement('span');
-                span.innerText = item.label;
+                span.innerText = t(item.label);
                 label.appendChild(span);
+                if (item.tip) {
+                    const tip = document.createElement('span');
+                    tip.classList.add('help-icon');
+                    tip.innerText = '?';
+                    tippy(tip, {
+                        appendTo: document.querySelector('.easy-bpmn-designer-container')!,
+                        content: t(item.tip),
+                        theme: 'easy-bpmn-designer-tip',
+                        arrow: true,
+                    });
+                    label.appendChild(tip);
+                }
+
                 radioGroup.appendChild(label);
             }
         }
