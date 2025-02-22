@@ -77,7 +77,12 @@
         right: unset;
         top: unset;
         left: 80px;
-        bottom: 30px;
+        bottom: 10px;
+
+        .map {
+            width: 250px;
+            height: 150px;
+        }
     }
 
     /* 添加模拟器相关样式 */
