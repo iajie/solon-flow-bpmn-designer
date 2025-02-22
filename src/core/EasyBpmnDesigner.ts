@@ -99,8 +99,7 @@ export class EasyBpmnDesigner {
   /**
    * 设计器对象
    */
-  // @ts-ignore
-  bpmnModeler: BpmnModeler;
+  bpmnModeler!: BpmnModeler;
   /**
    * 是否为主框架
    */

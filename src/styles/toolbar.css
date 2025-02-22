@@ -18,7 +18,7 @@
     border: 1px solid var(--easy-bpmn-designer-border-color);
 
     &.toolbar-width {
-        width: 100%;
+        width: calc(100% - 6px);
     }
 
     .first {

@@ -133,8 +133,8 @@
   --easy-bpmn-designer-panel-content-item-label: #fff;
   --easy-bpmn-designer-panel-content-item-header-bg-color: #515157;
   --easy-bpmn-designer-panel-content-item-header-text-color: #dddddda0;
-  --easy-bpmn-designer-panel-toggle-hover: rgba(197, 197, 197, 0.63);
-  --easy-bpmn-designer-panel-toggle-color: #c6c6d1;
+  --easy-bpmn-designer-panel-toggle-hover: rgb(30, 34, 33);
+  --easy-bpmn-designer-panel-toggle-color: rgb(89, 96, 101);
 
   --easy-bpmn-designer-panel-button-config-bg-color: #1e2022;
   --easy-bpmn-designer-panel-button-config-bg-hover-color: #353535;

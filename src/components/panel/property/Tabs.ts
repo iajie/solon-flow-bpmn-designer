@@ -10,7 +10,7 @@ export class Tabs extends AbstractPanel {
 
     constructor() {
         super();
-        this.template = `<div class="tab-item active">${t('basic')}</div>`
+        this.template = `<div class="tab-item active first">${t('basic')}</div>`
     }
 
     getTabKey(tabs: EasyBpmnDesignerOptions['panelTabs'], element: BpmnElement) {
@@ -27,11 +27,15 @@ export class Tabs extends AbstractPanel {
         
         const panelTab = (this.getTabKey(defaultPanelKeys, element) || [])
             .concat(this.getTabKey(this.options?.panelTabs, element) || []);
-        
-        for (let defaultPanelTab of panelTab) {
+        for (let i = 0; i < panelTab.length; i++) {
+            const defaultPanelTab = panelTab[i];
             const dom = document.createElement('div');
             // 根据重置后的 activeKey 设置激活状态
             dom.classList.add('tab-item');
+            // 如果是第一个就加外边距
+            if (i == 0) {
+                dom.classList.add('first');
+            }
             if (defaultPanelTab === this.activeKey) {
                 dom.classList.add('active');
             }
