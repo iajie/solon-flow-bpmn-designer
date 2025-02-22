@@ -1,7 +1,5 @@
 .easy-bpmn-designer-container-designer {
     flex: 1;
-    display: flex;
-    overflow: hidden;
 
     .djs-palette {
         background: transparent;

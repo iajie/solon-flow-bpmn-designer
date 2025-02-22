@@ -101,10 +101,6 @@ export class EasyBpmnDesigner {
    */
   bpmnModeler!: BpmnModeler;
   /**
-   * 是否为主框架
-   */
-  customLayout: boolean = false;
-  /**
    * easy-bpmn-designer设计器
    */
   container!: HTMLDivElement;
@@ -168,10 +164,7 @@ export class EasyBpmnDesigner {
     if (!this.container) {
       this.container = document.createElement("div");
       this.container.classList.add("easy-bpmn-designer-container");
-    } else {
-      this.customLayout = true;
     }
-
     rootEl.appendChild(this.container);
 
     // 设计器
@@ -349,13 +342,9 @@ export class EasyBpmnDesigner {
   destroy() {
     this.options.onDestroy?.(this);
     this.bpmnModeler.destroy();
-    if (this.customLayout) {
-      this.toolbar?.remove();
-      this.designer.remove();
-      this.panel?.remove();
-    } else {
-      this.container.remove();
-    }
+    this.toolbar?.remove();
+    this.designer.remove();
+    this.panel?.remove();
   }
 
   changeLocal(lang: string) {
