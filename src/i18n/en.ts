@@ -54,6 +54,7 @@ export const en = {
     'returnSetting': 'returnSetting',
     'reApprove': 'Re approve',
     'currentNode': 'Current node',
+    'currentNodeTip': 'If the process is A ->B ->C and C returns to A, then C ->A ->C',
 
     'Simulation Log': 'Simulation Log',
 

@@ -57,6 +57,7 @@ export const zh = {
     'returnSetting': '退回设置',
     'reApprove': '重新审批',
     'currentNode': '从当前节点',
+    'currentNodeTip': '若流程为A->B->C,C退回至A，则C->A->C',
 
     'Simulation Log': '模拟日志',
 
