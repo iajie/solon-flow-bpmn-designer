@@ -6,7 +6,7 @@ import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
 import { Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
     ZoomIn, ZoomOut, Reset, Simulation, MiniMap, defaultToolbarKeys  } from "./toolbar/index.ts";
 import {defineCustomElement} from "../utils/domUtils.ts";
-import {initToolbarKeys} from "../utils/initToolbarKeys.ts";
+import {initToolbarKeys} from "./toolbar/initToolbarKeys.ts";
 
 defineCustomElement('easy-bpmn-designer-toolbar-divider', Divider);
 defineCustomElement('easy-bpmn-designer-toolbar-import', Import);

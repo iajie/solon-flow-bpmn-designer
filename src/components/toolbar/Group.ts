@@ -1,7 +1,7 @@
 import tippy, {Instance} from "tippy.js";
 import {AbstractToolBar} from "./AbstractToolBar.ts";
 import {EasyBpmnDesignerOptions, MenuGroup} from "../../types/easy-bpmn-designer.ts";
-import {initToolbarKeys} from "../../utils/initToolbarKeys.ts";
+import {initToolbarKeys} from "./initToolbarKeys.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 
 

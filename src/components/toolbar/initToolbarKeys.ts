@@ -1,10 +1,10 @@
-import {CustomMenu, EasyBpmnDesignerOptions, MenuGroup} from "../types/easy-bpmn-designer.ts";
+import {CustomMenu, EasyBpmnDesignerOptions, MenuGroup} from "../../types/easy-bpmn-designer.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
-import {AbstractToolBar} from "../components/toolbar/AbstractToolBar.ts";
+import {AbstractToolBar} from "./AbstractToolBar.ts";
 import {t} from "i18next";
 import tippy from "tippy.js";
-import {Group} from "../components/toolbar/Group.ts";
-import {Custom} from "../components/toolbar/Custom.ts";
+import {Group} from "./Group.ts";
+import {Custom} from "./Custom.ts";
 
 export const initToolbarKeys = (modeler: BpmnModeler,
                                 options: EasyBpmnDesignerOptions,
@@ -14,7 +14,7 @@ export const initToolbarKeys = (modeler: BpmnModeler,
         let toolbarKey = toolbarKeys[i];
         if (!toolbarKey) continue;
         try {
-            const container = document.querySelector('.easy-bpmn-designer-container') || undefined;
+            const container = document.querySelector('.easy-bpmn-designer-container')!;
             if (typeof toolbarKey === "string") {
                 toolbarKey = toolbarKey.trim();
                 if (toolbarKey === "|") {
@@ -35,6 +35,7 @@ export const initToolbarKeys = (modeler: BpmnModeler,
                         content: tip,
                         theme: 'easy-bpmn-designer-tip',
                         arrow: true,
+                        placement: 'bottom',
                     });
                 }
 
@@ -54,6 +55,7 @@ export const initToolbarKeys = (modeler: BpmnModeler,
                             content: tip,
                             theme: 'easy-bpmn-designer-tip',
                             arrow: true,
+                            placement: 'bottom',
                         });
                     }
                     menuButtons.push(menuButton);
@@ -78,8 +80,7 @@ export const initToolbarKeys = (modeler: BpmnModeler,
                             content: tip,
                             theme: 'easy-bpmn-designer-tip',
                             arrow: true,
-                            // trigger:"click",
-                            // interactive:true,
+                            placement: 'bottom',
                         });
                     }
                     if (customMenuConfig.onCreate) {
