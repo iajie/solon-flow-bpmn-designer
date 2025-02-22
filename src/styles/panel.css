@@ -3,6 +3,7 @@
     border-left: 1px solid var(--easy-bpmn-designer-button-bg-color);
     background: var(--easy-bpmn-designer-bg-color);
     box-shadow: -2px 0 4px rgba(0, 0, 0, 0.03);
+    display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
     position: relative;
@@ -111,7 +112,7 @@
         border-bottom: 1px solid var(--easy-bpmn-designer-button-bg-color);
 
         &::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
             height: 8px;
         }
 
