@@ -6,71 +6,38 @@ import {
 } from "bpmn-js/lib/features/palette/PaletteProvider";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import {BpmnElement, BpmnFactory, Modeling} from "bpmn-js";
-import {t} from "i18next";
 
-export const initModelerStr = (
-    key?: string,
-    name?: string,
-    type?: EasyBpmnDesignerOptions["prefix"]
-) => {
+export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
     const newId: string = `Process_${timestamp}`;
     const newName: string = `业务流程_${timestamp}`;
-    return bpmnStr(key ? key : newId, name ? name : newName, type);
+    return bpmnStr(key ? key : newId, name ? name : newName);
 };
 
-const bpmnStr = (
-    key: string,
-    name: string,
-    type: EasyBpmnDesignerOptions["prefix"] = "flowable"
-) => {
-    const TYPE_TARGET = {
-        activiti: "http://activiti.org/bpmn",
-        camunda: "http://bpmn.io/schema/bpmn",
-        flowable: "http://flowable.org/bpmn",
-    } as any;
+const bpmnStr = (key: string, name: string,) => {
 
     return `<?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-  id="diagram_${key}"
-  targetNamespace="${TYPE_TARGET[type]}">
-  <bpmn2:process id="${key}" name="${t(name)}" isExecutable="true">
-    <bpmn2:startEvent id="Event_0fx15r3" name="${t('startLabel')}">
-      <bpmn2:outgoing>Flow_01qhgrr</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:userTask id="ApplyUserTask" name="${t('assigneeLabel')}"
-      flowable:assigneeType="user"
-      flowable:buttonConfig="[&#34;approve&#34;,&#34;revoke&#34;]"
-      flowable:emptyHandlerType="autoApprove"
-      flowable:returnType="restart">
-      <bpmn2:incoming>Flow_01qhgrr</bpmn2:incoming>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="Flow_01qhgrr" sourceRef="Event_0fx15r3" targetRef="ApplyUserTask" />
-  </bpmn2:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="${key}">
-      <bpmndi:BPMNShape id="Event_0fx15r3_di" bpmnElement="Event_0fx15r3">
-        <dc:Bounds x="192" y="322" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="199" y="365" width="23" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1fdrcox_di" bpmnElement="ApplyUserTask">
-        <dc:Bounds x="280" y="300" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_01qhgrr_di" bpmnElement="Flow_01qhgrr">
-        <di:waypoint x="228" y="340" />
-        <di:waypoint x="280" y="340" />
-      </bpmndi:BPMNEdge>
+<definitions id="definitions" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+    xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+    typeLanguage="http://www.w3.org/2001/XMLSchema"
+    expressionLanguage="http://www.w3.org/1999/XPath">
+<process id="${key}" name="${name}" isExecutable="true">
+    <startEvent id="StartEvent_1y45yut" name="开始">
+    </startEvent>
+</process>
+<bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="BpmnPlane">
+        <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
+            <dc:Bounds x="192" y="250" width="36" height="36" />
+            <bpmndi:BPMNLabel>
+              <dc:Bounds x="199" y="293" width="23" height="14" />
+            </bpmndi:BPMNLabel>
+        </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-</bpmn2:definitions>`;
+</bpmndi:BPMNDiagram>
+</definitions>`;
 };
 
 export const createAction = (

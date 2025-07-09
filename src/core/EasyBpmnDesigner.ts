@@ -177,8 +177,7 @@ export class EasyBpmnDesigner {
             height: `${height}vh`,
             additionalModules: this.additionalModules(),
             gridLine,
-            bpmnRenderer:
-                this.options.theme === "dark" ? darkBpmnRenderer : lightBpmnRenderer,
+            bpmnRenderer: this.options.theme === "dark" ? darkBpmnRenderer : lightBpmnRenderer,
             textRenderer,
             minimap,
         });
@@ -191,10 +190,7 @@ export class EasyBpmnDesigner {
         this.panel = new Panel();
         this.eventComponents.push(this.panel);
         // 导入xml
-        const xml = initModelerStr(
-            "easy_bpmn_process_1",
-            "Process",
-        );
+        const xml = initModelerStr();
         this.bpmnModeler
             .importXML(value || xml)
             .then(({warnings}) => {
@@ -344,7 +340,6 @@ export class EasyBpmnDesigner {
             typeof this.options.container === "string"
                 ? (document.querySelector(this.options.container) as Element)
                 : this.options.container;
-
         if (!theme) {
             theme = this.options.theme === "dark" ? "light" : "dark";
         }

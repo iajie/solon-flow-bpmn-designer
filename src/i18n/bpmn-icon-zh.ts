@@ -1,51 +1,14 @@
 export default {
-    'Participant': '泳道',
-    'Group': '组',
-
-    'IntermediateThrowEvent': '中间抛出事件',
     'EndEvent': '结束事件',
-    'MessageStartEvent': '消息启动事件',
-    'TimerStartEvent': '定时启动事件',
-    'ConditionalStartEvent': '条件启动事件',
-    'SignalStartEvent': '信号启动事件',
     'StartEvent': '开始事件',
 
-    'MessageEndEvent': '结束消息事件',
-    'EscalationEndEvent': '结束升级事件',
-    'ErrorEndEvent': '结束错误事件',
-    'CompensateEndEvent': '结束补偿事件',
-    'SignalEndEvent': '结束信号事件',
-    'TerminateEndEvent': '终止边界事件',
-
-    'MessageIntermediateCatchEvent': '中间消息捕获事件',
-    'MessageIntermediateThrowEvent': '中间消息抛出事件',
-    'TimerIntermediateCatchEvent': '中间定时捕获事件',
-    'EscalationIntermediateThrowEvent': '中间升级抛出事件',
-    'ConditionalIntermediateCatchEvent': '中间条件捕获事件',
-    'LinkIntermediateCatchEvent': '中间链接捕获事件',
-    'LinkIntermediateThrowEvent': '中间链接抛出事件',
-    'CompensateIntermediateThrowEvent': '中间补偿抛出事件',
-    'SignalIntermediateCatchEvent': '中间信号捕获事件',
-    'SignalIntermediateThrowEvent': '中间信号抛出事件',
-
-    'ExclusiveGateway': '串行网关',
+    'ExclusiveGateway': '排他网关',
     'ParallelGateway': '并行网关',
     'InclusiveGateway': '包容网关',
-    'ComplexGateway': '复杂网关',
-    'EventBasedGateway': '事件网关',
-
-    'DataStoreReference': '数据存储参考',
-    'DataObjectReference': '数据对象参考',
 
     'Process': '业务流程',
     'UserTask': '活动节点',
     'SequenceFlow': '普通流转路径',
     'TextAnnotation': '文本注释',
     'Association': '关联',
-
-    'EventSubProcess': '事件子流程',
-    'CollapsedSubProcess': '子流程（折叠的）',
-    'ExpandedSubProcess': '子流程（展开的）',
-    'ExpandedAdHocSubProcess': '临时子流程（展开的）',
-    'CollapsedAdHocSubProcess': '临时子流程（折叠的）',
 }
