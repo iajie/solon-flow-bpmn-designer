@@ -18,7 +18,7 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
         {
             title: 'conditionProps',
             items: [],
-            easy: ['condition-type', 'condition-expression'],
+            easy: ['condition-type', 'condition-expression', 'condition-priority'],
             show: 'SequenceFlow',
         },
     ]

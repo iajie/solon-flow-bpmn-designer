@@ -256,7 +256,6 @@
             /*数字输入框*/
 
             input[type="number"] {
-                width: 120px;
                 padding-right: 25px;
                 -moz-appearance: textfield;
 

@@ -23,6 +23,7 @@ export const zh = {
     'conditionExpression': '条件表达式',
     'conditionType': '条件类型',
     'noCondition': '无条件',
+    'priority': '优先级',
 
     'china': 'China 配置',
     'driver': '驱动',

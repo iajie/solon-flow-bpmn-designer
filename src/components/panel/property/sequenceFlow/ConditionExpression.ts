@@ -2,13 +2,20 @@ import { PanelInput } from "../PanelInput.ts";
 import Modeler from "bpmn-js/lib/Modeler";
 import { updateCondition } from "../../../../utils/bpmnUtils.ts";
 import { BpmnElement } from "bpmn-js";
+import {AreaEditor} from "../../../../utils/areaEditor.ts";
 
 export class ConditionExpression extends PanelInput {
 
     constructor() {
         super();
-        this.type = 'text';
         this.inputLabel = 'conditionExpression';
+        this.init();
+    }
+
+    init() {
+        this.inputElement = document.createElement('textarea');
+        this.inputElement.style.minHeight = '100px';
+        new AreaEditor(this.inputElement);
     }
 
     onChange(element: BpmnElement) {
