@@ -27,9 +27,9 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
     private readonly translate: Translate;
     private modeling: Modeling;
     private rules: Rules;
-    private contextPad: ContextPad;
     private popupMenu: PopupMenu;
     private connect: Connect;
+    private canvas: Canvas;
 
     constructor(config: ContextPadConfig, injector: Injector, eventBus: EventBus, contextPad: ContextPad,
                 modeling: Modeling, elementFactory: ElementFactory, connect: Connect, create: Create, popupMenu: PopupMenu,
@@ -44,9 +44,9 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
         this.autoPlace = injector.get("autoPlace", false);
         this.modeling = modeling;
         this.rules = rules;
-        this.contextPad = contextPad;
         this.popupMenu = popupMenu;
         this.connect = connect;
+        this.canvas = canvas;
     }
 
     isDeleteAllowed(elements: Element[]) {
@@ -87,9 +87,9 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
             this.connect.start(event, element);
         }
 
-        const getReplaceMenuPosition = (element: Element) => {
+        const getReplaceMenuPosition = (_: Element) => {
             const Y_OFFSET = 5;
-            const pad = this.contextPad.getPad(element).html;
+            const pad = this.canvas.getContainer().querySelector('.djs-context-pad');
             const padRect = pad.getBoundingClientRect();
             return {
                 x: padRect.left,

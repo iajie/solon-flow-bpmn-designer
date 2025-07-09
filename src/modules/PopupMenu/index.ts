@@ -3,6 +3,7 @@ import ReplaceMenuProvider, {
 } from 'bpmn-js/lib/features/popup-menu/ReplaceMenuProvider';
 import * as replaceOptions from "bpmn-js/lib/features/replace/ReplaceOptions";
 import {TargetElement} from "bpmn-js/lib/features/replace/BpmnReplace";
+import {isType} from "../../utils/bpmnUtils.ts";
 type ReplaceOption = import("bpmn-js/lib/features/replace/ReplaceOptions").ReplaceOption;
 
 class EasyBpmnPopupMenuProvider extends ReplaceMenuProvider {
@@ -38,15 +39,31 @@ class EasyBpmnPopupMenuProvider extends ReplaceMenuProvider {
     }
 
     getPopupMenuEntries(target: Element) {
-        if (!target.type.endsWith('Gateway')) {
-            return {};
+        if (target.type.endsWith('Gateway')) {
+            // 只有网关才会切换属性
+            const options= replaceOptions.GATEWAY.filter(item => {
+                return item.label !== "Event-based gateway" && item.label !== "Complex gateway" && item.target?.type !== target.type;
+            });
+            return this.createEntries(target, options);
         }
-        // 只有网关才会切换属性
-        const options= replaceOptions.GATEWAY.filter(item => {
-            item.label = this.translate(item.label as string);
-            return item.label !== "Event-based gateway" && item.label !== "Complex gateway" && item.target?.type !== target.type;
-        });
-        return this.createEntries(target, options);
+        // 用户任务可切换为子程序
+        if (isType(target.type, "bpmn:UserTask")) {
+            const options = replaceOptions.TRANSACTION.filter(item => {
+                return item.target?.type === "bpmn:SubProcess" && !item.target.triggeredByEvent;
+            });
+            return this.createEntries(target, options);
+        }
+        if (isType(target.type, "bpmn:SubProcess")) {
+            if (!target.collapsed) {
+                return this.createEntries(target, replaceOptions.TASK.filter(item => {
+                    return item.target?.type === "bpmn:SubProcess" && !item.target.triggeredByEvent && !item.target.isExpanded;
+                }))
+            }
+            return this.createEntries(target, replaceOptions.TASK.filter(item => {
+                return item.target?.type === "bpmn:SubProcess" && !item.target.triggeredByEvent && item.target.isExpanded;
+            }))
+        }
+        return {};
     }
 
     /**
