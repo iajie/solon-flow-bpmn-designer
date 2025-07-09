@@ -26,28 +26,6 @@ class EasyBpmnPaletteProvider extends PaletteProvider {
     getPaletteEntries() {
         const actions = {};
 
-        const createSubprocess = (event: any) => {
-            const subProcess = this.elementFactory.createShape({
-                type: 'bpmn:SubProcess',
-                x: 0,
-                y: 0,
-                isExpanded: true,
-            })
-
-            const startEvent = this.elementFactory.createShape({
-                type: 'bpmn:StartEvent',
-                x: 40,
-                y: 82,
-                parent: subProcess,
-            })
-
-            this.create.start(event, [subProcess, startEvent], {
-                hints: {
-                    autoSelect: [startEvent],
-                },
-            })
-        }
-
         Object.assign(actions, {
             'hand-tool': {
                 group: 'tools',
@@ -119,14 +97,6 @@ class EasyBpmnPaletteProvider extends PaletteProvider {
                 'bpmn-icon-gateway-parallel',
                 this.translate('Parallel gateway'),
             ),
-            // 'create.event-base-gateway': createAction(
-            //   elementFactory,
-            //   create,
-            //   'bpmn:EventBasedGateway',
-            //   'gateway',
-            //   'bpmn-icon-gateway-eventbased',
-            //   '事件网关',
-            // ),
             'gateway-separator': {
                 group: 'gateway',
                 separator: true,
@@ -139,31 +109,6 @@ class EasyBpmnPaletteProvider extends PaletteProvider {
                 'bpmn-icon-user-task',
                 this.translate('Create user task'),
             ),
-            // 'create.script-task': createAction(
-            //   elementFactory,
-            //   create,
-            //   'bpmn:ScriptTask',
-            //   'activity',
-            //   'bpmn-icon-script-task',
-            //   '脚本任务',
-            // ),
-            // 'create.service-task': createAction(
-            //   elementFactory,
-            //   create,
-            //   'bpmn:ServiceTask',
-            //   'activity',
-            //   'bpmn-icon-service-task',
-            //   '服务任务',
-            // ),
-            'create.subprocess-expanded': {
-                group: 'activity',
-                className: 'bpmn-icon-subprocess-expanded',
-                title: this.translate('Create expanded sub-process'),
-                action: {
-                    dragstart: createSubprocess,
-                    click: createSubprocess,
-                },
-            },
         })
 
         return actions

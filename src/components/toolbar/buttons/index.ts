@@ -7,5 +7,4 @@ export { PreviewJson } from './PreviewJson.ts';
 export { ZoomIn } from './ZoomIn.ts';
 export { ZoomOut } from './ZoomOut.ts';
 export { Reset } from './Reset.ts';
-export { Simulation } from './Simulation.ts';
 export { MiniMap } from './MiniMap.ts';

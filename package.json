@@ -1,6 +1,6 @@
 {
-  "name": "easy-bpmn-designer",
-  "version": "0.0.0",
+  "name": "solon-flow-bpmn-designer",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -14,8 +14,6 @@
   "dependencies": {
     "bpmn-js": "^18.2.0",
     "bpmn-js-color-picker": "^0.7.1",
-    "bpmn-js-create-append-anything": "^0.6.0",
-    "bpmn-js-token-simulation": "^0.36.2",
     "diagram-js-grid-bg": "^1.1.0",
     "diagram-js-minimap": "^5.2.0",
     "highlight.js": "^11.11.1",

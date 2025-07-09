@@ -1,17 +1,13 @@
 import events from "./zh/events.ts";
 import gateway from "./zh/gateway.ts";
-import lint from "./zh/lint.ts";
 import other from "./zh/other.ts";
 import tasks from "./zh/tasks.ts";
-import simulation from "./zh/simulation.ts";
 
 const zhConfigs = {
     ...events,
     ...tasks,
     ...gateway,
-    ...lint,
     ...other,
-    ...simulation
 } as any;
 
 const customTranslate = (template: string, replacements: any) => {

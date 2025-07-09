@@ -4,7 +4,7 @@ import BpmnModeler from "bpmn-js/lib/Modeler";
 import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
 
 import { Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
-    ZoomIn, ZoomOut, Reset, Simulation, MiniMap, defaultToolbarKeys  } from "./toolbar/index.ts";
+    ZoomIn, ZoomOut, Reset, MiniMap, defaultToolbarKeys  } from "./toolbar/index.ts";
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initToolbarKeys} from "./toolbar/initToolbarKeys.ts";
 
@@ -18,7 +18,6 @@ defineCustomElement('easy-bpmn-designer-toolbar-redo', Redo);
 defineCustomElement('easy-bpmn-designer-toolbar-zoom-in', ZoomIn);
 defineCustomElement('easy-bpmn-designer-toolbar-zoom-out', ZoomOut);
 defineCustomElement('easy-bpmn-designer-toolbar-reset', Reset);
-defineCustomElement('easy-bpmn-designer-toolbar-simulation', Simulation);
 defineCustomElement('easy-bpmn-designer-toolbar-minimap', MiniMap);
 
 export class Toolbar extends HTMLElement implements DesignerEventListener {
