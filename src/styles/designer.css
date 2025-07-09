@@ -83,48 +83,6 @@
             height: 150px;
         }
     }
-
-    /* 添加模拟器相关样式 */
-    .bts-toggle-mode {
-        display: none !important;
-    }
-
-    .bts-simulation-header {
-        background: linear-gradient(to right, #f8f9fa, #fff) !important;
-        padding: 8px 16px !important;
-
-        button {
-            background: transparent !important;
-            border: 1px solid !important;
-            border-radius: 4px !important;
-            padding: 4px 8px !important;
-            transition: all 0.3s !important;
-
-            .active {
-                color: white !important;
-            }
-        }
-
-        button:hover {
-        }
-
-    }
-
-    .token-simulation-palette {
-        border: none !important;
-        background: transparent !important;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
-        border-radius: 8px !important;
-        padding: 8px !important;
-    }
-
-    .token-simulation-palette button {
-        border-radius: 4px !important;
-        transition: all 0.3s !important;
-    }
-
-    .token-simulation-palette button:hover {
-    }
 }
 
 .djs-palette-column {
