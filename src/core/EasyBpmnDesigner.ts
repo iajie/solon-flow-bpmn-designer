@@ -22,8 +22,6 @@ import "../styles/index.css";
 
 import GridLineModule from "diagram-js-grid-bg";
 import minimapModule from "diagram-js-minimap"; //小地图
-import ToggleMode from "bpmn-js-token-simulation/lib/features/toggle-mode/modeler/ToggleMode";
-import "bpmn-js-token-simulation/assets/css/bpmn-js-token-simulation.css";
 import BpmnColorPickerModule from "bpmn-js-color-picker"; // 颜色选择器
 import "bpmn-js-color-picker/colors/color-picker.css";
 import {EasyBpmnDesignerPalette} from "../modules/Palette";
@@ -51,7 +49,6 @@ const defaultOptions: Partial<EasyBpmnDesignerOptions> = {
     lang: "zh",
     theme: "light",
     height: 70,
-    prefix: "flowable",
     gridLine: {
         smallGridSpacing: 20,
         gridSpacing: 80,
@@ -197,7 +194,6 @@ export class EasyBpmnDesigner {
         const xml = initModelerStr(
             "easy_bpmn_process_1",
             "Process",
-            this.options.prefix
         );
         this.bpmnModeler
             .importXML(value || xml)
@@ -358,23 +354,6 @@ export class EasyBpmnDesigner {
         this.options.theme = theme;
         this.initialize();
         return this;
-    }
-
-    /**
-     * 修改设计器适配
-     * @param mode
-     */
-    changeMode(mode?: EasyBpmnDesignerOptions["prefix"]) {
-        this.destroy();
-        this.options.prefix = mode;
-        this.initialize();
-        return this;
-    }
-
-    toggleSimulation() {
-        if (!this.bpmnModeler) return;
-        const tokenSimulation = this.bpmnModeler.get<ToggleMode>("toggleMode");
-        tokenSimulation.toggleMode();
     }
 
     toggleMinimap() {

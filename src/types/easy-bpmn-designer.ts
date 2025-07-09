@@ -1,4 +1,4 @@
-import {BaseViewerOptions, ModdleExtensions} from "bpmn-js/lib/BaseViewer";
+import {BaseViewerOptions} from "bpmn-js/lib/BaseViewer";
 import {EasyBpmnDesigner} from "../core/EasyBpmnDesigner.ts";
 import {DefaultToolbarKey} from "../components/toolbar/DefaultToolbarKeys.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
@@ -67,15 +67,6 @@ export type EasyBpmnDesignerOptions = {
      */
     additionalModels?: ModuleDeclaration[];
     /**
-     * @description 用户自定义解析
-     */
-    moddleExtension?: ModdleExtensions;
-    /**
-     * @description 流程类型设置扩展元素构建模块
-     * @default flowable
-     */
-    prefix?: string | 'camunda' | 'flowable' | 'activiti';
-    /**
      * @description 设计器网格样式
      */
     gridLine?: {
@@ -103,9 +94,6 @@ export type EasyBpmnDesignerOptions = {
     minimap?: {
         open: boolean;
         position: { x: number; y: 'bottom' | number },
-    };
-    tokenSimulation?: {
-        active: boolean;
     };
     toolbarKeys?: (string | CustomMenu | MenuGroup)[],
     toolbarExcludeKeys?: DefaultToolbarKey[];
