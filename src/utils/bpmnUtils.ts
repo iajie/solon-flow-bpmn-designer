@@ -28,7 +28,7 @@ const bpmnStr = (key: string, name: string,) => {
     </startEvent>
 </process>
 <bpmndi:BPMNDiagram id="BpmnDiagram_1">
-    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="BpmnPlane">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="${key}">
         <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
             <dc:Bounds x="192" y="250" width="36" height="36" />
             <bpmndi:BPMNLabel>

@@ -1,8 +1,10 @@
 import '../styles/index.css';
+import {AreaEditor} from '../utils/areaEditor'
 
 interface EasyBpmnDialogProps {
     content: string;
     title: string;
+    edit?: boolean;
     isMask?: boolean;
     clickMaskClose?: boolean;
 }
@@ -10,6 +12,7 @@ interface EasyBpmnDialogProps {
 const defaultOptions: EasyBpmnDialogProps = {
     content: '',
     title: '',
+    edit: false,
     isMask: true,
     clickMaskClose: false
 }
@@ -38,15 +41,26 @@ export class EasyBpmnDialog extends HTMLElement {
                             <svg t="1739262766708" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6771" width="200" height="200"><path d="M196.48 149.376L874.624 827.52l-47.104 47.104L149.376 196.48z" p-id="6772"></path><path d="M149.376 827.52L827.52 149.44l47.168 47.104L196.544 874.688z" p-id="6773"></path></svg>
                         </span>
                     </div>
-                <div class="preview-content"></div>
+                ${this.options.edit ? `` : `<div class="preview-content"></div>`}
             </div>`;
             if (this.options.isMask) {
                 dialogContainer = `<div class="preview-mask" />${dialogContainer}`;
             }
-
             const el = document.createElement('div');
             el.id = this.dialogId;
             el.innerHTML = dialogContainer;
+            if (this.options.edit) {
+                const dialog = el.querySelector('.preview-dialog');
+                if (dialog) {
+                    const textarea = document.createElement('textarea');
+                    new AreaEditor(textarea);
+                    textarea.value = this.options.content;
+                    textarea.addEventListener('input', () => {
+                        this.dispatchEvent(new CustomEvent('code-edit', { detail: textarea.value }));
+                    });
+                    dialog.appendChild(textarea);
+                }
+            }
             const dom = document.getElementById('easy-bpmn-designer');
             if (dom) {
                 dom.appendChild(el);

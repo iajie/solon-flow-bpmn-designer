@@ -49,6 +49,7 @@ export class PreviewCode extends AbstractToolBar {
             language: type,
             ignoreIllegals: true
         });
+        console.log(code, sourceCode.value);
         new EasyBpmnDialog({
             title: type === 'xml' ? t('preview-xml') : t('preview-json'),
             content: `<pre>${sourceCode.value}</pre>`,

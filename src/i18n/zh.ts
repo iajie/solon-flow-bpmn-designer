@@ -23,4 +23,10 @@ export const zh = {
     'conditionExpression': '条件表达式',
     'conditionType': '条件类型',
     'noCondition': '无条件',
+
+    'china': 'China 配置',
+    'driver': '驱动',
+    'meta': '元数据',
+    'metaTitle': '元数据编辑（YAML/JSON）',
+
 } as any;

@@ -15,4 +15,10 @@ export const en = {
     'basic': 'Basic',
     'id': 'ID',
     'name': 'NAME',
+
+    'china': 'China',
+    'driver': 'Driver',
+    'meta': 'Meta',
+    'metaTitle': 'Metadata Edit (YAML/JSON)',
+
 }

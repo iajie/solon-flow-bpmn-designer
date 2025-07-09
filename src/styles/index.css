@@ -189,7 +189,12 @@
             }
         }
 
-        .preview-content {
+        .preview-content, textarea {
+            &:focus {
+                border-color: var(--easy-bpmn-designer-content-pre-bg-color);
+                outline: none;
+                box-shadow: 0 0 0 1px rgba(64, 158, 255, 0.2);
+            }
             z-index: 100;
             flex: 1;
             padding: 16px;

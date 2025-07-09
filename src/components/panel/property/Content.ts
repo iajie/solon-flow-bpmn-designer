@@ -10,9 +10,13 @@ import { EasyBpmnDesignerOptions } from "../../../types/easy-bpmn-designer.ts";
 import { BpmnElement } from "bpmn-js";
 import { ConditionType } from "./sequenceFlow/ConditionType.ts";
 import { ConditionExpression } from "./sequenceFlow/ConditionExpression.ts";
+import {Driver} from "./china/Name.ts";
+import {Meta} from "./china/Meta.ts";
 
 defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);
+defineCustomElement('easy-panel-driver', Driver);
+defineCustomElement('easy-panel-meta', Meta);
 defineCustomElement('easy-panel-condition-type', ConditionType);
 defineCustomElement('easy-panel-condition-expression', ConditionExpression);
 

@@ -11,7 +11,7 @@ export class PanelInput extends AbstractPanel {
     inputLabel!: string;
     inputLabelTip!: string | Element;
     labelElement!: AbstractPanel;
-    inputElement!: HTMLInputElement | HTMLSelectElement;
+    inputElement!: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
     className!: string;
     customElement!: HTMLDivElement;
     show: boolean = true;
