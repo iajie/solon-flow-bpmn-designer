@@ -25,8 +25,9 @@ export class PreviewCode extends AbstractToolBar {
                 const elementRegistry = this.modeler?.get("elementRegistry") as any;
                 if (elementRegistry) {
                     const elements = elementRegistry.getAll();
+                    console.log(elements)
                     const processData = elements.reduce((acc: any, element: any) => {
-                        if (element.type !== "label") {
+                        if (element.type === "bpmn:Process") {
                             acc[element.id] = {
                                 type: element.type,
                                 ...element.businessObject

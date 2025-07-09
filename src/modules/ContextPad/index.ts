@@ -73,7 +73,7 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
                 };
             }
             : null;
-        if (!isType(element.type, ["bpmn:EndEvent", "bpmn:SequenceFlow", "bpmn:TextAnnotation", "bpmn:Association"])) {
+        if (!isType(element.type, ["bpmn:EndEvent", "bpmn:SequenceFlow", "bpmn:TextAnnotation", "bpmn:Association", "label"])) {
             // 添加创建用户任务按钮
             actions["append.append-task"] = {
                 group: "model",

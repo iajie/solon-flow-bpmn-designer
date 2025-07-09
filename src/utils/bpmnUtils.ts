@@ -9,8 +9,8 @@ import {BpmnElement, BpmnFactory, Modeling} from "bpmn-js";
 
 export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
-    const newId: string = `Process_${timestamp}`;
-    const newName: string = `业务流程_${timestamp}`;
+    const newId: string = `Chain_${timestamp}`;
+    const newName: string = `流程_${timestamp}`;
     return bpmnStr(key ? key : newId, name ? name : newName);
 };
 
