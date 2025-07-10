@@ -168,23 +168,23 @@ export const toSolonJson = (element: Element) => {
                         links.push(link);
                     });
                 }
+                console.log(children);
                 const node: SolonFlowNode = {
                     id: children.id,
                     title: children.businessObject.name,
                     type: getNodeType(children.type),
-                    when: children.businessObject.when,
-                    meta: children.businessObject.meta,
-                    task: children.businessObject.task,
+                    ...children.businessObject.$attrs,
                     link: links,
                 };
                 layouts.push(node);
             }
         });
+        console.log(element.businessObject)
         const data: SolonFlowChina = {
             id: element.id,
             title: element.businessObject.name,
-            driver: element.businessObject.driver,
-            meta: element.businessObject.meta,
+            driver: element.businessObject.$attrs.driver,
+            meta: element.businessObject.$attrs.meta,
             layout: layouts,
             bpmn: {
                 ...element.di,

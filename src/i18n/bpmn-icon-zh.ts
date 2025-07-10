@@ -8,7 +8,5 @@ export default {
 
     'Process': '链',
     'UserTask': '活动节点',
-    'SequenceFlow': '普通流转路径',
-    'TextAnnotation': '文本注释',
-    'Association': '关联',
+    'SequenceFlow': '连接',
 }

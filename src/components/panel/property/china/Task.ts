@@ -21,7 +21,7 @@ export class Task extends PanelInput {
 
     onChange(element: BpmnElement) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.task || '');
+        this.inputElement && (this.inputElement.value = element.businessObject.$attrs.task || '');
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {

@@ -10,7 +10,7 @@ import { EasyBpmnDesignerOptions } from "../../../types/easy-bpmn-designer.ts";
 import { BpmnElement } from "bpmn-js";
 import { ConditionType } from "./sequenceFlow/ConditionType.ts";
 import { ConditionExpression } from "./sequenceFlow/ConditionExpression.ts";
-import {Driver} from "./china/Name.ts";
+import {Driver} from "./china/Driver.ts";
 import {Meta} from "./china/Meta.ts";
 import {When} from "./china/When.ts";
 import {Task} from "./china/Task.ts";

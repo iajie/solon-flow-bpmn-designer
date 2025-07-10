@@ -35,7 +35,7 @@ export class Meta extends PanelInput {
 
     onChange(element: BpmnElement) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.meta || '{}');
+        this.inputElement && (this.inputElement.value = element.businessObject.$attrs.meta || '{}');
     }
 
     onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
