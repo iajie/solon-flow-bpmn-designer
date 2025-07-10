@@ -5,6 +5,7 @@ interface EasyBpmnDialogProps {
     content: string;
     title: string;
     edit?: boolean;
+    text?: string;
     isMask?: boolean;
     clickMaskClose?: boolean;
 }
@@ -60,6 +61,17 @@ export class EasyBpmnDialog extends HTMLElement {
                     });
                     dialog.appendChild(textarea);
                 }
+            } else {
+                const previewHeader = el.querySelector('.preview-header');
+                if (previewHeader) {
+                    const span = document.createElement("span");
+                    span.innerHTML = `<svg t="1752146618982" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8895" width="16" height="16"><path d="M763.392 543.744h-157.184V386.048a31.744 31.744 0 1 0-62.976 0v157.696H385.536a31.744 31.744 0 0 0 0 62.976h157.696v157.696a31.744 31.744 0 0 0 62.976 0v-157.696h157.696a31.744 31.744 0 0 0 0-62.976z" fill="" p-id="8896"></path><path d="M802.816 240.128H348.16a113.664 113.664 0 0 0-113.664 113.664v454.144A113.664 113.664 0 0 0 348.16 921.6h454.144a113.664 113.664 0 0 0 113.664-113.664V353.792a113.664 113.664 0 0 0-113.152-113.664zM870.4 807.936a68.096 68.096 0 0 1-68.096 68.096H348.16a68.096 68.096 0 0 1-68.096-68.096V353.792A68.096 68.096 0 0 1 348.16 285.696h454.144A68.096 68.096 0 0 1 870.4 353.792z" fill="" p-id="8897"></path><path d="M699.904 162.816a25.6 25.6 0 0 0 0-51.2H245.248A139.264 139.264 0 0 0 106.496 250.88v454.144a25.6 25.6 0 0 0 51.2 0V250.88a88.064 88.064 0 0 1 87.552-88.064z" fill="" p-id="8898"></path></svg>`;
+                    span.addEventListener('click', (_) => {
+                        navigator.clipboard.writeText(this.options.text || '');
+                    })
+                    previewHeader.children[0].appendChild(span);
+                }
+
             }
             const dom = document.getElementById('easy-bpmn-designer');
             if (dom) {

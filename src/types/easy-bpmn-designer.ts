@@ -208,7 +208,7 @@ export interface SolonFlowLink {
     /**
      * @description 下一节点ID
      */
-    nextId: string;
+    nextId?: string;
     /**
      * @description 分支流出条件描述（会触发驱动的 handleTest 处理）
      */
@@ -222,7 +222,7 @@ export interface SolonFlowLink {
      */
     meta: Record<string, any>;
     /**
-     * @description 存储bpmn节点信息
+     * @description 存储bpmn节点id
      */
-    // bpmn: Record<string, any>;
+    id: string;
 }

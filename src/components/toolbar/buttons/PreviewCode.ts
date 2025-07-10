@@ -47,6 +47,7 @@ export class PreviewCode extends AbstractToolBar {
         new EasyBpmnDialog({
             title: type === 'yaml' ? t('preview-yaml') : t('preview-json'),
             content: `<pre>${sourceCode.value}</pre>`,
+            text: code
         });
     }
 

@@ -200,6 +200,7 @@ export class EasyBpmnDesigner {
                 this.addListenerEvent();
             })
             .catch((err) => {
+                console.log(err);
                 this.options.onXmlError?.(err);
             });
     }
@@ -260,7 +261,7 @@ export class EasyBpmnDesigner {
         const eventBus = this.bpmnModeler.get("eventBus") as EventBus;
         // 监听 shape.added 事件
         eventBus.on("shape.added", function (event: any) {
-            console.log("监听新增节点事件", event);
+            console.debug("监听新增节点事件", event);
         });
     }
 

@@ -19,6 +19,8 @@ export const en = {
     'china': 'China',
     'driver': 'Driver',
     'meta': 'Meta',
+    'when': 'When',
+    'task': 'Task',
     'metaTitle': 'Metadata Edit (YAML/JSON)',
 
 }

@@ -28,6 +28,8 @@ export const zh = {
     'china': 'China 配置',
     'driver': '驱动',
     'meta': '元数据',
+    'when': '执行条件',
+    'task': '执行任务脚本',
     'metaTitle': '元数据编辑（YAML/JSON）',
 
 } as any;

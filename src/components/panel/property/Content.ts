@@ -12,15 +12,17 @@ import { ConditionType } from "./sequenceFlow/ConditionType.ts";
 import { ConditionExpression } from "./sequenceFlow/ConditionExpression.ts";
 import {Driver} from "./china/Name.ts";
 import {Meta} from "./china/Meta.ts";
-import {Priority} from "./sequenceFlow/Priority.ts";
+import {When} from "./china/When.ts";
+import {Task} from "./china/Task.ts";
 
 defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);
 defineCustomElement('easy-panel-driver', Driver);
 defineCustomElement('easy-panel-meta', Meta);
+defineCustomElement('easy-panel-when', When);
+defineCustomElement('easy-panel-task', Task);
 defineCustomElement('easy-panel-condition-type', ConditionType);
 defineCustomElement('easy-panel-condition-expression', ConditionExpression);
-defineCustomElement('easy-panel-condition-priority', Priority);
 
 export class PanelContent extends AbstractPanel {
 
