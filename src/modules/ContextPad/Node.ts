@@ -143,9 +143,9 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
                 },
             });
         } else if (!isType(element.type, ["bpmn:Association"])) {
-            Object.assign(actions, {
-                'append.text-annotation': this.appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation', 'Add text annotation')
-            });
+            // Object.assign(actions, {
+            //     'append.text-annotation': this.appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation', 'Add text annotation')
+            // });
         }
 
         if (this.isDeleteAllowed([element])) {

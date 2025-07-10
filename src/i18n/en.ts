@@ -1,7 +1,7 @@
 export const en = {
     'import': 'Import BPMN XML file',
     'download': 'Download BPMN XML file',
-    'preview-xml': 'Preview XML file',
+    'preview-yaml': 'Preview YAML file',
     'preview-json': 'Preview JSON file',
     'save': 'Save BPMN XML file',
     'undo': 'Undo (⌘Ctrl+Z)',

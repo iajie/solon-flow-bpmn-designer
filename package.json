@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "typescript": "~5.7.2",
     "vite": "^6.1.0"
   },
@@ -18,6 +19,7 @@
     "diagram-js-minimap": "^5.2.0",
     "highlight.js": "^11.11.1",
     "i18next": "^24.2.2",
+    "js-yaml": "^4.1.0",
     "tippy.js": "^6.3.7"
   }
 }

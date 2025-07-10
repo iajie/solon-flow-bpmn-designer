@@ -3,10 +3,8 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
-import {Modeling} from "bpmn-js";
 import {isUndo, isRedo} from "diagram-js/lib/features/keyboard/KeyboardUtil";
 import {event as domEvent} from "min-dom";
-
 type ModuleDeclaration = import("didi").ModuleDeclaration;
 import {Toolbar} from "../components/Toolbar.ts";
 import {Panel} from "../components/Panel.ts";
@@ -142,8 +140,7 @@ export class EasyBpmnDesigner {
     protected innerBpmnModeler() {
         // 根据传递container属性获取父级传递的数据是否为id，如果是则转为dom
         const rootEl =
-            typeof this.options.container === "string"
-                ? (document.querySelector(this.options.container) as Element)
+            typeof this.options.container === "string" ? (document.querySelector(this.options.container) as HTMLElement)
                 : this.options.container;
         // 主题-白/黑
         rootEl.classList.add(`easy-bpmn-designer-theme-${this.options.theme}`);
@@ -261,31 +258,9 @@ export class EasyBpmnDesigner {
 
     addListenerEvent() {
         const eventBus = this.bpmnModeler.get("eventBus") as EventBus;
-        const modeling = this.bpmnModeler?.get("modeling") as Modeling;
         // 监听 shape.added 事件
         eventBus.on("shape.added", function (event: any) {
-            const shape = event.element;
-            // 检查是否为用户任务节点
-            if (shape.type === "bpmn:UserTask") {
-                // 为用户任务添加默认属性
-                const defaultUserTaskProperties = {
-                    name: '',
-                    formEditable: true, // 允许编辑
-                    emptyHandlerType: "autoApprove", // 处理人为空时自动通过
-                    returnType: "restart", // 退回时重新审批
-                    assigneeType: "user", // 处理人类型默认为用户
-                    buttonConfig: JSON.stringify(["approve", "reject"]), // 默认按钮
-                };
-                try {
-                    // 确保在合适的时机更新属性，避免并发操作
-                    setTimeout(() => {
-                        // 更新节点属性
-                        modeling.updateProperties(shape, defaultUserTaskProperties);
-                    }, 0);
-                } catch (error) {
-                    console.error("更新属性时出错:", error);
-                }
-            }
+            console.log("监听新增节点事件", event);
         });
     }
 
@@ -338,8 +313,7 @@ export class EasyBpmnDesigner {
 
     changeTheme(theme?: "dark" | "light") {
         const rootEl =
-            typeof this.options.container === "string"
-                ? (document.querySelector(this.options.container) as Element)
+            typeof this.options.container === "string" ? (document.querySelector(this.options.container) as HTMLElement)
                 : this.options.container;
         if (!theme) {
             theme = this.options.theme === "dark" ? "light" : "dark";

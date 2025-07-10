@@ -1,4 +1,4 @@
-export const defaultToolbarKeys = ["import", "download", "preview-xml", "preview-json", "divider", "undo", "redo",
+export const defaultToolbarKeys = ["import", "download", "preview-yaml", "preview-json", "divider", "undo", "redo",
     "divider", "zoom-in", "zoom-out", "reset", "divider", "minimap",
 ];
 

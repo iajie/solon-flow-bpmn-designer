@@ -4,7 +4,7 @@ export const zh = {
     ...bpmnIcon,
     'import': '导入流程文件',
     'download': '下载流程文件',
-    'preview-xml': '预览 XML',
+    'preview-yaml': '预览 YAML',
     'preview-json': '预览 JSON',
     'save': '保存流程 (Ctrl+S)',
     'undo': '撤销 (Ctrl+Z)',

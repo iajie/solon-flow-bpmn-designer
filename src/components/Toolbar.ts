@@ -11,7 +11,7 @@ import {initToolbarKeys} from "./toolbar/initToolbarKeys.ts";
 defineCustomElement('easy-bpmn-designer-toolbar-divider', Divider);
 defineCustomElement('easy-bpmn-designer-toolbar-import', Import);
 defineCustomElement('easy-bpmn-designer-toolbar-download', Download);
-defineCustomElement('easy-bpmn-designer-toolbar-preview-xml', PreviewXml);
+defineCustomElement('easy-bpmn-designer-toolbar-preview-yaml', PreviewXml);
 defineCustomElement('easy-bpmn-designer-toolbar-preview-json', PreviewJson);
 defineCustomElement('easy-bpmn-designer-toolbar-undo', Undo);
 defineCustomElement('easy-bpmn-designer-toolbar-redo', Redo);

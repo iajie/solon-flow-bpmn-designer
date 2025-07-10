@@ -6,7 +6,8 @@ import {
 } from "bpmn-js/lib/features/palette/PaletteProvider";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import {BpmnElement, BpmnFactory, Modeling} from "bpmn-js";
-
+import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
+type Element = import("bpmn-js/lib/model/Types").Element;
 export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
     const newId: string = `Chain_${timestamp}`;
@@ -26,17 +27,17 @@ const bpmnStr = (key: string, name: string,) => {
 <process id="${key}" name="${name}" isExecutable="true">
     <startEvent id="StartEvent_1y45yut" name="开始">
     </startEvent>
-</process>
-<bpmndi:BPMNDiagram id="BpmnDiagram_1">
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
     <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="${key}">
-        <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
-            <dc:Bounds x="192" y="250" width="36" height="36" />
-            <bpmndi:BPMNLabel>
-              <dc:Bounds x="199" y="293" width="23" height="14" />
-            </bpmndi:BPMNLabel>
-        </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
+        <omgdc:Bounds x="192" y="250" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="199" y="293" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
-</bpmndi:BPMNDiagram>
+  </bpmndi:BPMNDiagram>
 </definitions>`;
 };
 
@@ -99,31 +100,6 @@ export const updateProperty = (key: string, value: any, element?: BpmnElement, m
     }
 };
 
-export const updateMultiInstance = (type: string, element?: BpmnElement, modeler?: BpmnModeler) => {
-    if (!element || !modeler) return;
-    const bpmnFactory = modeler.get("bpmnFactory") as BpmnFactory;
-    const modeling = modeler.get("modeling") as Modeling;
-    try {
-        if (type) {
-            // 创建多实例特性
-            const loopCharacteristics = bpmnFactory.create(
-                "bpmn:MultiInstanceLoopCharacteristics",
-                {isSequential: type === "sequential"}
-            );
-            modeling.updateProperties(element, {
-                loopCharacteristics: loopCharacteristics,
-            });
-        } else {
-            // 移除多实例特性
-            modeling.updateProperties(element, {
-                loopCharacteristics: null,
-            });
-        }
-    } catch (error) {
-        console.error("Failed to update multi-instance:", error);
-    }
-};
-
 /**
  * 添加更新条件表达式的方法
  * @param type
@@ -165,4 +141,67 @@ export const isType = (type: string, arrays: string | string[]) => {
         return arrays.includes(type);
     }
     return type === arrays;
+}
+
+const getNodeType = (type: string) => {
+    switch (type) {
+        case "bpmn:StartEvent":
+            return "start";
+        case "bpmn:EndEvent":
+            return "end";
+        case "bpmn:ParallelGateway":
+            return "parallel";
+        case "bpmn:InclusiveGateway":
+            return "inclusive";
+        case "bpmn:ExclusiveGateway":
+            return "exclusive";
+        default:
+            return "activity";
+    }
+}
+
+/**
+ * 根据主流程构建solon-flow-json-code
+ * @param element
+ */
+export const toSolonJson = (element: Element) => {
+    if (isType(element.type, "bpmn:Process")) {
+        const layouts: SolonFlowNode[] = [];
+        element.children.forEach((children: Element) => {
+            if (!isType(children.type, ["bpmn:SequenceFlow", "label"])) {
+                const links: SolonFlowLink[] = [];
+                if (children.outgoing && children.outgoing.length) {
+                    children.outgoing.forEach(linkNode => {
+                        const link: SolonFlowLink = {
+                            nextId: linkNode.id,
+                            when: linkNode.businessObject.when,
+                            title: linkNode.businessObject.name,
+                            meta: linkNode.businessObject.meta,
+                        };
+                        links.push(link);
+                    });
+                }
+                const node: SolonFlowNode = {
+                    id: children.id,
+                    title: children.businessObject.name,
+                    type: getNodeType(children.type),
+                    when: children.businessObject.when,
+                    meta: children.businessObject.meta,
+                    task: children.businessObject.task,
+                    link: links,
+                };
+                layouts.push(node);
+            }
+        });
+        const data: SolonFlowChina = {
+            id: element.id,
+            title: element.businessObject.name,
+            driver: element.businessObject.driver,
+            meta: element.businessObject.meta,
+            layout: layouts,
+            bpmn: element.di
+        };
+        return data;
+    }
+    return {};
 }

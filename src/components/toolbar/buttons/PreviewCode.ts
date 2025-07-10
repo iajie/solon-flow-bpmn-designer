@@ -4,6 +4,8 @@ import 'highlight.js/styles/atom-one-light.css';
 import {EasyBpmnDialog} from "../../EasyBpmnDialog.ts";
 import {defineCustomElement} from "../../../utils/domUtils.ts";
 import {t} from "i18next";
+import {toSolonJson} from "../../../utils/bpmnUtils.ts";
+import jsYaml from 'js-yaml';
 
 defineCustomElement('easy-bpmn-designer-dialog', EasyBpmnDialog);
 
@@ -13,28 +15,21 @@ export class PreviewCode extends AbstractToolBar {
         super();
     }
 
-    protected handlePreview = async (type: "xml" | "json") => {
+    protected handlePreview = async (type: "yaml" | "json") => {
         if (!this.modeler) return;
         try {
-            if (type === "xml") {
-                const {xml} = await this.modeler.saveXML({format: true});
-                if (xml) {
-                    this.insertCode(xml, type);
-                }
-            } else {
-                const elementRegistry = this.modeler?.get("elementRegistry") as any;
-                if (elementRegistry) {
-                    const elements = elementRegistry.getAll();
-                    console.log(elements)
-                    const processData = elements.reduce((acc: any, element: any) => {
-                        if (element.type === "bpmn:Process") {
-                            acc[element.id] = {
-                                type: element.type,
-                                ...element.businessObject
-                            };
-                        }
-                        return acc;
-                    }, {});
+            const elementRegistry = this.modeler?.get("elementRegistry") as any;
+            if (elementRegistry) {
+                const elements = elementRegistry.getAll();
+                const processData = elements.reduce((acc: any, element: any) => {
+                    if (element.type === "bpmn:Process") {
+                        return toSolonJson(element);
+                    }
+                    return acc;
+                }, {});
+                if (type === "yaml") {
+                    this.insertCode(jsYaml.dump(processData), type);
+                } else {
                     const code = JSON.stringify(processData, null, 2);
                     this.insertCode(code, type);
                 }
@@ -44,14 +39,13 @@ export class PreviewCode extends AbstractToolBar {
         }
     }
 
-    private insertCode(code: string, type: "xml" | "json") {
+    private insertCode(code: string, type: "yaml" | "json") {
         const sourceCode = highlight.highlight(code, {
             language: type,
             ignoreIllegals: true
         });
-        console.log(code, sourceCode.value);
         new EasyBpmnDialog({
-            title: type === 'xml' ? t('preview-xml') : t('preview-json'),
+            title: type === 'yaml' ? t('preview-yaml') : t('preview-json'),
             content: `<pre>${sourceCode.value}</pre>`,
         });
     }
