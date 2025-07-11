@@ -2,6 +2,7 @@ import {BaseViewerOptions} from "bpmn-js/lib/BaseViewer";
 import {EasyBpmnDesigner} from "../core/EasyBpmnDesigner.ts";
 import {DefaultToolbarKey} from "../components/toolbar/DefaultToolbarKeys.ts";
 import BpmnModeler from "bpmn-js/lib/Modeler";
+type Element = import("bpmn-js/lib/model/Types").Element;
 type ModuleDeclaration = import("didi").ModuleDeclaration;
 
 export interface CustomMenu {
@@ -123,12 +124,12 @@ export type EasyBpmnDesignerOptions = {
      * @description 监听选择节点变化
      * @param bpmnModeler
      */
-    onSelect?: (designer: EasyBpmnDesigner) => void;
+    onSelect?: (element: Element) => void;
     /**
      * @description 监听设计器变化
      * @param bpmnModeler
      */
-    onChange?: (designer: EasyBpmnDesigner) => void;
+    onChange?: (callback: (valueType?: "json" | "yaml") => any) => void;
     /**
      * @description xml加载错误
      * @param error
@@ -138,7 +139,7 @@ export type EasyBpmnDesignerOptions = {
      * @description 实例创建完成
      * @param bpmnModeler
      */
-    onCreated?: (designer: EasyBpmnDesigner) => void;
+    onCreated?: (modeler: BpmnModeler) => void;
     /**
      * @description 销毁实例
      * @param bpmnModeler

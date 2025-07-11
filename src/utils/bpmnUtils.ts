@@ -168,7 +168,6 @@ export const toSolonJson = (element: Element) => {
                         links.push(link);
                     });
                 }
-                console.log(children);
                 const node: SolonFlowNode = {
                     id: children.id,
                     title: children.businessObject.name,
@@ -179,7 +178,6 @@ export const toSolonJson = (element: Element) => {
                 layouts.push(node);
             }
         });
-        console.log(element.businessObject)
         const data: SolonFlowChina = {
             id: element.id,
             title: element.businessObject.name,

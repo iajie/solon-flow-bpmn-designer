@@ -27,7 +27,7 @@ import {EasyBpmnDesignerPalette} from "../modules/Palette";
 import {EasyBpmnDesignerContextPad, EasyBpmnDesignerNodeContextPad} from "../modules/ContextPad";
 import {EasyBpmnDesignerPopupMenu} from "../modules/PopupMenu";
 import zhTranslate from "../modules/Translate";
-
+type Element = import("bpmn-js/lib/model/Types").Element;
 // 标签解析 Moddle
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initModelerStr, toSolonJson} from "../utils/bpmnUtils.ts";
@@ -201,7 +201,7 @@ export class EasyBpmnDesigner {
                 this.addListenerEvent();
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 this.options.onXmlError?.(err);
             });
     }
@@ -212,22 +212,19 @@ export class EasyBpmnDesigner {
         });
 
         const _header =
-            this.container.querySelector(".easy-bpmn-designer-container-toolbar") ||
-            this.container;
+            this.container.querySelector(".easy-bpmn-designer-container-toolbar") || this.container;
         _header.appendChild(this.toolbar);
 
         const _main =
-            this.container.querySelector(".easy-bpmn-designer-container-designer") ||
-            this.container;
+            this.container.querySelector(".easy-bpmn-designer-container-designer") || this.container;
         _main.appendChild(this.designer);
 
         const _footer =
-            this.container.querySelector(".easy-bpmn-designer-container-panel") ||
-            this.container;
+            this.container.querySelector(".easy-bpmn-designer-container-panel") || this.container;
         _footer.appendChild(this.panel);
 
         if (this.options.onCreated) {
-            this.options.onCreated(this);
+            this.options.onCreated(this.bpmnModeler);
         }
     }
 
@@ -264,13 +261,24 @@ export class EasyBpmnDesigner {
         eventBus.on("shape.added", function (event: any) {
             console.debug("监听新增节点事件", event);
         });
+        eventBus.on('element.changed', () => {
+            this.options.onChange?.((valueType) => {
+                if (valueType === "json") {
+                    return this.getJson();
+                }
+                return this.getValue();
+            });
+        });
+        eventBus.on('element.selected', (e: Element) => {
+            this.options.onSelect?.(e);
+        });
     }
 
     /**
      * 获取设计器的xml值
      */
     getValue() {
-        jsYaml.dump(this.getJson())
+        return jsYaml.dump(this.getJson())
     }
 
     getJson() {
@@ -285,7 +293,7 @@ export class EasyBpmnDesigner {
                 return acc;
             }, {});
         }
-        return JSON.stringify(processData, null, 2);
+        return processData;
     }
 
     getOptions() {
