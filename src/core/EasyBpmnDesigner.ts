@@ -30,9 +30,10 @@ import zhTranslate from "../modules/Translate";
 
 // 标签解析 Moddle
 import {defineCustomElement} from "../utils/domUtils.ts";
-import {initModelerStr} from "../utils/bpmnUtils.ts";
+import {initModelerStr, toSolonJson} from "../utils/bpmnUtils.ts";
 import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
 import {CommandStack, EventBus} from "bpmn-js";
+import jsYaml from "js-yaml";
 
 defineCustomElement("easy-bpmn-designer-toolbar", Toolbar);
 defineCustomElement("easy-bpmn-designer-panel", Panel);
@@ -268,23 +269,22 @@ export class EasyBpmnDesigner {
     /**
      * 获取设计器的xml值
      */
-    async getValue() {
-        const {xml} = await this.bpmnModeler.saveXML();
-        return xml;
+    getValue() {
+        jsYaml.dump(this.getJson())
     }
 
-    async getJson() {
-        // @ts-ignore
-        const elements = this.bpmnModeler.get("elementRegistry").getAll();
-        const processData = elements.reduce((acc: any, element: any) => {
-            if (element.type !== "label") {
-                acc[element.id] = {
-                    type: element.type,
-                    ...element.businessObject,
-                };
-            }
-            return acc;
-        }, {});
+    getJson() {
+        let processData: any = {};
+        const elementRegistry = this.bpmnModeler?.get("elementRegistry") as any;
+        if (elementRegistry) {
+            const elements = elementRegistry.getAll();
+            processData = elements.reduce((acc: any, element: any) => {
+                if (element.type === "bpmn:Process") {
+                    return toSolonJson(element);
+                }
+                return acc;
+            }, {});
+        }
         return JSON.stringify(processData, null, 2);
     }
 
