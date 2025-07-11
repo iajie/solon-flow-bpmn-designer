@@ -22,10 +22,17 @@ export class Import extends AbstractToolBar {
             try {
                 const text = await file.text();
                 const yaml = jsYaml.load(text);
-                console.log(toBpmnXml(yaml as SolonFlowChina))
-                await modeler?.importXML(toBpmnXml(yaml as SolonFlowChina));
+                const solonFlow = yaml as SolonFlowChina;
+                // 存在bpmn信息
+                if (solonFlow.bpmn) {
+                    await modeler?.importXML(toBpmnXml(solonFlow));
+                } else {
+                    if (this.options?.onXmlError) {
+                        this.options?.onXmlError("Solon Flow Bpmn Import `bpmn` 属性为必填项");
+                        console.error("Solon Flow Bpmn Import `bpmn` 属性为必填项");
+                    }
+                }
             } catch (error) {
-                console.log(error);
                 if (this.options?.onXmlError) {
                     this.options?.onXmlError(error as Error);
                 }
@@ -42,4 +49,5 @@ export class Import extends AbstractToolBar {
             fileInput.onchange = (e) => this.handleFileChange(e, this.modeler);
         }
     }
+
 }

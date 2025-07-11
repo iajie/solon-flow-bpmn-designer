@@ -133,7 +133,7 @@ export type EasyBpmnDesignerOptions = {
      * @description xml加载错误
      * @param error
      */
-    onXmlError?: (error: Error) => void;
+    onXmlError?: (error: Error | string) => void;
     /**
      * @description 实例创建完成
      * @param bpmnModeler
