@@ -1,9 +1,8 @@
-import ReplaceMenuProvider, {
-    BpmnFactory, BpmnReplace, Moddle, ModdleCopy, Modeling, PopupMenu, Rules, Translate, Element
-} from 'bpmn-js/lib/features/popup-menu/ReplaceMenuProvider';
+import ReplaceMenuProvider from 'bpmn-js/lib/features/popup-menu/ReplaceMenuProvider';
 import * as replaceOptions from "bpmn-js/lib/features/replace/ReplaceOptions";
 import {TargetElement} from "bpmn-js/lib/features/replace/BpmnReplace";
 type ReplaceOption = import("bpmn-js/lib/features/replace/ReplaceOptions").ReplaceOption;
+import { BpmnFactory, BpmnReplace, Moddle, ModdleCopy, Modeling, PopupMenu, Rules, Translate, Element } from 'bpmn-js';
 
 class EasyBpmnPopupMenuProvider extends ReplaceMenuProvider {
 

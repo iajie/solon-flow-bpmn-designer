@@ -1,7 +1,5 @@
-import PaletteProvider, {
-    Palette, Create, ElementFactory, SpaceTool, LassoTool,
-    HandTool, GlobalConnect, Translate
-} from 'bpmn-js/lib/features/palette/PaletteProvider';
+import PaletteProvider from 'bpmn-js/lib/features/palette/PaletteProvider';
+import { Palette, Create, ElementFactory, SpaceTool, LassoTool, HandTool, GlobalConnect, Translate } from 'bpmn-js';
 import { createAction } from '../../utils/bpmnUtils.ts';
 
 class EasyBpmnPaletteProvider extends PaletteProvider {
@@ -25,7 +23,6 @@ class EasyBpmnPaletteProvider extends PaletteProvider {
     }
     getPaletteEntries() {
         const actions = {};
-
         Object.assign(actions, {
             'hand-tool': {
                 group: 'tools',

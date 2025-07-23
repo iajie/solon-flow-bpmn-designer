@@ -1,7 +1,6 @@
 import { AbstractPanel } from "../AbstractPanel.ts";
-import { BpmnElement } from "bpmn-js";
+import {BpmnElement, Modeler} from "bpmn-js";
 import { t } from "i18next";
-import BpmnModeler from "bpmn-js/lib/Modeler";
 import { EasyBpmnDesignerOptions } from "../../../types/easy-bpmn-designer.ts";
 import tippy from "tippy.js";
 
@@ -62,11 +61,11 @@ export class PanelInput extends AbstractPanel {
         this.labelElement = this;
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: BpmnModeler) {
+    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
         console.log('onChangeValue', e, element, modeler);
     }
 
-    onCreate(modeler: BpmnModeler, options: EasyBpmnDesignerOptions) {
+    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions) {
         this.modeler = modeler;
         super.onCreate(modeler, options);
     }

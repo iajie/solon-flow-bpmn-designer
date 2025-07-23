@@ -1,13 +1,8 @@
 // @ts-ignore
 import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
-import {
-    Create,
-    ElementFactory,
-} from "bpmn-js/lib/features/palette/PaletteProvider";
-import BpmnModeler from "bpmn-js/lib/Modeler";
-import {BpmnElement, BpmnFactory, Modeling} from "bpmn-js";
+import { Create } from "bpmn-js/lib/features/palette/PaletteProvider";
+import { ElementFactory, Modeling, Modeler, Element, Shape } from "bpmn-js";
 import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
-type Element = import("bpmn-js/lib/model/Types").Element;
 export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
     const newId: string = `Chain_${timestamp}`;
@@ -60,7 +55,7 @@ export const downloadFile = (content: string, filename: string, type = "text/xml
     window.URL.revokeObjectURL(url);
 };
 
-export const updateProperty = (key: string, value: any, element?: BpmnElement, modeler?: BpmnModeler) => {
+export const updateProperty = (key: string, value: any, element?: Element, modeler?: Modeler) => {
     if (!element || !modeler) return;
     const modeling = modeler.get("modeling") as Modeling;
     try {
@@ -81,13 +76,13 @@ export const updateProperty = (key: string, value: any, element?: BpmnElement, m
  * @param element
  * @param modeler
  */
-export const updateCondition = (type: string, expression: string = "", element?: BpmnElement, modeler?: BpmnModeler) => {
+export const updateCondition = (type: string, expression: string = "", element?: Element, modeler?: Modeler) => {
     if (!element || !modeler) return;
-    const bpmnFactory = modeler.get("bpmnFactory") as BpmnFactory;
+    const bpmnFactory = modeler.get("bpmnFactory");
     const modeling = modeler.get("modeling") as Modeling;
     try {
         if (type === "expression" && expression) {
-            // 创建条件表达式
+            // @ts-ignore 创建条件表达式
             const conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {
                 body: expression,
             });
@@ -144,6 +139,53 @@ const getNodeType = (type: string) => {
         default:
             return "activity";
     }
+}
+
+const getBpmnNode = (type: string) => {
+    switch (type) {
+        case "start":
+            return "bpmn:StartEvent";
+        case "end":
+            return "bpmn:EndEvent";
+        case "parallel":
+            return "bpmn:ParallelGateway";
+        case "inclusive":
+            return "bpmn:InclusiveGateway";
+        case "exclusive":
+            return "bpmn:ExclusiveGateway";
+        default:
+            return "bpmn:UserTask";
+    }
+}
+
+
+/**
+ * 创建节点
+ * @param modeler bpmn模型
+ * @param startShape 在谁的后面创建节点
+ * @param elementFactory 元素工厂
+ * @param modeling 属性工具
+ * @param type 创建类型
+ */
+export const createTaskShape = (modeler: Modeler, startShape: Shape, elementFactory: ElementFactory,
+                                modeling: Modeling, type: string = 'activity')=> {
+    const shapeTask = getBpmnNode(type);
+    //获取根节点
+    const rootElement = modeler.get('canvas').getRootElement();
+    let branchShape = elementFactory.create("shape", { type: shapeTask })
+    let shapeX: number = 0, shapeY: number = 0;
+    if (branchShape.type === startShape.type) {
+        shapeX = branchShape.width * 2
+        shapeY = branchShape.height / 2
+    } else if (shapeTask === "bpmn:UserTask") {
+        shapeX = 150
+        // 为了对齐，用task节点的高减去start节点高的一半，后面减去4是边框的px
+        shapeY = (branchShape.height - startShape.height) / 2 - 4
+    }
+    //branchShape要创建的节点
+    //坐标位置
+    //rootElement表示在根节点创建
+    return modeling.createShape(branchShape, { x: startShape.x + shapeX, y: startShape.y + shapeY }, <any>rootElement);
 }
 
 /**

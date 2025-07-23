@@ -1,23 +1,7 @@
-import ContextPadProvider, {Canvas, ContextPadConfig,} from "bpmn-js/lib/features/context-pad/ContextPadProvider";
+import ContextPadProvider, {Canvas, ContextPadConfig} from "bpmn-js/lib/features/context-pad/ContextPadProvider";
 import {isType} from "../../utils/bpmnUtils.ts";
-
-type Injector = import("didi").Injector;
-type EventBus = import("diagram-js/lib/core/EventBus").default;
-type ContextPad =
-    import("diagram-js/lib/features/context-pad/ContextPad").default;
-type Modeling = import("bpmn-js/lib/features/modeling/Modeling").default;
-type ElementFactory =
-    import("bpmn-js/lib/features/modeling/ElementFactory").default;
-type AppendPreview =
-    import("bpmn-js/lib/features/append-preview/AppendPreview").default;
-type Connect = import("diagram-js/lib/features/connect/Connect").default;
-type Create = import("diagram-js/lib/features/create/Create").default;
-type PopupMenu = import("diagram-js/lib/features/popup-menu/PopupMenu").default;
-type Rules = import("diagram-js/lib/features/rules/Rules").default;
-export type Translate =
-    typeof import("diagram-js/lib/i18n/translate/translate").default;
-type Element = import("bpmn-js/lib/model/Types").Element;
-type Shape = import("bpmn-js/lib/model/Types").Shape;
+import { Injector, EventBus, ContextPad, Modeling, ElementFactory, Connect,
+    Create, PopupMenu, Rules, Translate, Element, Shape, AppendPreview } from 'bpmn-js';
 
 export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
     private elementFactory: ElementFactory;

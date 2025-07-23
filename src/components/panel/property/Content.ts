@@ -5,9 +5,8 @@ import { PanelInput } from "./PanelInput.ts";
 import { defineCustomElement } from "../../../utils/domUtils.ts";
 import { Name } from "./basic/Name.ts";
 import { ID } from "./basic/ID.ts";
-import BpmnModeler from "bpmn-js/lib/Modeler";
 import { EasyBpmnDesignerOptions } from "../../../types/easy-bpmn-designer.ts";
-import { BpmnElement } from "bpmn-js";
+import {BpmnElement, Modeler} from "bpmn-js";
 import { ConditionType } from "./sequenceFlow/ConditionType.ts";
 import { ConditionExpression } from "./sequenceFlow/ConditionExpression.ts";
 import {Driver} from "./china/Driver.ts";
@@ -57,7 +56,7 @@ export class PanelContent extends AbstractPanel {
         }
     }
 
-    initGroup(modeler: BpmnModeler, options: EasyBpmnDesignerOptions, panelGroup: any) {
+    initGroup(modeler: Modeler, options: EasyBpmnDesignerOptions, panelGroup: any) {
         for (let group of panelGroup) {
             const groupDom = document.createElement('div');
             groupDom.style.display = group.title == 'basic' ? "block" : "none";

@@ -32,14 +32,14 @@ type Element = import("bpmn-js/lib/model/Types").Element;
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initModelerStr, toSolonJson} from "../utils/bpmnUtils.ts";
 import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
-import {CommandStack, EventBus} from "bpmn-js";
+import {CommandStack, EventBus, Modeler} from "bpmn-js";
 import jsYaml from "js-yaml";
 
 defineCustomElement("easy-bpmn-designer-toolbar", Toolbar);
 defineCustomElement("easy-bpmn-designer-panel", Panel);
 
 export interface DesignerEventListener {
-    onCreate: (modeler: BpmnModeler, options: EasyBpmnDesignerOptions) => void;
+    onCreate: (modeler: Modeler, options: EasyBpmnDesignerOptions) => void;
 }
 
 /**
@@ -208,7 +208,7 @@ export class EasyBpmnDesigner {
 
     protected onCreated() {
         this.eventComponents.forEach((zEvent) => {
-            zEvent.onCreate && zEvent.onCreate(this.bpmnModeler, this.options);
+            zEvent.onCreate && zEvent.onCreate(this.bpmnModeler as Modeler, this.options);
         });
 
         const _header =
@@ -224,7 +224,7 @@ export class EasyBpmnDesigner {
         _footer.appendChild(this.panel);
 
         if (this.options.onCreated) {
-            this.options.onCreated(this.bpmnModeler);
+            this.options.onCreated(this.bpmnModeler as Modeler);
         }
     }
 

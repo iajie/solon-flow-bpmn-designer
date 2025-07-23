@@ -1,9 +1,7 @@
 import {BaseViewerOptions} from "bpmn-js/lib/BaseViewer";
 import {EasyBpmnDesigner} from "../core/EasyBpmnDesigner.ts";
 import {DefaultToolbarKey} from "../components/toolbar/DefaultToolbarKeys.ts";
-import BpmnModeler from "bpmn-js/lib/Modeler";
-type Element = import("bpmn-js/lib/model/Types").Element;
-type ModuleDeclaration = import("didi").ModuleDeclaration;
+import {Modeler, Element, ModuleDeclaration } from "bpmn-js";
 
 export interface CustomMenu {
     id?: string
@@ -11,8 +9,8 @@ export interface CustomMenu {
     icon?: string
     html?: string
     tip?: string
-    onClick?: (event: MouseEvent, modeler: BpmnModeler) => void
-    onCreate?: (button: HTMLElement, modeler: BpmnModeler) => void
+    onClick?: (event: MouseEvent, modeler: Modeler) => void
+    onCreate?: (button: HTMLElement, modeler: Modeler) => void
 }
 
 export interface MenuGroup {
@@ -139,7 +137,7 @@ export type EasyBpmnDesignerOptions = {
      * @description 实例创建完成
      * @param bpmnModeler
      */
-    onCreated?: (modeler: BpmnModeler) => void;
+    onCreated?: (modeler: Modeler) => void;
     /**
      * @description 销毁实例
      * @param bpmnModeler

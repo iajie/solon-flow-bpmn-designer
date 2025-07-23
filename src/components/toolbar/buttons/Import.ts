@@ -27,6 +27,7 @@ export class Import extends AbstractToolBar {
                 if (solonFlow.bpmn) {
                     await modeler?.importXML(toBpmnXml(solonFlow));
                 } else {
+                    modeler?.clear();
                     if (this.options?.onXmlError) {
                         this.options?.onXmlError("Solon Flow Bpmn Import `bpmn` 属性为必填项");
                         console.error("Solon Flow Bpmn Import `bpmn` 属性为必填项");

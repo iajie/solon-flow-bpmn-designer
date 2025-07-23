@@ -1,12 +1,11 @@
-import BpmnModeler from "bpmn-js/lib/Modeler";
 import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
 import {DesignerEventListener} from "../../core/EasyBpmnDesigner.ts";
-import { BpmnElement } from "bpmn-js";
+import {BpmnElement, Modeler} from "bpmn-js";
 
 export class AbstractPanel extends HTMLElement implements DesignerEventListener {
 
     template: string = '';
-    modeler?: BpmnModeler;
+    modeler?: Modeler;
     options?: EasyBpmnDesignerOptions;
     originalElement?: BpmnElement;
     element?: BpmnElement & any;
@@ -37,7 +36,7 @@ export class AbstractPanel extends HTMLElement implements DesignerEventListener 
     // @ts-ignore
     updateElement(element: BpmnElement, oldProperties: any, properties: any) {}
 
-    onCreate(modeler: BpmnModeler, options: EasyBpmnDesignerOptions): void {
+    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions): void {
         this.modeler = modeler;
         this.options = options;
         if (!this.element) {
@@ -63,7 +62,7 @@ export class AbstractPanel extends HTMLElement implements DesignerEventListener 
         this.updateElement(e.context.element, e.context.oldProperties, e.context.properties);
     }
 
-    handleSelectionChange(e: { newSelection: BpmnElement[] }, modeler: BpmnModeler) {
+    handleSelectionChange(e: { newSelection: BpmnElement[] }, modeler: Modeler) {
         let element = e.newSelection[0] || null;
         // 保存原始元素引用
         if (element) {

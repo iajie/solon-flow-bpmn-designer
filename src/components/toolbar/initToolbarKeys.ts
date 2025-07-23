@@ -1,15 +1,13 @@
 import {CustomMenu, EasyBpmnDesignerOptions, MenuGroup} from "../../types/easy-bpmn-designer.ts";
-import BpmnModeler from "bpmn-js/lib/Modeler";
 import {AbstractToolBar} from "./AbstractToolBar.ts";
 import {t} from "i18next";
 import tippy from "tippy.js";
 import {Group} from "./Group.ts";
 import {Custom} from "./Custom.ts";
+import {Modeler} from "bpmn-js";
 
-export const initToolbarKeys = (modeler: BpmnModeler,
-                                options: EasyBpmnDesignerOptions,
-                                menuButtons: AbstractToolBar[],
-                                toolbarKeys: (string | CustomMenu | MenuGroup)[]) => {
+export const initToolbarKeys = (modeler: Modeler, options: EasyBpmnDesignerOptions,
+                                menuButtons: AbstractToolBar[], toolbarKeys: (string | CustomMenu | MenuGroup)[]) => {
     for (let i = 0; i < toolbarKeys.length; i++) {
         let toolbarKey = toolbarKeys[i];
         if (!toolbarKey) continue;

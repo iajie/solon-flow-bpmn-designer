@@ -2,7 +2,7 @@ import tippy, {Instance} from "tippy.js";
 import {AbstractToolBar} from "./AbstractToolBar.ts";
 import {EasyBpmnDesignerOptions, MenuGroup} from "../../types/easy-bpmn-designer.ts";
 import {initToolbarKeys} from "./initToolbarKeys.ts";
-import BpmnModeler from "bpmn-js/lib/Modeler";
+import {Modeler} from "bpmn-js";
 
 
 export class Group extends AbstractToolBar {
@@ -16,11 +16,11 @@ export class Group extends AbstractToolBar {
         super();
     }
 
-    onCreate(_: BpmnModeler, options: EasyBpmnDesignerOptions) {
+    onCreate(_: Modeler, options: EasyBpmnDesignerOptions) {
         super.onCreate(_, options);
     }
 
-    init(modeler: BpmnModeler, options: EasyBpmnDesignerOptions, mg: MenuGroup) {
+    init(modeler: Modeler, options: EasyBpmnDesignerOptions, mg: MenuGroup) {
         initToolbarKeys(modeler, options, this.menuButtons, mg.toolbarKeys)
         this.iconSvg = mg.icon || this.iconSvg;
     }

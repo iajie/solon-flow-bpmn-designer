@@ -1,6 +1,5 @@
 import {AbstractPanel} from "./AbstractPanel.ts";
-import {BpmnFactory, Modeling} from "bpmn-js";
-import Modeler from "bpmn-js/lib/Modeler";
+import { Modeling, Modeler } from "bpmn-js";
 import { EasyBpmnDesignerOptions } from "../../types/easy-bpmn-designer.ts";
 import { initPanelContent } from "./index.ts";
 
@@ -34,7 +33,7 @@ export class Property extends AbstractPanel {
     }
 
     bpmnFactory() {
-        return this.modeler?.get('bpmnFactory') as BpmnFactory;
+        return this.modeler?.get('bpmnFactory');
     }
 
     modeling() {

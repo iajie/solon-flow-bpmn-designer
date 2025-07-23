@@ -2,12 +2,12 @@ import { Switch } from './Switch.ts';
 import { BpmnIcon } from './BpmnIcon.ts';
 import { Property } from './Property.ts';
 import {defineCustomElement} from "../../utils/domUtils.ts";
-import BpmnModeler from "bpmn-js/lib/Modeler";
 import { EasyBpmnDesignerOptions } from "../../types/easy-bpmn-designer.ts";
 import {AbstractPanel} from "./AbstractPanel.ts";
 import { PanelContent } from "./property/Content.ts";
 import { TabGroup } from "./property/TabGroup.ts";
 import { defaultPanelKeys } from "./DefaultPanelTabs.ts";
+import {Modeler} from "bpmn-js";
 
 defineCustomElement('easy-bpmn-designer-panel-switch', Switch);
 defineCustomElement('easy-bpmn-designer-panel-bpmn-icon', BpmnIcon);
@@ -15,7 +15,7 @@ defineCustomElement('easy-bpmn-designer-panel-property', Property);
 defineCustomElement('easy-bpmn-designer-panel-property-content', PanelContent);
 defineCustomElement('easy-bpmn-designer-panel-property-group', TabGroup);
 
-export const initPanelKeys = (modeler: BpmnModeler,
+export const initPanelKeys = (modeler: Modeler,
                               options: EasyBpmnDesignerOptions, panelDom: AbstractPanel[]) => {
     try {
         // 创建开关
@@ -38,7 +38,7 @@ export const initPanelKeys = (modeler: BpmnModeler,
     }
 }
 
-export const initPanelContent = (modeler: BpmnModeler,
+export const initPanelContent = (modeler: Modeler,
                                  options: EasyBpmnDesignerOptions, property: Property) => {
     try {
         const panelTabs = defaultPanelKeys?.concat(options?.panelTabs || []) || [];

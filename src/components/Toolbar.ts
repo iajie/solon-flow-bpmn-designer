@@ -1,7 +1,7 @@
 import {AbstractToolBar} from "./toolbar/AbstractToolBar.ts";
 import {DesignerEventListener} from "../core/EasyBpmnDesigner.ts";
-import BpmnModeler from "bpmn-js/lib/Modeler";
 import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
+import { Modeler } from 'bpmn-js';
 
 import { Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
     ZoomIn, ZoomOut, Reset, MiniMap, defaultToolbarKeys  } from "./toolbar/index.ts";
@@ -38,7 +38,7 @@ export class Toolbar extends HTMLElement implements DesignerEventListener {
         }
     }
 
-    onCreate(modeler: BpmnModeler, options: EasyBpmnDesignerOptions): void {
+    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions): void {
         let toolbarKeys = options.toolbarKeys || defaultToolbarKeys;
         toolbarKeys = toolbarKeys.filter((tool) => {
             if (typeof tool === "string") {
