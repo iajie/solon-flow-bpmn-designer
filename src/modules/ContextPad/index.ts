@@ -2,9 +2,10 @@ import ContextPadProvider, {
     Canvas,
     ContextPadConfig,
 } from "bpmn-js/lib/features/context-pad/ContextPadProvider";
-import { Injector, EventBus, ContextPad, Modeling, ElementFactory, AppendPreview, Connect, Create, PopupMenu,
+import { Injector, EventBus, ContextPad, Modeling, AppendPreview, Connect, Create, PopupMenu,
     Rules, Translate, Element, Shape
 } from 'bpmn-js';
+type ElementFactory = import("bpmn-js/lib/features/modeling/ElementFactory").default;
 import {EasyBpmnNodeContextPadProvider} from './Node.ts';
 import {isType} from "../../utils/bpmnUtils.ts";
 

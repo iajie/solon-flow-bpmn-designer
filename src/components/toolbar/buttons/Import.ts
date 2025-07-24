@@ -1,8 +1,8 @@
 import {AbstractToolBar} from "../AbstractToolBar.ts";
 import jsYaml from "js-yaml";
-import {toBpmnXml} from "../../../utils/bpmnUtils.ts";
+import {createTaskShape, toBpmnXml, updateProperty} from "../../../utils/bpmnUtils.ts";
 import {SolonFlowChina} from "../../../types/easy-bpmn-designer.ts";
-import Modeler from "bpmn-js/lib/Modeler";
+import {Modeler, Element, ShapeLike} from "bpmn-js";
 
 export class Import extends AbstractToolBar {
 
@@ -15,7 +15,7 @@ export class Import extends AbstractToolBar {
         this.registerClickListener();
     }
 
-    async handleFileChange(e: Event, modeler: Modeler<null> | undefined) {
+    async handleFileChange(e: Event, modeler?: Modeler) {
         const target = e.target as HTMLInputElement;
         const file = target.files?.[0];
         if (file) {
@@ -27,11 +27,29 @@ export class Import extends AbstractToolBar {
                 if (solonFlow.bpmn) {
                     await modeler?.importXML(toBpmnXml(solonFlow));
                 } else {
-                    modeler?.clear();
-                    if (this.options?.onXmlError) {
-                        this.options?.onXmlError("Solon Flow Bpmn Import `bpmn` 属性为必填项");
-                        console.error("Solon Flow Bpmn Import `bpmn` 属性为必填项");
+                    const canvas = modeler?.get("canvas");
+                    const root = canvas?.getRootElement() as Element;
+                    const rootElement = canvas?.getRootElements()[0];
+                    if (rootElement) {
+                        rootElement.children.forEach((el: ShapeLike) => {
+                            if (el.label) {
+                                canvas?.removeShape(el.label.id);
+                            }
+                            canvas?.removeShape(el.id);
+                        });
                     }
+                    updateProperty('id', solonFlow.id, root, modeler);
+                    if (solonFlow.title) {
+                        updateProperty('name', solonFlow.title, root, modeler);
+                    }
+                    if (solonFlow.driver) {
+                        updateProperty('driver', solonFlow.driver, root, modeler);
+                    }
+                    if (solonFlow.meta) {
+                        updateProperty('meta', solonFlow.meta, root, modeler);
+                    }
+                    // 定义第一节点位置
+                    createTaskShape(modeler, solonFlow.layout);
                 }
             } catch (error) {
                 if (this.options?.onXmlError) {

@@ -1,7 +1,6 @@
 import { PanelInput } from "../PanelInput.ts";
-import Modeler from "bpmn-js/lib/Modeler";
 import { updateCondition } from "../../../../utils/bpmnUtils.ts";
-import { BpmnElement } from "bpmn-js";
+import { Modeler, Element } from "bpmn-js";
 import {AreaEditor} from "../../../../utils/areaEditor.ts";
 
 export class ConditionExpression extends PanelInput {
@@ -18,16 +17,16 @@ export class ConditionExpression extends PanelInput {
         new AreaEditor(this.inputElement);
     }
 
-    onChange(element: BpmnElement) {
+    onChange(element: Element) {
         this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
         this.inputElement && (this.inputElement.value = element.businessObject.conditionExpression?.body || "");
     }
 
-    updateElement(element: BpmnElement) {
+    updateElement(element: Element) {
         this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
+    onChangeValue(e: Event, element: Element, modeler?: Modeler) {
         const value = (e.target as HTMLInputElement).value;
         updateCondition('expression', value, element, modeler);
     }

@@ -27,12 +27,12 @@ import {EasyBpmnDesignerPalette} from "../modules/Palette";
 import {EasyBpmnDesignerContextPad, EasyBpmnDesignerNodeContextPad} from "../modules/ContextPad";
 import {EasyBpmnDesignerPopupMenu} from "../modules/PopupMenu";
 import zhTranslate from "../modules/Translate";
-type Element = import("bpmn-js/lib/model/Types").Element;
 // 标签解析 Moddle
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initModelerStr, toSolonJson} from "../utils/bpmnUtils.ts";
 import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
-import {CommandStack, EventBus, Modeler} from "bpmn-js";
+import {CommandStack, EventBus, Modeler, Element} from "bpmn-js";
+
 import jsYaml from "js-yaml";
 
 defineCustomElement("easy-bpmn-designer-toolbar", Toolbar);

@@ -1,6 +1,7 @@
 declare module 'bpmn-js' {
 
     export type Canvas = import('diagram-js/lib/core/Canvas').default;
+    export type ShapeLike = import('diagram-js/lib/core/Types').ShapeLike;
     export type ElementRegistry = import('diagram-js/lib/core/ElementRegistry').default;
     export type ElementFactory = import("diagram-js/lib/core/ElementFactory").default;
     export type EventBus = import("diagram-js/lib/core/EventBus").default;
@@ -27,29 +28,16 @@ declare module 'bpmn-js' {
     export type LassoTool = import("diagram-js/lib/features/lasso-tool/LassoTool").default;
     export type HandTool = import("diagram-js/lib/features/hand-tool/HandTool").default;
     export type GlobalConnect = import("diagram-js/lib/features/global-connect/GlobalConnect").default;
+    export type Connection = import("diagram-js/lib/model/Types").Connection;
 
-    export interface BpmnJSOptions {
-        container: HTMLElement | string;
-        width?: string | number;
-        height?: string | number;
-        position?: 'absolute';
-        additionalModules?: BpmnJSModule[];
-        moddleExtensions?: Record<string, any>;
-    }
+    export type BpmnJSOptions = import('bpmn-js/lib/BaseModeler').BaseViewerOptions;
 
-    export interface Selection {
-        get(): Array<any>;
-    }
+    export type Selection = import('diagram-js/lib/features/selection/Selection').default;
 
     export type CommandStack = import('diagram-js/lib/command/CommandStack').default;
 
-    export interface Clipboard {
-        isEmpty(): boolean;
-
-        copy(elements: Array<any>): void;
-
-        paste(): void;
-    }
+    export type Clipboard = import('diagram-js/lib/features/clipboard/Clipboard').default;
+    export type AlignElements = import('diagram-js/lib/features/align-elements/AlignElements').default;
 
     export interface BpmnElement {
         id: string;
@@ -91,7 +79,7 @@ declare module 'bpmn-js' {
         get(moduleName: string): any;
     }
 
-    export interface Modeler {
+    export type Modeler = import('bpmn-js/lib/Modeler').default & {
         get(name: 'canvas'): Canvas;
 
         get(name: 'modeling'): Modeling;
@@ -104,7 +92,9 @@ declare module 'bpmn-js' {
 
         get(name: 'clipboard'): Clipboard;
 
-        get(name: 'bpmnFactory'): ElementFactory;
+        get(name: 'bpmnFactory'): BpmnFactory;
+
+        get(name: 'elementFactory'): ElementFactory;
 
         get(name: 'alignElements'): AlignElements;
 
@@ -129,9 +119,6 @@ declare module 'bpmn-js' {
         saveXML(options?: { format?: boolean }): Promise<{ xml: string }>;
     }
 
-    export interface AlignElements {
-        trigger(elements: BpmnElement[], type: 'left' | 'right' | 'center' | 'top' | 'bottom' | 'middle'): void;
-    }
 }
 
 declare module 'bpmn-js/lib/Viewer' {
@@ -143,5 +130,5 @@ export type {Canvas, Modeling, Selection, Clipboard, CommandStack,
     BpmnElement, Modeler, Element, Shape, ElementFactory,
     Create, Connect, ContextPad, EventBus, Injector, Palette, PopupMenu, BpmnFactory, Rules, Translate,
     Moddle, ModdleCopy, BpmnReplace, ElementRegistry, AppendPreview, SpaceTool, HandTool, LassoTool, GlobalConnect,
-    ModuleDeclaration
+    ModuleDeclaration, ShapeLike, Connection
 } from 'bpmn-js';

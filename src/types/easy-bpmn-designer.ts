@@ -200,7 +200,7 @@ export interface SolonFlowNode {
     /**
      * @description 连接
      */
-    link: SolonFlowLink[];
+    link: SolonFlowLink[] | string | string[] | SolonFlowLink;
 }
 
 export interface SolonFlowLink {
@@ -224,4 +224,5 @@ export interface SolonFlowLink {
      * @description 存储bpmn节点id
      */
     id: string;
+    [key: string]: any;
 }

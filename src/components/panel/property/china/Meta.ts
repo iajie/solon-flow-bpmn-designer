@@ -1,6 +1,5 @@
 import { PanelInput } from "../PanelInput.ts";
-import { BpmnElement } from "bpmn-js";
-import Modeler from "bpmn-js/lib/Modeler";
+import { Element, Modeler } from "bpmn-js";
 import { updateProperty } from "../../../../utils/bpmnUtils.ts";
 import {EasyBpmnDialog} from "../../../EasyBpmnDialog.ts";
 import {t} from "i18next";
@@ -33,12 +32,12 @@ export class Meta extends PanelInput {
         });
     }
 
-    onChange(element: BpmnElement) {
+    onChange(element: Element) {
         super.onChange(element);
         this.inputElement && (this.inputElement.value = element.businessObject.$attrs.meta || '{}');
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
+    onChangeValue(e: Event, element: Element, modeler?: Modeler) {
         updateProperty('meta', (e.target as HTMLInputElement).value || '', element, modeler);
     }
 }

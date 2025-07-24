@@ -1,8 +1,9 @@
 // @ts-ignore
 import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
-import { Create } from "bpmn-js/lib/features/palette/PaletteProvider";
-import { ElementFactory, Modeling, Modeler, Element, Shape } from "bpmn-js";
+import {Create} from "bpmn-js/lib/features/palette/PaletteProvider";
+import { Element, ElementFactory, Modeler, Modeling, Shape} from "bpmn-js";
 import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
+
 export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
     const newId: string = `Chain_${timestamp}`;
@@ -57,7 +58,7 @@ export const downloadFile = (content: string, filename: string, type = "text/xml
 
 export const updateProperty = (key: string, value: any, element?: Element, modeler?: Modeler) => {
     if (!element || !modeler) return;
-    const modeling = modeler.get("modeling") as Modeling;
+    const modeling = modeler.get("modeling");
     try {
         const updateObj: Record<string, any> = {};
         updateObj[key] = value;
@@ -158,35 +159,140 @@ const getBpmnNode = (type: string) => {
     }
 }
 
+const sequenceFlows = (nodes: SolonFlowNode[]) => {
+    const sequenceFlows: any[] = [];
+    nodes.map((node: SolonFlowNode, index) => {
+        if (node.link) {
+            if (Array.isArray(node.link)) {
+                node.link.forEach(item => {
+                    if (typeof item === "string") {
+                        sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: item });
+                    } else {
+                        sequenceFlows.push({
+                            id: item.id || `SequenceFlows_${index}`,
+                            sourceRef: node.id,
+                            targetRef: item.nextId,
+                            when: item.when,
+                            name: item.title,
+                            meta: item.meta,
+                        });
+                    }
+                });
+            } else if(typeof node.link === "object") {
+                sequenceFlows.push({
+                    id: node.id || `SequenceFlows_${index}`,
+                    sourceRef: node.id,
+                    targetRef: node.link.nextId,
+                    when: node.link.when,
+                    name: node.link.title,
+                    meta: node.link.meta,
+                });
+            } else {
+                sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: node.link });
+            }
+        } else {
+            sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: nodes[index+1].id });
+        }
+    });
+    return sequenceFlows;
+}
+
 
 /**
  * 创建节点
  * @param modeler bpmn模型
- * @param startShape 在谁的后面创建节点
- * @param elementFactory 元素工厂
- * @param modeling 属性工具
- * @param type 创建类型
+ * @param nodes 生成节点
  */
-export const createTaskShape = (modeler: Modeler, startShape: Shape, elementFactory: ElementFactory,
-                                modeling: Modeling, type: string = 'activity')=> {
-    const shapeTask = getBpmnNode(type);
-    //获取根节点
-    const rootElement = modeler.get('canvas').getRootElement();
-    let branchShape = elementFactory.create("shape", { type: shapeTask })
-    let shapeX: number = 0, shapeY: number = 0;
-    if (branchShape.type === startShape.type) {
-        shapeX = branchShape.width * 2
-        shapeY = branchShape.height / 2
-    } else if (shapeTask === "bpmn:UserTask") {
-        shapeX = 150
-        // 为了对齐，用task节点的高减去start节点高的一半，后面减去4是边框的px
-        shapeY = (branchShape.height - startShape.height) / 2 - 4
+export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
+    if (!modeler || !nodes || !nodes.length) {
+        return;
     }
-    //branchShape要创建的节点
-    //坐标位置
-    //rootElement表示在根节点创建
-    return modeling.createShape(branchShape, { x: startShape.x + shapeX, y: startShape.y + shapeY }, <any>rootElement);
+    //获取根节点
+    const canvas = modeler.get('canvas');
+    const rootElement = canvas.getRootElement();
+    const modeling = modeler.get('modeling');
+    const elementFactory = modeler.get('elementFactory');
+    const elements: Element[] = [];
+    nodes.forEach((item, index) => {
+        const nodeType = getBpmnNode(item.type);
+        const node = elementFactory.createShape({
+            id: item.id || `${nodeType}_${index}`,
+            type: nodeType,
+        });
+        if (index === 0) {
+            node.x = 192;
+            node.y = 250;
+            console.log(node.x, node.y, node.width, node.height);
+        } else {
+            const preNode = elements[index - 1];
+            let shapeX: number, shapeY: number = 0;
+            if (preNode.type === node.type) {
+                shapeX = preNode.width * 2
+            } else {
+                if (preNode.type === "bpmn:StartEvent" && node.type === "bpmn:UserTask") {
+                    // 为了对齐，用task节点的高减去start节点高的一半，后面减去4是边框的px
+                    shapeY = -(preNode.height / 2) - 4;
+                } else if (preNode.type === "bpmn:UserTask" && node.type.endsWith("Gateway")) {
+                    shapeY = (preNode.height-node.height) / 2;
+                } else if (preNode.type.endsWith("Gateway") && node.type === "bpmn:UserTask") {
+                    shapeY = (preNode.height-node.height) / 2;
+                } else if (preNode.type === "bpmn:UserTask" && node.type === "bpmn:EndEvent") {
+                    shapeY = node.height/2 + 4;
+                }
+                shapeX = 150;
+            }
+            node.x = preNode.x + shapeX;
+            node.y = preNode.y + shapeY;
+            console.log(node.x, node.y, node.width, node.height);
+        }
+        if (item.title) {
+            node.businessObject.name = item.title;
+        }
+        if (item.task) {
+            node.businessObject['$attrs'].task = item.task;
+        }
+        if (item.when) {
+            node.businessObject['$attrs'].when = item.when;
+        }
+        if (item.meta) {
+            node.businessObject['$attrs'].meta = item.meta;
+        }
+        elements.push(node as Shape);
+    });
+    modeling.createElements(elements, { x: 192, y: 250 }, <any>rootElement);
+    // 连线
+    connection(sequenceFlows(nodes), elements, modeling);
+    // 调整网关布局
+    const gateways = elements.filter(item => item.type.endsWith("Gateway"));
+    console.log(gateways);
+    canvas.scroll({ dx: 0, dy: 0 });
+    // @ts-ignore
+    canvas.zoom('fit-viewport', 'auto');
 }
+
+const connection = (links: any[], elements: Element[], modeling: Modeling) => {
+    links.forEach(item => {
+        // 目标节点
+        const node = elements.find(node => node.id === item.sourceRef);
+        if (node) {
+            const target = elements.find(node => node.id === item.targetRef);
+            if (target) {
+                const businessObject: any = {};
+                if (item.name) {
+                    businessObject.name = item.name;
+                }
+                if (item.when) {
+                    businessObject['$attrs'].when = item.when;
+                }
+                if (item.meta) {
+                    businessObject['$attrs'].meta = item.meta;
+                }
+                modeling.connect(node, target);
+            }
+        }
+    });
+}
+
 
 /**
  * 根据主流程构建solon-flow-json-code
@@ -280,8 +386,8 @@ export const toBpmnXml = (json: SolonFlowChina) => {
 export const createNodeXml = (nodes: SolonFlowNode[]) => {
     const sequenceFlows: any[] = [];
     const data: any[] = nodes.map((node: SolonFlowNode) => {
-        if (node.link.length) {
-            node.link.forEach(item => {
+        if (node.link) {
+            (node.link as SolonFlowLink[]).forEach(item => {
                 sequenceFlows.push({
                     type: "sequenceFlow",
                     id: item.id,
