@@ -71,37 +71,6 @@ export const updateProperty = (key: string, value: any, element?: Element, model
 };
 
 /**
- * 添加更新条件表达式的方法
- * @param type
- * @param expression
- * @param element
- * @param modeler
- */
-export const updateCondition = (type: string, expression: string = "", element?: Element, modeler?: Modeler) => {
-    if (!element || !modeler) return;
-    const bpmnFactory = modeler.get("bpmnFactory");
-    const modeling = modeler.get("modeling") as Modeling;
-    try {
-        if (type === "expression" && expression) {
-            // @ts-ignore 创建条件表达式
-            const conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {
-                body: expression,
-            });
-            modeling.updateProperties(element, {
-                conditionExpression: conditionExpression,
-            });
-        } else {
-            // 移除条件表达式
-            modeling.updateProperties(element, {
-                conditionExpression: null,
-            });
-        }
-    } catch (error) {
-        console.error("Failed to update condition:", error);
-    }
-};
-
-/**
  * 判断元素节点类型
  * @param type
  * @param arrays
@@ -277,17 +246,18 @@ const connection = (links: any[], elements: Element[], modeling: Modeling) => {
         if (node) {
             const target = elements.find(node => node.id === item.targetRef);
             if (target) {
-                const businessObject: any = {};
-                if (item.name) {
-                    businessObject.name = item.name;
-                }
-                if (item.when) {
-                    businessObject['$attrs'].when = item.when;
-                }
-                if (item.meta) {
-                    businessObject['$attrs'].meta = item.meta;
-                }
-                modeling.connect(node, target);
+                const businessObject: any = {
+                    name: item.name,
+                    $attrs: {
+                        when: item.when,
+                        meta: item.meta,
+                    }
+                };
+                const connect = modeling.connect(node, target);
+                connect.businessObject = {
+                    ...connect.businessObject,
+                    ...businessObject
+                };
             }
         }
     });
@@ -428,9 +398,8 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
                 </${node.type}>`
         } else {
             str += `<${node.type} id="${node.id}"
-                    name="${node.title || ''}" mata="${node.meta || '{}'}"
+                    name="${node.title || ''}" mata="${node.meta || '{}'}" when="${node.when}"
                     sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
-                    ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${node.when}</conditionExpression>` : ``}
                 </${node.type}>`
         }
     });

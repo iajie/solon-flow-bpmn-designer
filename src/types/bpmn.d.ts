@@ -58,7 +58,7 @@ declare module 'bpmn-js' {
         };
         width?: number;
         height?: number;
-        x?: number;
+        x?: numberwhen
         y?: number;
     }
 
