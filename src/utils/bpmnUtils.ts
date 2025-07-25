@@ -1,7 +1,7 @@
 // @ts-ignore
 import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
 import {Create} from "bpmn-js/lib/features/palette/PaletteProvider";
-import { Element, ElementFactory, Modeler, Modeling, Shape} from "bpmn-js";
+import { BpmnFactory, Element, ElementFactory, Modeler, Modeling, Shape } from "bpmn-js";
 import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
 
 export const initModelerStr = (key?: string, name?: string) => {
@@ -68,7 +68,39 @@ export const updateProperty = (key: string, value: any, element?: Element, model
     } catch (error) {
         console.error("Failed to update property:", error);
     }
-};
+}
+
+/**
+ * 添加更新条件表达式的方法
+ * @param type
+ * @param expression
+ * @param element
+ * @param modeler
+ */
+export const updateCondition = (type: string, expression: string = "", element?: Element, modeler?: Modeler) => {
+    if (!element || !modeler) return;
+    const bpmnFactory = modeler.get("bpmnFactory");
+    const modeling = modeler.get("modeling");
+    try {
+        if (type === "expression" && expression) {
+            // 创建条件表达式
+            const conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {
+                body: expression,
+            });
+            modeling.updateProperties(element, {
+                conditionExpression: conditionExpression,
+            });
+        } else {
+            // 移除条件表达式
+            modeling.updateProperties(element, {
+                conditionExpression: null,
+            });
+        }
+    } catch (error) {
+        console.error("Failed to update condition:", error);
+    }
+}
+
 
 /**
  * 判断元素节点类型
@@ -181,6 +213,7 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
     const rootElement = canvas.getRootElement();
     const modeling = modeler.get('modeling');
     const elementFactory = modeler.get('elementFactory');
+    const bpmnFactory = modeler.get('bpmnFactory');
     const elements: Element[] = [];
     nodes.forEach((item, index) => {
         const nodeType = getBpmnNode(item.type);
@@ -230,7 +263,7 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
     });
     modeling.createElements(elements, { x: 192, y: 250 }, <any>rootElement);
     // 连线
-    connection(sequenceFlows(nodes), elements, modeling);
+    connection(sequenceFlows(nodes), elements, modeling, bpmnFactory);
     // 调整网关布局
     const gateways = elements.filter(item => item.type.endsWith("Gateway"));
     console.log(gateways);
@@ -239,25 +272,22 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
     canvas.zoom('fit-viewport', 'auto');
 }
 
-const connection = (links: any[], elements: Element[], modeling: Modeling) => {
+const connection = (links: any[], elements: Element[], modeling: Modeling, bpmnFactory: BpmnFactory) => {
     links.forEach(item => {
         // 目标节点
         const node = elements.find(node => node.id === item.sourceRef);
         if (node) {
             const target = elements.find(node => node.id === item.targetRef);
             if (target) {
-                const businessObject: any = {
-                    name: item.name,
-                    $attrs: {
-                        when: item.when,
-                        meta: item.meta,
-                    }
-                };
                 const connect = modeling.connect(node, target);
-                connect.businessObject = {
-                    ...connect.businessObject,
-                    ...businessObject
-                };
+                if (item.title) {
+                    connect.businessObject.name = item.title;
+                }
+                if (item.when) {
+                    connect.businessObject.conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {
+                        body: item.when,
+                    });
+                }
             }
         }
     });
@@ -276,11 +306,11 @@ export const toSolonJson = (element: Element) => {
                 const links: SolonFlowLink[] = [];
                 if (children.outgoing && children.outgoing.length) {
                     children.outgoing.forEach(linkNode => {
+                        const obj = linkNode.businessObject;
                         const link: SolonFlowLink = {
                             nextId: linkNode.target?.id,
-                            when: linkNode.businessObject?.conditionExpression?.body,
-                            title: linkNode.businessObject.name,
-                            meta: linkNode.businessObject.meta,
+                            when: obj?.conditionExpression?.body,
+                            title: obj.name,
                             id: linkNode.id,
                         };
                         links.push(link);
@@ -362,7 +392,6 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
                     type: "sequenceFlow",
                     id: item.id,
                     title: item.title,
-                    meta: item.meta,
                     when: item.when,
                     sourceRef: node.id,
                     targetRef: item.nextId
@@ -397,9 +426,8 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
                     ${createComing(node)}
                 </${node.type}>`
         } else {
-            str += `<${node.type} id="${node.id}"
-                    name="${node.title || ''}" mata="${node.meta || '{}'}" when="${node.when}"
-                    sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
+            str += `<${node.type} id="${node.id}" name="${node.title || ''}" sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
+                    ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${node.when}</conditionExpression>` : ``}
                 </${node.type}>`
         }
     });

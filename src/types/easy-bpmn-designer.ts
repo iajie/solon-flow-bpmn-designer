@@ -217,10 +217,6 @@ export interface SolonFlowLink {
      */
     title: string;
     /**
-     * @description 元数据
-     */
-    meta: Record<string, any>;
-    /**
      * @description 存储bpmn节点id
      */
     id: string;

@@ -1,6 +1,6 @@
 import { PanelInput } from "../PanelInput.ts";
 import { t } from "i18next";
-import { updateProperty} from "../../../../utils/bpmnUtils.ts";
+import {updateCondition} from "../../../../utils/bpmnUtils.ts";
 import { Element, Modeler } from "bpmn-js";
 
 const options = [
@@ -29,16 +29,11 @@ export class ConditionType extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject['$attrs'].hasOwnProperty('when') ? "expression" : "");
+        this.inputElement && (this.inputElement.value = element.businessObject.conditionExpression ? "expression" : "");
     }
 
     onChangeValue(e: Event, element: Element, modeler?: Modeler) {
-        // @ts-ignore
-        if (e.target?.value === 'expression') {
-            updateProperty('when', '', element, modeler);
-        } else {
-            delete element.businessObject['$attrs'].when;
-            modeler?.get('modeling').updateProperties(element, element.businessObject);
-        }
+        const value = (e.target as HTMLInputElement).value;
+        updateCondition(value, '', element, modeler);
     }
 }
