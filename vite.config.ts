@@ -4,6 +4,7 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
     build: {
+        minify: "esbuild",
         lib: {
             entry: resolve(__dirname, './src/index.ts'),
             name: 'solon-flow-bpmn-designer',
@@ -11,7 +12,7 @@ export default defineConfig({
             formats: ['es', 'cjs'],
         },
     },
-    plugins: [dts()],
+    plugins: [dts({rollupTypes: true})],
     server: {
         port: 3008,
     }

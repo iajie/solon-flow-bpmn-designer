@@ -1,6 +1,5 @@
 import { PanelInput } from "../PanelInput.ts";
-import { BpmnElement } from "bpmn-js";
-import Modeler from "bpmn-js/lib/Modeler";
+import { Element, Modeler } from "bpmn-js";
 import { updateProperty } from "../../../../utils/bpmnUtils.ts";
 
 export class Name extends PanelInput {
@@ -11,12 +10,12 @@ export class Name extends PanelInput {
         this.inputLabel = 'name';
     }
 
-    onChange(element: BpmnElement) {
+    onChange(element: Element) {
         super.onChange(element);
         this.inputElement && (this.inputElement.value = element.businessObject.name || '');
     }
 
-    onChangeValue(e: Event, element: BpmnElement, modeler?: Modeler) {
+    onChangeValue(e: Event, element: Element, modeler?: Modeler) {
         updateProperty('name', (e.target as HTMLInputElement).value || '', element, modeler);
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/docs/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>easy-bpmn-designer</title>
     <script>
@@ -15,7 +15,7 @@
         }
         function changeLanguage() {
             const options = easyBpmnDesigner.getOptions();
-            if (options.lang == 'en') {
+            if (options.lang === 'en') {
                 easyBpmnDesigner.changeLocal("zh");
             } else {
                 easyBpmnDesigner.changeLocal("en");

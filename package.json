@@ -1,6 +1,6 @@
 {
     "name": "solon-flow-bpmn-designer",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "type": "module",
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
@@ -11,7 +11,10 @@
             "import": "./dist/index.js",
             "require": "./dist/index.cjs"
         },
-        "./style.css": "./dist/style.css"
+        "./dist/style.css": {
+            "import": "./dist/style.css",
+            "require": "./dist/style.css"
+        }
     },
     "files": [
         "dist",

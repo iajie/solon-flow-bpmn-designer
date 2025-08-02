@@ -391,7 +391,7 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
                 sequenceFlows.push({
                     type: "sequenceFlow",
                     id: item.id,
-                    title: item.title,
+                    name: item.title,
                     when: item.when,
                     sourceRef: node.id,
                     targetRef: item.nextId
@@ -421,13 +421,12 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
     let str = ``;
     flowData.forEach((node) => {
         if (node.type !== "sequenceFlow") {
-            str += `<${node.type} id="${node.id}" name="${node.name || ''}" when="${node.when || ''}"
-                        task="${node.task || ''}" mata="${node.meta || '{}'}">
+            str += `<${node.type} id="${node.id}" ${node.name ? `name="${node.name}"` : ``} ${node.when ? `when="${node.when}"` : ``} ${node.task ? `task="${node.task}"` : ``} ${node.mata ? `mata="${node.mata}"` : ``}>
                     ${createComing(node)}
                 </${node.type}>`
         } else {
-            str += `<${node.type} id="${node.id}" name="${node.title || ''}" sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
-                    ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${node.when}</conditionExpression>` : ``}
+            str += `<${node.type} id="${node.id}" ${node.name ? `name="${node.name}"` : ``} sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
+                    ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${node.when.replace(/[<>&]/g, (match: string) => {if(match === '<') return "&lt;"; if(match === '>') return "&gt;"; if (match === "&") return "&amp;";})}</conditionExpression>` : ``}
                 </${node.type}>`
         }
     });
@@ -453,12 +452,7 @@ const jsonToXml = (json: any)=> {
     let xml = ``;
     if (json.planeElement) {
         json.planeElement.forEach((element: any) => {
-            xml += `<${element.$type} id="${element.id}" bpmnElement="${element.bpmnElement}"
-                ${element['background-color'] ? `background-color="${element['background-color']}"` : ``}
-                ${element['border-color'] ? `border-color="${element['border-color']}"` : ``}
-                ${element['stroke'] ? `stroke="${element['stroke']}"` : ``}
-                ${element['fill'] ? `fill="${element['fill']}"` : ``}
-                >`;
+            xml += `<${element.$type} id="${element.id}" bpmnElement="${element.bpmnElement}" ${element['background-color'] ? `background-color="${element['background-color']}"` : ``} ${element['border-color'] ? `border-color="${element['border-color']}"` : ``} ${element['stroke'] ? `stroke="${element['stroke']}"` : ``} ${element['fill'] ? `fill="${element['fill']}"` : ``}>`;
             if (element.$type === 'bpmndi:BPMNShape') {
                 xml += createBounds(element);
             } else {
