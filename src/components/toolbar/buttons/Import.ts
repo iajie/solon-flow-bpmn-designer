@@ -2,7 +2,9 @@ import {AbstractToolBar} from "../AbstractToolBar.ts";
 import jsYaml from "js-yaml";
 import {createTaskShape, toBpmnXml, updateProperty} from "../../../utils/bpmnUtils.ts";
 import {SolonFlowChina} from "../../../types/easy-bpmn-designer.ts";
-import {Modeler, Element, ShapeLike} from "bpmn-js";
+import { Modeler, Element } from "bpmn-js";
+// @ts-ignore
+import { layoutProcess } from 'bpmn-auto-layout';
 
 export class Import extends AbstractToolBar {
 
@@ -28,28 +30,37 @@ export class Import extends AbstractToolBar {
                     await modeler?.importXML(toBpmnXml(solonFlow));
                 } else {
                     const canvas = modeler?.get("canvas");
+                    const modeling = modeler?.get("modeling");
                     const root = canvas?.getRootElement() as Element;
                     const rootElement = canvas?.getRootElements()[0];
                     if (rootElement) {
-                        rootElement.children.forEach((el: ShapeLike) => {
+                        const arr: Element[] = [];
+                        rootElement.children.forEach((el: any) => {
                             if (el.label) {
-                                canvas?.removeShape(el.label.id);
+                                arr.push(el.label);
                             }
-                            canvas?.removeShape(el.id);
+                            arr.push(el);
                         });
+                        modeling?.removeElements(arr);
                     }
                     updateProperty('id', solonFlow.id, root, modeler);
-                    if (solonFlow.title) {
-                        updateProperty('name', solonFlow.title, root, modeler);
-                    }
+                    updateProperty('name', solonFlow.title || '', root, modeler);
                     if (solonFlow.driver) {
                         updateProperty('driver', solonFlow.driver, root, modeler);
                     }
                     if (solonFlow.meta) {
-                        updateProperty('meta', solonFlow.meta, root, modeler);
+                        updateProperty('meta', JSON.stringify(solonFlow.meta, null, 2), root, modeler);
                     }
                     // 定义第一节点位置
                     createTaskShape(modeler, solonFlow.layout);
+                    modeler?.saveXML({ format: false }).then(async ({ xml }) => {
+                        // 重新布局
+                        modeler?.importXML(await layoutProcess(xml)).then(() => {
+                            canvas?.scroll({ dx: 0, dy: 0 });
+                            // @ts-ignore
+                            canvas.zoom('fit-viewport', 'auto');
+                        });
+                    });
                 }
             } catch (error) {
                 if (this.options?.onXmlError) {

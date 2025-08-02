@@ -23,7 +23,6 @@ export class ConditionExpression extends PanelInput {
     }
 
     updateElement(element: Element) {
-        console.log(element.businessObject)
         this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
     }
 

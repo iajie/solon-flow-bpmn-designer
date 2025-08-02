@@ -16,7 +16,7 @@ export class Meta extends PanelInput {
 
     init() {
         this.inputElement = document.createElement('textarea');
-        this.inputElement.style.minHeight = '200px';
+        this.inputElement.style.minHeight = '180px';
         new AreaEditor(this.inputElement);
         this.inputElement.readOnly = true;
         this.inputElement.addEventListener('click', () => {

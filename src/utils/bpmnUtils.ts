@@ -162,6 +162,7 @@ const getBpmnNode = (type: string) => {
 
 const sequenceFlows = (nodes: SolonFlowNode[]) => {
     const sequenceFlows: any[] = [];
+    if (nodes.length <= 1) return sequenceFlows;
     nodes.map((node: SolonFlowNode, index) => {
         if (node.link) {
             if (Array.isArray(node.link)) {
@@ -175,7 +176,6 @@ const sequenceFlows = (nodes: SolonFlowNode[]) => {
                             targetRef: item.nextId,
                             when: item.when,
                             name: item.title,
-                            meta: item.meta,
                         });
                     }
                 });
@@ -186,13 +186,14 @@ const sequenceFlows = (nodes: SolonFlowNode[]) => {
                     targetRef: node.link.nextId,
                     when: node.link.when,
                     name: node.link.title,
-                    meta: node.link.meta,
                 });
             } else {
                 sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: node.link });
             }
         } else {
-            sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: nodes[index+1].id });
+            if (node.type !== 'end' && index !== nodes.length - 1) {
+                sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: nodes[index+1].id });
+            }
         }
     });
     return sequenceFlows;
@@ -215,38 +216,23 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
     const elementFactory = modeler.get('elementFactory');
     const bpmnFactory = modeler.get('bpmnFactory');
     const elements: Element[] = [];
-    nodes.forEach((item, index) => {
+    const newNodes = nodes.filter((item, index) => {
+        for (const key in item) {
+            if (key.startsWith("meta.")) {
+                if (!item.meta) {
+                    item.meta = {};
+                }
+                const metaKey = key.split(".")[1];
+                // @ts-ignore
+                item.meta[metaKey] = item[key];
+            }
+        }
         const nodeType = getBpmnNode(item.type);
         const node = elementFactory.createShape({
             id: item.id || `${nodeType}_${index}`,
             type: nodeType,
         });
-        if (index === 0) {
-            node.x = 192;
-            node.y = 250;
-            console.log(node.x, node.y, node.width, node.height);
-        } else {
-            const preNode = elements[index - 1];
-            let shapeX: number, shapeY: number = 0;
-            if (preNode.type === node.type) {
-                shapeX = preNode.width * 2
-            } else {
-                if (preNode.type === "bpmn:StartEvent" && node.type === "bpmn:UserTask") {
-                    // 为了对齐，用task节点的高减去start节点高的一半，后面减去4是边框的px
-                    shapeY = -(preNode.height / 2) - 4;
-                } else if (preNode.type === "bpmn:UserTask" && node.type.endsWith("Gateway")) {
-                    shapeY = (preNode.height-node.height) / 2;
-                } else if (preNode.type.endsWith("Gateway") && node.type === "bpmn:UserTask") {
-                    shapeY = (preNode.height-node.height) / 2;
-                } else if (preNode.type === "bpmn:UserTask" && node.type === "bpmn:EndEvent") {
-                    shapeY = node.height/2 + 4;
-                }
-                shapeX = 150;
-            }
-            node.x = preNode.x + shapeX;
-            node.y = preNode.y + shapeY;
-            console.log(node.x, node.y, node.width, node.height);
-        }
+        item.id = node.id;
         if (item.title) {
             node.businessObject.name = item.title;
         }
@@ -257,19 +243,14 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
             node.businessObject['$attrs'].when = item.when;
         }
         if (item.meta) {
-            node.businessObject['$attrs'].meta = item.meta;
+            node.businessObject['$attrs'].meta = JSON.stringify(item.meta, null, 2);
         }
         elements.push(node as Shape);
+        return true;
     });
     modeling.createElements(elements, { x: 192, y: 250 }, <any>rootElement);
     // 连线
-    connection(sequenceFlows(nodes), elements, modeling, bpmnFactory);
-    // 调整网关布局
-    const gateways = elements.filter(item => item.type.endsWith("Gateway"));
-    console.log(gateways);
-    canvas.scroll({ dx: 0, dy: 0 });
-    // @ts-ignore
-    canvas.zoom('fit-viewport', 'auto');
+    connection(sequenceFlows(newNodes), elements, modeling, bpmnFactory);
 }
 
 const connection = (links: any[], elements: Element[], modeling: Modeling, bpmnFactory: BpmnFactory) => {
@@ -280,8 +261,8 @@ const connection = (links: any[], elements: Element[], modeling: Modeling, bpmnF
             const target = elements.find(node => node.id === item.targetRef);
             if (target) {
                 const connect = modeling.connect(node, target);
-                if (item.title) {
-                    connect.businessObject.name = item.title;
+                if (item.name) {
+                    connect.businessObject.name = item.name;
                 }
                 if (item.when) {
                     connect.businessObject.conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {

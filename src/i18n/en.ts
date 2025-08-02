@@ -22,5 +22,6 @@ export const en = {
     'when': 'When',
     'task': 'Task',
     'metaTitle': 'Metadata Edit (YAML/JSON)',
+    'script': 'Task Script Edit',
 
 }

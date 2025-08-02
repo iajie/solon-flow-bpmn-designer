@@ -34,6 +34,7 @@
         "vite-plugin-dts": "^4.5.4"
     },
     "dependencies": {
+        "bpmn-auto-layout": "^1.0.0",
         "bpmn-js": "^18.2.0",
         "bpmn-js-color-picker": "^0.7.1",
         "diagram-js-grid-bg": "^1.1.0",
