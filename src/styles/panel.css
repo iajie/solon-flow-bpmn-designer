@@ -55,7 +55,6 @@
         font-weight: 600;
         color: var(--easy-bpmn-designer-text-color);
         position: relative;
-        letter-spacing: 0.5px;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -64,8 +63,17 @@
             width: 26px;
             height: 26px;
             margin-left: 16px;
+            margin-right: 10px;
             fill: var(--easy-bpmn-designer-panel-header-svg);
         }
+    }
+
+    .panel-header-icon {
+        display: flex;
+    }
+
+    .panel-header-icon-hide {
+        display: none;
     }
 
     .panel-tabs {

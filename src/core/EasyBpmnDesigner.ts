@@ -28,9 +28,12 @@ import {EasyBpmnDesignerContextPad, EasyBpmnDesignerNodeContextPad} from "../mod
 import {EasyBpmnDesignerPopupMenu} from "../modules/PopupMenu";
 import zhTranslate from "../modules/Translate";
 // 标签解析 Moddle
-import {defineCustomElement} from "../utils/domUtils.ts";
-import {initModelerStr, toSolonJson} from "../utils/bpmnUtils.ts";
-import {EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
+import { defineCustomElement, switchPanel } from "../utils/domUtils.ts";
+import { initModelerStr, toBpmnXml, toSolonJson } from "../utils/bpmnUtils.ts";
+import {
+    EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions,
+    SolonFlowChina
+} from "../types/easy-bpmn-designer.ts";
 import {CommandStack, EventBus, Modeler, Element} from "bpmn-js";
 
 import jsYaml from "js-yaml";
@@ -48,6 +51,7 @@ export interface DesignerEventListener {
 const defaultOptions: Partial<SolonFlowBpmnDesignerOptions> = {
     lang: "zh",
     theme: "light",
+    valueType: 'yaml',
     height: 70,
     gridLine: {
         smallGridSpacing: 20,
@@ -190,19 +194,20 @@ export class SolonFlowBpmnDesigner {
         this.eventComponents.push(this.panel);
         // 导入xml
         const xml = initModelerStr();
-        this.bpmnModeler
-            .importXML(value || xml)
-            .then(({warnings}) => {
-                if (warnings && warnings.length) {
-                    warnings.forEach((warn) => console.warn(warn));
-                }
-                this.onCreated();
-                // 添加监听事件
-                this.addListenerEvent();
-            })
-            .catch((err) => {
-                this.options.onXmlError?.(err);
-            });
+        let valueStr = value;
+        if (this.options.valueType !== 'bpmn' && value) {
+            valueStr = toBpmnXml(jsYaml.load(value) as SolonFlowChina);
+        }
+        this.bpmnModeler.importXML(valueStr || xml).then(({warnings}) => {
+            if (warnings && warnings.length) {
+                warnings.forEach((warn) => console.warn(warn));
+            }
+            this.onCreated();
+            // 添加监听事件
+            this.addListenerEvent();
+        }).catch((err) => {
+            this.options.onXmlError?.(err);
+        });
     }
 
     protected onCreated() {
@@ -227,7 +232,7 @@ export class SolonFlowBpmnDesigner {
         }
     }
 
-    setupKeyboard(designer: HTMLDivElement) {
+    private setupKeyboard(designer: HTMLDivElement) {
         const eventBus = this.bpmnModeler.get("eventBus") as EventBus;
         const commandStack = this.bpmnModeler.get("commandStack") as CommandStack;
         const cancel = (event: any) => {
@@ -254,7 +259,7 @@ export class SolonFlowBpmnDesigner {
         });
     }
 
-    addListenerEvent() {
+    private addListenerEvent() {
         const eventBus = this.bpmnModeler.get("eventBus") as EventBus;
         // 监听 shape.added 事件
         eventBus.on("shape.added", function (event: any) {
@@ -270,6 +275,24 @@ export class SolonFlowBpmnDesigner {
         });
         eventBus.on('element.selected', (e: Element) => {
             this.options.onSelect?.(e);
+        });
+    }
+
+    /**
+     * 设置设计器值
+     * 注意：暂不支持无bpmn属性的值设置
+     * @param value
+     */
+    setValue(value?: string) {
+        if (value && this.options.valueType !== 'bpmn') {
+            value = toBpmnXml(jsYaml.load(value) as SolonFlowChina);
+        }
+        this.bpmnModeler.importXML(value || initModelerStr()).then(({warnings}) => {
+            if (warnings && warnings.length) {
+                warnings.forEach((warn) => console.warn(warn));
+            }
+        }).catch((err) => {
+            this.options.onXmlError?.(err);
         });
     }
 
@@ -329,6 +352,7 @@ export class SolonFlowBpmnDesigner {
         this.destroy();
         rootEl.classList.remove(`easy-bpmn-designer-theme-${this.options.theme}`);
         rootEl.classList.add(`easy-bpmn-designer-theme-${theme}`);
+        rootEl.style.background = theme === 'dark' ? '#1a1b1e' : '';
         this.options.theme = theme;
         this.initialize();
         return this;
@@ -339,6 +363,10 @@ export class SolonFlowBpmnDesigner {
         const minimap = this.bpmnModeler.get("minimap");
         // @ts-ignore
         minimap.toggle();
+    }
+
+    showPanel() {
+        return switchPanel();
     }
 
     /**

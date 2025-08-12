@@ -25,6 +25,11 @@ export type EasyBpmnDesignerOptions = {
      */
     container: string | Element;
     /**
+     * @description 值类型
+     * @defaultValue yaml
+     */
+    valueType?: 'bpmn' | 'json' | 'yaml';
+    /**
      * @description 主题
      * @default light
      */

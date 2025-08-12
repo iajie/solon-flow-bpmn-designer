@@ -8,8 +8,6 @@
     <script>
         let isDark = false;
         function changeTheme() {
-            document.body.style.background = isDark ? "" : "#1a1b1e"
-            document.querySelector("#easy-bpmn-designer").style.color = isDark ? "" : "#eee"
             easyBpmnDesigner.changeTheme();
             isDark = !isDark;
         }
@@ -21,6 +19,9 @@
                 easyBpmnDesigner.changeLocal("en");
             }
         }
+        function showPanel() {
+            easyBpmnDesigner.showPanel();
+        }
     </script>
 </head>
 <body>
@@ -28,6 +29,7 @@
     <a href="https://easy-flowable.online" target="_blank">访问官网</a>
     <button onclick="changeTheme()">切换主题</button>
     <button onclick="changeLanguage()">切换语言</button>
+    <button onclick="showPanel()">属性面板开关</button>
 </div>
 <div id="easy-bpmn-designer"></div>
 <script type="module" src="/src/main.ts"></script>

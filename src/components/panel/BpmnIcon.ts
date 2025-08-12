@@ -12,11 +12,11 @@ export class BpmnIcon extends AbstractPanel {
 
     onChange(element: BpmnElement) {
         const icon = getBpmnIcon(element as any);
-        const html = `${formatIcon(icon)}${t(icon)}`;
+        const html = `<span class="panel-header-icon">${formatIcon(icon)}${t(icon)}</span>`;
         if (!this.template) {
             this.template = html;
         } else {
-            super.innerHTML = `${formatIcon(icon)}${t(icon)}`;
+            super.innerHTML = `<span class="panel-header-icon">${formatIcon(icon)}${t(icon)}</span>`;
         }
     }
 }
