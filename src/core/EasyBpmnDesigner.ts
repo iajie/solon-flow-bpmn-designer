@@ -30,7 +30,7 @@ import zhTranslate from "../modules/Translate";
 // 标签解析 Moddle
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initModelerStr, toSolonJson} from "../utils/bpmnUtils.ts";
-import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
+import {EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
 import {CommandStack, EventBus, Modeler, Element} from "bpmn-js";
 
 import jsYaml from "js-yaml";
@@ -39,13 +39,13 @@ defineCustomElement("easy-bpmn-designer-toolbar", Toolbar);
 defineCustomElement("easy-bpmn-designer-panel", Panel);
 
 export interface DesignerEventListener {
-    onCreate: (modeler: Modeler, options: EasyBpmnDesignerOptions) => void;
+    onCreate: (modeler: Modeler, options: SolonFlowBpmnDesignerOptions) => void;
 }
 
 /**
  * @description 默认属性
  */
-const defaultOptions: Partial<EasyBpmnDesignerOptions> = {
+const defaultOptions: Partial<SolonFlowBpmnDesignerOptions> = {
     lang: "zh",
     theme: "light",
     height: 70,
@@ -83,7 +83,7 @@ const defaultOptions: Partial<EasyBpmnDesignerOptions> = {
     },
 };
 
-export class EasyBpmnDesigner {
+export class SolonFlowBpmnDesigner {
     /**
      * 设计器对象
      */
@@ -95,7 +95,7 @@ export class EasyBpmnDesigner {
     /**
      * 属性
      */
-    options: EasyBpmnDesignerOptions;
+    options: SolonFlowBpmnDesignerOptions;
     /**
      * 顶部工具栏
      */
@@ -111,7 +111,7 @@ export class EasyBpmnDesigner {
 
     eventComponents: DesignerEventListener[] = [];
 
-    constructor(options: EasyBpmnDesignerOptions) {
+    constructor(options: SolonFlowBpmnDesignerOptions) {
         this.options = {...defaultOptions, ...options};
         this.initialize();
     }
@@ -201,7 +201,6 @@ export class EasyBpmnDesigner {
                 this.addListenerEvent();
             })
             .catch((err) => {
-                console.error(err);
                 this.options.onXmlError?.(err);
             });
     }

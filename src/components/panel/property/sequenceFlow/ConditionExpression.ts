@@ -18,12 +18,13 @@ export class ConditionExpression extends PanelInput {
     }
 
     onChange(element: Element) {
-        this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
+        this.onShow(element.businessObject.hasOwnProperty('conditionExpression') && element.businessObject.conditionExpression !== null);
         this.inputElement && (this.inputElement.value = element.businessObject.conditionExpression?.body || "");
     }
 
     updateElement(element: Element) {
-        this.onShow(element.businessObject.hasOwnProperty('conditionExpression'));
+        console.log(element.businessObject);
+        this.onShow(element.businessObject.hasOwnProperty('conditionExpression') && element.businessObject.conditionExpression !== null);
     }
 
     onChangeValue(e: Event, element: Element, modeler?: Modeler) {

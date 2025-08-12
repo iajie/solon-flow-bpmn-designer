@@ -1,5 +1,5 @@
-import {BaseViewerOptions} from "bpmn-js/lib/BaseViewer";
-import {EasyBpmnDesigner} from "../core/EasyBpmnDesigner.ts";
+import { BaseViewerOptions } from "bpmn-js/lib/BaseViewer";
+import { SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
 import {DefaultToolbarKey} from "../components/toolbar/DefaultToolbarKeys.ts";
 import {Modeler, Element, ModuleDeclaration } from "bpmn-js";
 
@@ -87,7 +87,7 @@ export type EasyBpmnDesignerOptions = {
     };
     toolbarKeys?: (string | CustomMenu | MenuGroup)[],
     toolbarExcludeKeys?: DefaultToolbarKey[];
-    toolbarSize: string | 'small' | 'medium' | 'large';
+    toolbarSize?: string | 'small' | 'medium' | 'large';
     panelTabs?: {
         /**
          * @description tabs item项标题
@@ -142,7 +142,7 @@ export type EasyBpmnDesignerOptions = {
      * @description 销毁实例
      * @param bpmnModeler
      */
-    onDestroy?: (designer: EasyBpmnDesigner) => void;
+    onDestroy?: (designer: SolonFlowBpmnDesigner) => void;
 } & Partial<Omit<BaseViewerOptions, "element">>
 
 export interface SolonFlowChina {

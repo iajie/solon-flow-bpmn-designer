@@ -82,7 +82,7 @@ export const updateCondition = (type: string, expression: string = "", element?:
     const bpmnFactory = modeler.get("bpmnFactory");
     const modeling = modeler.get("modeling");
     try {
-        if (type === "expression" && expression) {
+        if (type === "expression") {
             // 创建条件表达式
             const conditionExpression = bpmnFactory.create("bpmn:FormalExpression", {
                 body: expression,

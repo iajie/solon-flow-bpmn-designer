@@ -39,10 +39,6 @@ https://www.easy-flowable.online/component/designer
 - [x] **属性面板**：基础属性、条件属性
 - [x] **更多**：国际化、亮色主题、暗色主题...
 
-## 开发中...
-
-- [ ] 适配非bpmn导出的yaml/json文件
-
 ## 快速开始
 
 访问官网：https://easy-flowable.online/component

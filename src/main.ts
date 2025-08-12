@@ -1,7 +1,7 @@
-import { EasyBpmnDesigner } from "./core/EasyBpmnDesigner.ts";
+import { SolonFlowBpmnDesigner } from "./core/EasyBpmnDesigner.ts";
 
 // @ts-ignore
-window.easyBpmnDesigner = new EasyBpmnDesigner({
+window.easyBpmnDesigner = new SolonFlowBpmnDesigner({
     container: '#easy-bpmn-designer',
     i18n: {
         zh: {
