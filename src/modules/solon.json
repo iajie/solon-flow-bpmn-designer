@@ -19,9 +19,30 @@
                 },
                 {
                     "name": "meta",
-                    "isAttr": true,
-                    "type": "String"
+                    "type": "solon:Meta",
+                    "isMany": false
                 }
+            ]
+        },
+        {
+            "name": "Meta",
+            "superClass": ["Element"],
+            "properties": [
+                { "name": "body", "type": "String", "isBody": true }
+            ]
+        },
+        {
+            "name": "When",
+            "superClass": ["Element"],
+            "properties": [
+                { "name": "body", "type": "String", "isBody": true }
+            ]
+        },
+        {
+            "name": "Task",
+            "superClass": ["Element"],
+            "properties": [
+                { "name": "body", "type": "String", "isBody": true }
             ]
         },
         {
@@ -30,18 +51,18 @@
             "properties": [
                 {
                     "name": "when",
-                    "isAttr": true,
-                    "type": "String"
+                    "type": "solon:When",
+                    "isMany": false
                 },
                 {
                     "name": "task",
-                    "isAttr": true,
-                    "type": "String"
+                    "type": "solon:Task",
+                    "isMany": false
                 },
                 {
                     "name": "meta",
-                    "isAttr": true,
-                    "type": "String"
+                    "type": "solon:Meta",
+                    "isMany": false
                 }
             ]
         }

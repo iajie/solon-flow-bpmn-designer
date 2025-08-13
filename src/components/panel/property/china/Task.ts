@@ -1,6 +1,5 @@
 import { PanelInput } from "../PanelInput.ts";
-import { Modeler, Element } from "bpmn-js";
-import { updateProperty } from "../../../../utils/bpmnUtils.ts";
+import { Element } from "bpmn-js";
 import {AreaEditor} from "../../../../utils/areaEditor.ts";
 import { EasyBpmnDialog } from "../../../EasyBpmnDialog.ts";
 import { t } from "i18next";
@@ -22,22 +21,24 @@ export class Task extends PanelInput {
         this.inputElement.addEventListener('click', () => {
             const dialog = new EasyBpmnDialog({
                 edit: true,
-                title: t('metaTitle'),
+                title: t('script'),
                 content: this.inputElement.value || ``,
             });
             dialog.addEventListener('code-edit', (e: any) => {
-                this.inputElement.value = e.detail;
-                updateProperty('task', e.detail, this.element, this.modeler);
+                if (this.modeler) {
+                    const modeling = this.modeler?.get("modeling");
+                    const bpmnFactory = this.modeler?.get("bpmnFactory");
+                    const task = bpmnFactory.create("solon:Task", { body: e.detail });
+                    modeling.updateProperties(this.element, { task });
+                    this.inputElement.value = e.detail;
+                }
             })
         });
     }
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.task || '');
+        this.inputElement && (this.inputElement.value = element.businessObject.task?.body || '');
     }
 
-    onChangeValue(e: Event, element: Element, modeler?: Modeler) {
-        updateProperty('task', (e.target as HTMLInputElement).value || '', element, modeler);
-    }
 }

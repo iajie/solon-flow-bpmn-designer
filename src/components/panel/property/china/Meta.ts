@@ -1,9 +1,9 @@
 import { PanelInput } from "../PanelInput.ts";
-import { Element, Modeler } from "bpmn-js";
-import { updateProperty } from "../../../../utils/bpmnUtils.ts";
-import {EasyBpmnDialog} from "../../../EasyBpmnDialog.ts";
-import {t} from "i18next";
-import {AreaEditor} from "../../../../utils/areaEditor.ts";
+import { Element } from "bpmn-js";
+import { EasyBpmnDialog } from "../../../EasyBpmnDialog.ts";
+import { t } from "i18next";
+import { AreaEditor } from "../../../../utils/areaEditor.ts";
+import jsYaml from "js-yaml";
 
 export class Meta extends PanelInput {
 
@@ -27,10 +27,17 @@ export class Meta extends PanelInput {
             });
             dialog.addEventListener('code-edit', (e: any) => {
                 try {
-                    const meta = JSON.parse(e.detail);
-                    updateProperty('meta', JSON.stringify(meta), this.element, this.modeler);
-                    this.inputElement.value = e.detail;
+                    // 校验json/yaml
+                    jsYaml.load(e.detail);
+                    if (this.modeler) {
+                        const modeling = this.modeler?.get("modeling");
+                        const bpmnFactory = this.modeler?.get("bpmnFactory");
+                        const meta = bpmnFactory.create("solon:Meta", { body: e.detail });
+                        modeling.updateProperties(this.element, { meta });
+                        this.inputElement.value = e.detail;
+                    }
                 } catch (err) {
+                    console.warn("Meta Properties 不是一个JSON/YAML");
                 }
             })
         });
@@ -38,10 +45,7 @@ export class Meta extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.meta || element.businessObject['$attrs'].meta || '{}');
+        this.inputElement && (this.inputElement.value = element.businessObject.meta?.body || '{}');
     }
 
-    onChangeValue(e: Event, element: Element, modeler?: Modeler) {
-        updateProperty('meta', (e.target as HTMLInputElement).value || '', element, modeler);
-    }
 }

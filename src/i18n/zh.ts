@@ -31,5 +31,6 @@ export const zh = {
     'when': '执行条件',
     'task': '执行任务脚本',
     'metaTitle': '元数据编辑（YAML/JSON）',
-    'script': '任务脚本编辑'
+    'script': '任务编辑（#子链、@组件、$脚本引用、脚本代码）',
+    'whenTitle': '条件编辑（逻辑表达式）'
 } as any;

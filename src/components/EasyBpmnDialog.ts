@@ -57,10 +57,7 @@ export class EasyBpmnDialog extends HTMLElement {
                 new AreaEditor(textarea);
                 textarea.value = this.options.content;
                 textarea.addEventListener('input', () => {
-                    try {
-                        JSON.parse(textarea.value);
-                        this.dispatchEvent(new CustomEvent('code-edit', { detail: textarea.value }));
-                    } catch (e) {}
+                    this.dispatchEvent(new CustomEvent('code-edit', { detail: textarea.value }));
                 });
                 dialog.appendChild(textarea);
             }
@@ -74,7 +71,6 @@ export class EasyBpmnDialog extends HTMLElement {
                 })
                 previewHeader.children[0].appendChild(span);
             }
-
         }
         const dom = document.querySelector('.easy-bpmn-designer-container');
         if (dom) {
