@@ -52,7 +52,7 @@ export class Import extends AbstractToolBar {
                     }
                     if (solonFlow.meta) {
                         const bpmnFactory = modeler?.get("bpmnFactory");
-                        const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4) });
+                        const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4), $parent: root });
                         modeling?.updateProperties(root, { meta });
                     }
                     // 定义第一节点位置

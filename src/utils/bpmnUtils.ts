@@ -249,6 +249,7 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
         elements.push(node as Shape);
         return true;
     });
+    console.log(elements);
     modeling.createElements(elements, { x: 192, y: 250 }, <any>rootElement);
     // 连线
     connection(sequenceFlows(newNodes), elements, modeling, bpmnFactory);
