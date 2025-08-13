@@ -34,7 +34,7 @@ export class Task extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.$attrs.task || '');
+        this.inputElement && (this.inputElement.value = element.businessObject.task || '');
     }
 
     onChangeValue(e: Event, element: Element, modeler?: Modeler) {

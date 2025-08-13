@@ -25,14 +25,16 @@ export class Import extends AbstractToolBar {
                 const text = await file.text();
                 const yaml = jsYaml.load(text);
                 const solonFlow = yaml as SolonFlowChina;
+                const modeling = modeler?.get("modeling");
+                const canvas = modeler?.get("canvas");
+                const root = canvas?.getRootElement() as Element;
+                const rootElement = canvas?.getRootElements()[0];
                 // 存在bpmn信息
                 if (solonFlow.bpmn) {
-                    await modeler?.importXML(toBpmnXml(solonFlow));
+                    await modeler?.importXML(toBpmnXml(solonFlow)).then(({ warnings }) => {
+                        console.debug(warnings);
+                    });
                 } else {
-                    const canvas = modeler?.get("canvas");
-                    const modeling = modeler?.get("modeling");
-                    const root = canvas?.getRootElement() as Element;
-                    const rootElement = canvas?.getRootElements()[0];
                     if (rootElement) {
                         const arr: Element[] = [];
                         rootElement.children.forEach((el: any) => {

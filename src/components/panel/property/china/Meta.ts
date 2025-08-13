@@ -26,15 +26,19 @@ export class Meta extends PanelInput {
                 content: this.inputElement.value || `{}`,
             });
             dialog.addEventListener('code-edit', (e: any) => {
-                this.inputElement.value = e.detail;
-                updateProperty('meta', e.detail, this.element, this.modeler);
+                try {
+                    const meta = JSON.parse(e.detail);
+                    updateProperty('meta', JSON.stringify(meta), this.element, this.modeler);
+                    this.inputElement.value = e.detail;
+                } catch (err) {
+                }
             })
         });
     }
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.$attrs.meta || '{}');
+        this.inputElement && (this.inputElement.value = element.businessObject.meta || element.businessObject['$attrs'].meta || '{}');
     }
 
     onChangeValue(e: Event, element: Element, modeler?: Modeler) {

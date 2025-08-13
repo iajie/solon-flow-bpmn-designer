@@ -166,7 +166,7 @@ export interface SolonFlowChina {
     /**
      * @description 元数据，存储bpmn节点信息
      */
-    meta?: string;
+    meta?: Record<string, any>;
     /**
      * @description 子节点
      */
@@ -201,7 +201,7 @@ export interface SolonFlowNode {
     /**
      * @description 元数据
      */
-    meta: Record<string, any>;
+    meta?: Record<string, any>;
     /**
      * @description 连接
      */

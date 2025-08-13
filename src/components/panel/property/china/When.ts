@@ -20,7 +20,7 @@ export class When extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.$attrs.when || '');
+        this.inputElement && (this.inputElement.value = element.businessObject.when || '');
     }
 
     onChangeValue(e: Event, element: Element, modeler?: Modeler) {

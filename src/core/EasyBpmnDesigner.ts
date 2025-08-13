@@ -3,14 +3,13 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
-import {isUndo, isRedo} from "diagram-js/lib/features/keyboard/KeyboardUtil";
-import {event as domEvent} from "min-dom";
-type ModuleDeclaration = import("didi").ModuleDeclaration;
-import {Toolbar} from "../components/Toolbar.ts";
-import {Panel} from "../components/Panel.ts";
-import {en} from "../i18n/en.ts";
-import {zh} from "../i18n/zh.ts";
-import i18next, {Resource} from "i18next";
+import { isUndo, isRedo } from "diagram-js/lib/features/keyboard/KeyboardUtil";
+import { event as domEvent } from "min-dom";
+import { Toolbar } from "../components/Toolbar.ts";
+import { Panel } from "../components/Panel.ts";
+import { en } from "../i18n/en.ts";
+import { zh } from "../i18n/zh.ts";
+import i18next, { Resource } from "i18next";
 
 import "../styles/variable.css";
 import "../styles/designer.css";
@@ -23,18 +22,14 @@ import minimapModule from "diagram-js-minimap"; //小地图
 import "diagram-js-minimap/assets/diagram-js-minimap.css";
 import BpmnColorPickerModule from "bpmn-js-color-picker"; // 颜色选择器
 import "bpmn-js-color-picker/colors/color-picker.css";
-import {EasyBpmnDesignerPalette} from "../modules/Palette";
-import {EasyBpmnDesignerContextPad, EasyBpmnDesignerNodeContextPad} from "../modules/ContextPad";
-import {EasyBpmnDesignerPopupMenu} from "../modules/PopupMenu";
-import zhTranslate from "../modules/Translate";
+import { EasyBpmnDesignerPalette, EasyBpmnDesignerNodeContextPad, EasyBpmnDesignerPopupMenu,
+    EasyBpmnDesignerContextPad, zhTranslate, SolonModdle } from "../modules";
 // 标签解析 Moddle
 import { defineCustomElement, switchPanel } from "../utils/domUtils.ts";
 import { initModelerStr, toBpmnXml, toSolonJson } from "../utils/bpmnUtils.ts";
 import {
-    EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions,
-    SolonFlowChina
-} from "../types/easy-bpmn-designer.ts";
-import {CommandStack, EventBus, Modeler, Element} from "bpmn-js";
+    EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions, SolonFlowChina } from "../types/easy-bpmn-designer.ts";
+import { CommandStack, EventBus, Modeler, Element, ModuleDeclaration } from "bpmn-js";
 
 import jsYaml from "js-yaml";
 
@@ -148,7 +143,7 @@ export class SolonFlowBpmnDesigner {
             typeof this.options.container === "string" ? (document.querySelector(this.options.container) as HTMLElement)
                 : this.options.container;
         // 主题-白/黑
-        rootEl.classList.add(`easy-bpmn-designer-theme-${this.options.theme}`);
+        rootEl.classList.add(`easy-bpmn-designer-theme-${ this.options.theme }`);
         // 获取父级dom class
         this.container = rootEl.querySelector(".easy-bpmn-designer-container")!;
         // 如果没有就创建
@@ -163,22 +158,17 @@ export class SolonFlowBpmnDesigner {
         this.designer.classList.add("easy-bpmn-designer-container-designer");
 
         // 设计器内容
-        const {
-            height,
-            gridLine,
-            value,
-            textRenderer,
-            minimap,
-            lightBpmnRenderer,
-            darkBpmnRenderer,
-        } = this.options;
+        const { height, gridLine, value, textRenderer, minimap, lightBpmnRenderer, darkBpmnRenderer } = this.options;
         if ((height || 60) >= 60) {
             this.designer.classList.add("djs-palette-column");
         }
         this.bpmnModeler = new BpmnModeler({
             container: this.designer,
-            height: `${height}vh`,
+            height: `${ height }vh`,
             additionalModules: this.additionalModules(),
+            moddleExtensions: {
+                solon: SolonModdle
+            },
             gridLine,
             bpmnRenderer: this.options.theme === "dark" ? darkBpmnRenderer : lightBpmnRenderer,
             textRenderer,
@@ -350,8 +340,8 @@ export class SolonFlowBpmnDesigner {
             theme = this.options.theme === "dark" ? "light" : "dark";
         }
         this.destroy();
-        rootEl.classList.remove(`easy-bpmn-designer-theme-${this.options.theme}`);
-        rootEl.classList.add(`easy-bpmn-designer-theme-${theme}`);
+        rootEl.classList.remove(`easy-bpmn-designer-theme-${ this.options.theme }`);
+        rootEl.classList.add(`easy-bpmn-designer-theme-${ theme }`);
         rootEl.style.background = theme === 'dark' ? '#1a1b1e' : '';
         this.options.theme = theme;
         this.initialize();
@@ -388,16 +378,12 @@ export class SolonFlowBpmnDesigner {
             Modules.push(zhTranslate);
         }
         // 插入用户自定义扩展模块
-        if (
-            Object.prototype.toString.call(this.options.additionalModel) ===
-            "[object Array]"
-        ) {
+        if (Object.prototype.toString.call(this.options.additionalModel) === "[object Array]") {
             Modules.push(...this.options.additionalModel);
         } else {
             this.options.additionalModel &&
             Modules.concat(this.options.additionalModel);
         }
-
         return Modules;
     }
 

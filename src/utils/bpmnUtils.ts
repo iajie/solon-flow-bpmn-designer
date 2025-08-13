@@ -3,6 +3,7 @@ import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
 import {Create} from "bpmn-js/lib/features/palette/PaletteProvider";
 import { BpmnFactory, Element, ElementFactory, Modeler, Modeling, Shape } from "bpmn-js";
 import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
+import jsYaml from "js-yaml";
 
 export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
@@ -237,13 +238,13 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
             node.businessObject.name = item.title;
         }
         if (item.task) {
-            node.businessObject['$attrs'].task = item.task;
+            node.businessObject.task = item.task;
         }
         if (item.when) {
-            node.businessObject['$attrs'].when = item.when;
+            node.businessObject.when = item.when;
         }
         if (item.meta) {
-            node.businessObject['$attrs'].meta = JSON.stringify(item.meta, null, 2);
+            node.businessObject.meta = JSON.stringify(item.meta, null, 2);
         }
         elements.push(node as Shape);
         return true;
@@ -301,7 +302,9 @@ export const toSolonJson = (element: Element) => {
                     id: children.id,
                     title: children.businessObject.name,
                     type: getNodeType(children.type),
-                    ...children.businessObject.$attrs,
+                    task: children.businessObject.task,
+                    meta: children.businessObject.meta ? jsYaml.load(children.businessObject.meta) as any : undefined,
+                    when: children.businessObject.when,
                     link: links,
                 };
                 layouts.push(node);
@@ -310,8 +313,8 @@ export const toSolonJson = (element: Element) => {
         const data: SolonFlowChina = {
             id: element.id,
             title: element.businessObject.name,
-            driver: element.businessObject.$attrs.driver,
-            meta: element.businessObject.$attrs.meta,
+            driver: element.businessObject.driver,
+            meta: element.businessObject.meta ? jsYaml.load(element.businessObject.meta) as any : undefined,
             layout: layouts,
             bpmn: {
                 ...element.di,
@@ -329,8 +332,8 @@ const xmlHeader = `<?xml version="1.0" encoding="UTF-8"?>
     xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
     xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
     typeLanguage="http://www.w3.org/2001/XMLSchema"
-    expressionLanguage="http://www.w3.org/1999/XPath">`;
-
+    expressionLanguage="http://www.w3.org/1999/XPath"
+    targetNamespace="http://solon.flow/bpmn">`;
 
 const bpmnStr = (key: string, name: string) => {
     return `${xmlHeader}
@@ -353,7 +356,7 @@ const bpmnStr = (key: string, name: string) => {
 
 export const toBpmnXml = (json: SolonFlowChina) => {
     return `${xmlHeader}
-        <process id="${json.id}" name="${json.title}" isExecutable="true" driver="${json.driver || ''}" meta="${json.meta || '{}'}">
+        <process id="${json.id}" name="${json.title}" isExecutable="true"${json.driver ? ` solon:driver="${json.driver}` : ``}${json.meta ? ` solon:meta="${JSON.stringify(json.meta).replace(/"/g, '\'')}"` : ``}>
             ${createNodeXml(json.layout)}
         </process>
         <bpmndi:BPMNDiagram id="BpmnDiagram_1">
@@ -373,7 +376,6 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
                     type: "sequenceFlow",
                     id: item.id,
                     name: item.title,
-                    when: item.when,
                     sourceRef: node.id,
                     targetRef: item.nextId
                 });
@@ -402,11 +404,11 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
     let str = ``;
     flowData.forEach((node) => {
         if (node.type !== "sequenceFlow") {
-            str += `<${node.type} id="${node.id}" ${node.name ? `name="${node.name}"` : ``} ${node.when ? `when="${node.when}"` : ``} ${node.task ? `task="${node.task}"` : ``} ${node.mata ? `mata="${node.mata}"` : ``}>
+            str += `<${node.type} id="${node.id}"${node.name ? ` name="${node.name}"` : ``}${node.when ? ` solon:when="${node.when}"` : ``}${node.task ? ` solon:task="${node.task}"` : ``}${node.meta ? ` solon:meta="${JSON.stringify(node.meta).replace(/"/g, '\'')}"` : ``}>
                     ${createComing(node)}
                 </${node.type}>`
         } else {
-            str += `<${node.type} id="${node.id}" ${node.name ? `name="${node.name}"` : ``} sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
+            str += `<${node.type} id="${node.id}"${node.name ? ` name="${node.name}"` : ``} sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
                     ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${node.when.replace(/[<>&]/g, (match: string) => {if(match === '<') return "&lt;"; if(match === '>') return "&gt;"; if (match === "&") return "&amp;";})}</conditionExpression>` : ``}
                 </${node.type}>`
         }

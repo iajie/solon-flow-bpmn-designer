@@ -12,7 +12,7 @@ export class Driver extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject['$attrs'].driver || '');
+        this.inputElement && (this.inputElement.value = element.businessObject.driver || '');
     }
 
     onChangeValue(e: Event, element: Element, modeler?: Modeler) {

@@ -1,0 +1,49 @@
+{
+    "name": "Solon",
+    "uri": "http://solon.flow/bpmn",
+    "prefix": "solon",
+    "xml": {
+        "tagAlias": "lowerCase"
+    },
+    "associations": [],
+    "enumerations": [],
+    "types": [
+        {
+            "name": "Process",
+            "extends": ["bpmn:Process"],
+            "properties": [
+                {
+                    "name": "driver",
+                    "isAttr": true,
+                    "type": "String"
+                },
+                {
+                    "name": "meta",
+                    "isAttr": true,
+                    "type": "String"
+                }
+            ]
+        },
+        {
+            "name": "UserTask",
+            "extends": ["bpmn:UserTask"],
+            "properties": [
+                {
+                    "name": "when",
+                    "isAttr": true,
+                    "type": "String"
+                },
+                {
+                    "name": "task",
+                    "isAttr": true,
+                    "type": "String"
+                },
+                {
+                    "name": "meta",
+                    "isAttr": true,
+                    "type": "String"
+                }
+            ]
+        }
+    ]
+}

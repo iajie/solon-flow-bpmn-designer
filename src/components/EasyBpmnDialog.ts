@@ -57,7 +57,10 @@ export class EasyBpmnDialog extends HTMLElement {
                 new AreaEditor(textarea);
                 textarea.value = this.options.content;
                 textarea.addEventListener('input', () => {
-                    this.dispatchEvent(new CustomEvent('code-edit', { detail: textarea.value }));
+                    try {
+                        JSON.parse(textarea.value);
+                        this.dispatchEvent(new CustomEvent('code-edit', { detail: textarea.value }));
+                    } catch (e) {}
                 });
                 dialog.appendChild(textarea);
             }
