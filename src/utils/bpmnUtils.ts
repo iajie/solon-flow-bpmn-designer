@@ -238,13 +238,13 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
             node.businessObject.name = item.title;
         }
         if (item.task) {
-            node.businessObject.task = item.task;
+            node.businessObject.task = bpmnFactory.create("solon:Task", { body: item.task });
         }
         if (item.when) {
-            node.businessObject.when = item.when;
+            node.businessObject.when = bpmnFactory.create("solon:When", { body: item.when });
         }
         if (item.meta) {
-            node.businessObject.meta = JSON.stringify(item.meta, null, 2);
+            node.businessObject.meta = bpmnFactory.create("solon:Meta", { body: JSON.stringify(item.meta, null, 4) });
         }
         elements.push(node as Shape);
         return true;
@@ -302,9 +302,9 @@ export const toSolonJson = (element: Element) => {
                     id: children.id,
                     title: children.businessObject.name,
                     type: getNodeType(children.type),
-                    task: children.businessObject.task,
-                    meta: children.businessObject.meta ? jsYaml.load(children.businessObject.meta) as any : undefined,
-                    when: children.businessObject.when,
+                    task: children.businessObject.task?.body,
+                    meta: children.businessObject.meta?.body ? jsYaml.load(children.businessObject.meta?.body) as any : undefined,
+                    when: children.businessObject.when?.body,
                     link: links,
                 };
                 layouts.push(node);
@@ -314,7 +314,7 @@ export const toSolonJson = (element: Element) => {
             id: element.id,
             title: element.businessObject.name,
             driver: element.businessObject.driver,
-            meta: element.businessObject.meta ? jsYaml.load(element.businessObject.meta) as any : undefined,
+            meta: element.businessObject.meta?.body ? jsYaml.load(element.businessObject.meta?.body) as any : undefined,
             layout: layouts,
             bpmn: {
                 ...element.di,
@@ -356,8 +356,9 @@ const bpmnStr = (key: string, name: string) => {
 
 export const toBpmnXml = (json: SolonFlowChina) => {
     return `${xmlHeader}
-        <process id="${json.id}" name="${json.title}" isExecutable="true"${json.driver ? ` solon:driver="${json.driver}` : ``}${json.meta ? ` solon:meta="${JSON.stringify(json.meta).replace(/"/g, '\'')}"` : ``}>
+        <process id="${json.id}" name="${json.title}" isExecutable="true"${json.driver ? ` solon:driver="${json.driver}"` : ``}>
             ${createNodeXml(json.layout)}
+            ${json.meta ? `<solon:Meta>${JSON.stringify(json.meta, null, 4)}</solon:Meta>` : ``}
         </process>
         <bpmndi:BPMNDiagram id="BpmnDiagram_1">
             <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="${json.id}">
@@ -365,6 +366,18 @@ export const toBpmnXml = (json: SolonFlowChina) => {
             </bpmndi:BPMNPlane>
         </bpmndi:BPMNDiagram>
     </definitions>`;
+}
+
+/**
+ * 获取xml可识别的字符串(对于脚本<>&等情况)
+ * @param str
+ */
+const toXmlStr = (str: string) => {
+    return str.replace(/[<>&]/g, (match: string) => {
+        if(match === '<') return "&lt;";
+        if(match === '>') return "&gt;";
+        return "&amp;";
+    });
 }
 
 export const createNodeXml = (nodes: SolonFlowNode[]) => {
@@ -404,12 +417,15 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
     let str = ``;
     flowData.forEach((node) => {
         if (node.type !== "sequenceFlow") {
-            str += `<${node.type} id="${node.id}"${node.name ? ` name="${node.name}"` : ``}${node.when ? ` solon:when="${node.when}"` : ``}${node.task ? ` solon:task="${node.task}"` : ``}${node.meta ? ` solon:meta="${JSON.stringify(node.meta).replace(/"/g, '\'')}"` : ``}>
+            str += `<${node.type} id="${node.id}"${node.name ? ` name="${node.name}"` : ``}>
                     ${createComing(node)}
+                    ${node.when ? `<solon:When>${toXmlStr(node.when)}</solon:When>` : ``}
+                    ${node.task ? `<solon:Task>${toXmlStr(node.task)}</solon:Task>` : ``}
+                    ${node.meta ? `<solon:Meta>${JSON.stringify(node.meta, null, 4)}</solon:Meta>` : ``}
                 </${node.type}>`
         } else {
             str += `<${node.type} id="${node.id}"${node.name ? ` name="${node.name}"` : ``} sourceRef="${node.sourceRef}" targetRef="${node.targetRef}">
-                    ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${node.when.replace(/[<>&]/g, (match: string) => {if(match === '<') return "&lt;"; if(match === '>') return "&gt;"; if (match === "&") return "&amp;";})}</conditionExpression>` : ``}
+                    ${node.when ? `<conditionExpression xsi:type="tFormalExpression">${toXmlStr(node.when)}</conditionExpression>` : ``}
                 </${node.type}>`
         }
     });

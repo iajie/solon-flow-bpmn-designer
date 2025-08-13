@@ -31,7 +31,7 @@ export class Import extends AbstractToolBar {
                 const rootElement = canvas?.getRootElements()[0];
                 // 存在bpmn信息
                 if (solonFlow.bpmn) {
-                    await modeler?.importXML(toBpmnXml(solonFlow)).then(({ warnings }) => {
+                    modeler?.importXML(toBpmnXml(solonFlow)).then(({ warnings }) => {
                         console.debug(warnings);
                     });
                 } else {
@@ -51,7 +51,9 @@ export class Import extends AbstractToolBar {
                         updateProperty('driver', solonFlow.driver, root, modeler);
                     }
                     if (solonFlow.meta) {
-                        updateProperty('meta', JSON.stringify(solonFlow.meta, null, 2), root, modeler);
+                        const bpmnFactory = modeler?.get("bpmnFactory");
+                        const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4) });
+                        modeling?.updateProperties(root, { meta });
                     }
                     // 定义第一节点位置
                     createTaskShape(modeler, solonFlow.layout);
