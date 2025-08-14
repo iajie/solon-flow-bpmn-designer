@@ -63,7 +63,7 @@
     .djs-context-pad .entry {
         background-color: transparent;
         box-shadow: 0 0 0 0;
-
+        color: var(--easy-bpmn-designer-text-color);
         &:hover {
             background-color: var(--easy-bpmn-designer-border-color);
         }

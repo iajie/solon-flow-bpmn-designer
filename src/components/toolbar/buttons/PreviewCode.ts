@@ -1,6 +1,4 @@
 import { AbstractToolBar } from "../AbstractToolBar.ts";
-import highlight from 'highlight.js';
-import 'highlight.js/styles/atom-one-light.css';
 import { EasyBpmnDialog } from "../../EasyBpmnDialog.ts";
 import { defineCustomElement } from "../../../utils/domUtils.ts";
 import { t } from "i18next";
@@ -40,14 +38,11 @@ export class PreviewCode extends AbstractToolBar {
     }
 
     private insertCode(code: string, type: "yaml" | "json") {
-        const sourceCode = highlight.highlight(code, {
-            language: type,
-            ignoreIllegals: true
-        });
         new EasyBpmnDialog({
             title: type === 'yaml' ? t('preview-yaml') : t('preview-json'),
-            content: `<pre>${ sourceCode.value }</pre>`,
-            text: code
+            content: code,
+            text: code,
+            type: type
         });
     }
 

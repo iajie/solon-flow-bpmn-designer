@@ -1,5 +1,6 @@
 import '../styles/index.css';
 import {AreaEditor} from '../utils/areaEditor'
+import { CodeHighlight } from "./CodeHighlight.ts";
 
 interface EasyBpmnDialogProps {
     content: string;
@@ -8,11 +9,13 @@ interface EasyBpmnDialogProps {
     text?: string;
     isMask?: boolean;
     clickMaskClose?: boolean;
+    type: 'yaml' | 'json';
 }
 
 const defaultOptions: EasyBpmnDialogProps = {
     content: '',
     title: '',
+    type: 'yaml',
     edit: false,
     isMask: true,
     clickMaskClose: false
@@ -42,7 +45,6 @@ export class EasyBpmnDialog extends HTMLElement {
                         <svg t="1739262766708" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6771" width="200" height="200"><path d="M196.48 149.376L874.624 827.52l-47.104 47.104L149.376 196.48z" p-id="6772"></path><path d="M149.376 827.52L827.52 149.44l47.168 47.104L196.544 874.688z" p-id="6773"></path></svg>
                     </span>
                 </div>
-            ${this.options.edit ? `` : `<div class="preview-content"></div>`}
         </div>`;
         if (this.options.isMask) {
             dialogContainer = `<div class="preview-mask" />${dialogContainer}`;
@@ -50,16 +52,16 @@ export class EasyBpmnDialog extends HTMLElement {
         const el = document.createElement('div');
         el.id = this.dialogId;
         el.innerHTML = dialogContainer;
+        const previewDialog = el.querySelector('.preview-dialog');
         if (this.options.edit) {
-            const dialog = el.querySelector('.preview-dialog');
-            if (dialog) {
+            if (previewDialog) {
                 const textarea = document.createElement('textarea');
                 new AreaEditor(textarea);
                 textarea.value = this.options.content;
                 textarea.addEventListener('input', () => {
                     this.dispatchEvent(new CustomEvent('code-edit', { detail: textarea.value }));
                 });
-                dialog.appendChild(textarea);
+                previewDialog.appendChild(textarea);
             }
         } else {
             const previewHeader = el.querySelector('.preview-header');
@@ -70,15 +72,16 @@ export class EasyBpmnDialog extends HTMLElement {
                     navigator.clipboard.writeText(this.options.text || '');
                 })
                 previewHeader.children[0].appendChild(span);
+                const codeHighlight = new CodeHighlight({
+                    source: this.options.content,
+                    type: this.options.type,
+                });
+                previewDialog?.appendChild(codeHighlight);
             }
         }
         const dom = document.querySelector('.easy-bpmn-designer-container');
         if (dom) {
             dom.appendChild(el);
-            const content = document.querySelector('.preview-content');
-            if (content) {
-                content.innerHTML = this.options.content;
-            }
             if (this.options.clickMaskClose) {
                 const mask = document.querySelector('.preview-mask');
                 if (mask) {

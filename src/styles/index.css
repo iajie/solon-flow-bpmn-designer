@@ -122,14 +122,6 @@
     }
 }
 
-.easy-bpmn-designer-theme-light {
-    @import "highlight.js/styles/atom-one-light.css";
-}
-
-.easy-bpmn-designer-theme-dark {
-    @import  'highlight.js/styles/atom-one-dark.css';
-}
-
 #easy-bpmn-preview-dialog-container {
 
     .preview-mask {
