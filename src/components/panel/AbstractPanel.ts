@@ -40,8 +40,8 @@ export class AbstractPanel extends HTMLElement implements DesignerEventListener 
         this.modeler = modeler;
         this.options = options;
         if (!this.element) {
-            const elementRegistry = modeler?.get("elementRegistry") as any;
-            this.element = elementRegistry.find((el: any) => el.type === "bpmn:Process");
+            const canvas = modeler?.get("canvas");
+            this.element = canvas?.getRootElement();
             this.onChange(this.element);
         }
         // 先移除旧的监听器

@@ -1,10 +1,10 @@
-import {AbstractToolBar} from "../AbstractToolBar.ts";
+import { AbstractToolBar } from "../AbstractToolBar.ts";
 import highlight from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
-import {EasyBpmnDialog} from "../../EasyBpmnDialog.ts";
-import {defineCustomElement} from "../../../utils/domUtils.ts";
-import {t} from "i18next";
-import {toSolonJson} from "../../../utils/bpmnUtils.ts";
+import { EasyBpmnDialog } from "../../EasyBpmnDialog.ts";
+import { defineCustomElement } from "../../../utils/domUtils.ts";
+import { t } from "i18next";
+import { toSolonJson } from "../../../utils/bpmnUtils.ts";
 import jsYaml from 'js-yaml';
 
 defineCustomElement('easy-bpmn-designer-dialog', EasyBpmnDialog);
@@ -46,7 +46,7 @@ export class PreviewCode extends AbstractToolBar {
         });
         new EasyBpmnDialog({
             title: type === 'yaml' ? t('preview-yaml') : t('preview-json'),
-            content: `<pre>${sourceCode.value}</pre>`,
+            content: `<pre>${ sourceCode.value }</pre>`,
             text: code
         });
     }

@@ -1,4 +1,4 @@
-import {AbstractPanel} from "./AbstractPanel.ts";
+import { AbstractPanel } from "./AbstractPanel.ts";
 import { Modeling, Modeler } from "bpmn-js";
 import { EasyBpmnDesignerOptions } from "../../types/easy-bpmn-designer.ts";
 import { initPanelContent } from "./index.ts";
@@ -28,7 +28,7 @@ export class Property extends AbstractPanel {
 
     onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions) {
         super.onCreate(modeler, options);
-        this.style.height = `calc(${this.options?.height} - 90px)`;
+        this.style.height = `calc(${ this.options?.height } - 90px)`;
         initPanelContent(modeler, options, this);
     }
 
@@ -38,17 +38,6 @@ export class Property extends AbstractPanel {
 
     modeling() {
         return this.modeler?.get('modeling') as Modeling;
-    }
-
-    updateProperty(key: string, value: any){
-        try {
-            const updateObj: Record<string, any> = {};
-            updateObj[key] = value;
-            // 使用原始元素进行更新
-            this.modeling().updateProperties(this.element, updateObj);
-        } catch (error) {
-            console.error("Failed to update property:", error);
-        }
     }
 
 }

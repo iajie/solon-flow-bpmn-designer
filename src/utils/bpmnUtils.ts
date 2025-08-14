@@ -1,7 +1,4 @@
-// @ts-ignore
-import {EasyBpmnDesignerOptions} from "../core/EasyBpmnDesigner.ts";
-import {Create} from "bpmn-js/lib/features/palette/PaletteProvider";
-import { BpmnFactory, Element, ElementFactory, Modeler, Modeling, Shape } from "bpmn-js";
+import { BpmnFactory, Element, ElementFactory, Modeler, Modeling, Shape, Create } from "bpmn-js";
 import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
 import jsYaml from "js-yaml";
 
@@ -233,29 +230,23 @@ export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
             id: item.id || `${nodeType}_${index}`,
             type: nodeType,
         });
+        node.di.id = `${node.id}_di`;
+        node.businessObject.id = node.id;
         item.id = node.id;
         if (item.title) {
             node.businessObject.name = item.title;
         }
-        if (item.task) {
-            node.businessObject.task = bpmnFactory.create("solon:Task", { body: item.task });
-        }
-        if (item.when) {
-            node.businessObject.when = bpmnFactory.create("solon:When", { body: item.when });
-        }
-        if (item.meta) {
-            node.businessObject.meta = bpmnFactory.create("solon:Meta", { body: JSON.stringify(item.meta, null, 4) });
-        }
         elements.push(node as Shape);
         return true;
     });
-    console.log(elements);
     modeling.createElements(elements, { x: 192, y: 250 }, <any>rootElement);
     // 连线
-    connection(sequenceFlows(newNodes), elements, modeling, bpmnFactory);
+    connection(newNodes, elements, modeling, bpmnFactory);
+    return newNodes;
 }
 
-const connection = (links: any[], elements: Element[], modeling: Modeling, bpmnFactory: BpmnFactory) => {
+const connection = (nodes: any[], elements: Element[], modeling: Modeling, bpmnFactory: BpmnFactory) => {
+    const links = sequenceFlows(nodes);
     links.forEach(item => {
         // 目标节点
         const node = elements.find(node => node.id === item.sourceRef);

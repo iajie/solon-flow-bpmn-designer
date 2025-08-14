@@ -49,17 +49,45 @@ export class Import extends AbstractToolBar {
                     updateProperty('name', solonFlow.title || '', root, modeler);
                     if (solonFlow.driver) {
                         updateProperty('driver', solonFlow.driver, root, modeler);
-                    }
-                    if (solonFlow.meta) {
-                        const bpmnFactory = modeler?.get("bpmnFactory");
-                        const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4), $parent: root });
-                        modeling?.updateProperties(root, { meta });
+                    } else {
+                        updateProperty('driver', '', root, modeler);
                     }
                     // 定义第一节点位置
-                    createTaskShape(modeler, solonFlow.layout);
-                    modeler?.saveXML({ format: false }).then(async ({ xml }) => {
+                    const nodes = createTaskShape(modeler, solonFlow.layout);
+                    const elementRegistry = modeler?.get('elementRegistry');
+                    const bpmnFactory = modeler?.get("bpmnFactory");
+                    modeler?.saveXML({ format: true }).then(async ({ xml }) => {
                         // 重新布局
                         modeler?.importXML(await layoutProcess(xml)).then(() => {
+                            if (nodes && elementRegistry && bpmnFactory) {
+                                // 设置meta
+                                if (solonFlow.meta) {
+                                    const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4) });
+                                    const rootNode = elementRegistry.get(solonFlow.id) as Element;
+                                    rootNode && modeling?.updateProperties(rootNode, { meta });
+                                }
+                                nodes.forEach(node => {
+                                    if (node.id) {
+                                        const el = elementRegistry.get(node.id) as Element;
+                                        if (el) {
+                                            if (node.meta) {
+                                                const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4) });
+                                                modeling?.updateProperties(el, { meta });
+                                            }
+                                            if (node.when) {
+                                                const when = bpmnFactory?.create("solon:When", { body: node.when });
+                                                modeling?.updateProperties(el, { when });
+                                            }
+                                            if (node.task) {
+                                                const task = bpmnFactory?.create("solon:Task", { body: node.task });
+                                                modeling?.updateProperties(el, { task });
+                                            }
+                                        }
+
+                                    }
+                                });
+                            }
+                            // 选中主节点
                             canvas?.scroll({ dx: 0, dy: 0 });
                             // @ts-ignore
                             canvas.zoom('fit-viewport', 'auto');

@@ -1,13 +1,13 @@
 import { Switch } from './Switch.ts';
 import { BpmnIcon } from './BpmnIcon.ts';
 import { Property } from './Property.ts';
-import {defineCustomElement} from "../../utils/domUtils.ts";
+import { defineCustomElement } from "../../utils/domUtils.ts";
 import { EasyBpmnDesignerOptions } from "../../types/easy-bpmn-designer.ts";
-import {AbstractPanel} from "./AbstractPanel.ts";
+import { AbstractPanel } from "./AbstractPanel.ts";
 import { PanelContent } from "./property/Content.ts";
 import { TabGroup } from "./property/TabGroup.ts";
 import { defaultPanelKeys } from "./DefaultPanelTabs.ts";
-import {Modeler} from "bpmn-js";
+import { Modeler } from "bpmn-js";
 
 defineCustomElement('easy-bpmn-designer-panel-switch', Switch);
 defineCustomElement('easy-bpmn-designer-panel-bpmn-icon', BpmnIcon);
