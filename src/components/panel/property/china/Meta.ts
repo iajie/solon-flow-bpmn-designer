@@ -2,28 +2,29 @@ import { PanelInput } from "../PanelInput.ts";
 import { Element } from "bpmn-js";
 import { EasyBpmnDialog } from "../../../EasyBpmnDialog.ts";
 import { t } from "i18next";
-import { AreaEditor } from "../../../../utils/areaEditor.ts";
 import jsYaml from "js-yaml";
+import { CodeHighlight } from "../../../CodeHighlight.ts";
 
 export class Meta extends PanelInput {
 
+    private value: string;
+
     constructor() {
         super();
-        this.type = 'text';
         this.inputLabel = 'meta';
+        this.value = '{}';
         this.init();
     }
 
     init() {
-        this.inputElement = document.createElement('textarea');
-        this.inputElement.style.minHeight = '180px';
-        new AreaEditor(this.inputElement);
-        this.inputElement.readOnly = true;
-        this.inputElement.addEventListener('click', () => {
+        this.customElement = document.createElement('div');
+        this.customElement.style.minHeight = '180px';
+        this.customElement.classList.add('property-item-code');
+        this.customElement.addEventListener('click', () => {
             const dialog = new EasyBpmnDialog({
                 edit: true,
                 title: t('metaTitle'),
-                content: this.inputElement.value || `{}`,
+                content: this.value,
             });
             dialog.addEventListener('code-edit', (e: any) => {
                 try {
@@ -34,7 +35,8 @@ export class Meta extends PanelInput {
                         const bpmnFactory = this.modeler?.get("bpmnFactory");
                         const meta = bpmnFactory.create("solon:Meta", { body: e.detail });
                         modeling.updateProperties(this.element, { meta });
-                        this.inputElement.value = e.detail;
+                        this.value = e.detail;
+                        this.codeShow();
                     }
                 } catch (err) {
                     console.warn("Meta Properties 不是一个JSON/YAML");
@@ -45,7 +47,20 @@ export class Meta extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.meta?.body || '{}');
+        this.value = JSON.stringify(JSON.parse(element.businessObject.meta?.body || '{}'), null, 4);
+        this.codeShow();
+    }
+
+    codeShow() {
+        if (this.customElement.children.length) {
+            for (let i = 0; i < this.customElement.children.length; i++) {
+                this.customElement.removeChild(this.customElement.children[i]);
+            }
+        }
+        this.customElement.appendChild(new CodeHighlight({
+            source: this.value,
+            type: 'javascript'
+        }));
     }
 
 }

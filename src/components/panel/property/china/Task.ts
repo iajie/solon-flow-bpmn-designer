@@ -1,28 +1,29 @@
 import { PanelInput } from "../PanelInput.ts";
 import { Element } from "bpmn-js";
-import {AreaEditor} from "../../../../utils/areaEditor.ts";
 import { EasyBpmnDialog } from "../../../EasyBpmnDialog.ts";
 import { t } from "i18next";
+import { CodeHighlight } from "../../../CodeHighlight.ts";
 
 export class Task extends PanelInput {
 
+    private value: string;
+
     constructor() {
         super();
-        this.type = 'text';
         this.inputLabel = 'task';
+        this.value = '{}';
         this.init();
     }
 
     init() {
-        this.inputElement = document.createElement('textarea');
-        this.inputElement.style.minHeight = '120px';
-        new AreaEditor(this.inputElement);
-        this.inputElement.readOnly = true;
-        this.inputElement.addEventListener('click', () => {
+        this.customElement = document.createElement('div');
+        this.customElement.style.minHeight = '150px';
+        this.customElement.classList.add('property-item-code');
+        this.customElement.addEventListener('click', () => {
             const dialog = new EasyBpmnDialog({
                 edit: true,
                 title: t('script'),
-                content: this.inputElement.value || ``,
+                content: this.value || ``,
             });
             dialog.addEventListener('code-edit', (e: any) => {
                 if (this.modeler) {
@@ -30,7 +31,8 @@ export class Task extends PanelInput {
                     const bpmnFactory = this.modeler?.get("bpmnFactory");
                     const task = bpmnFactory.create("solon:Task", { body: e.detail });
                     modeling.updateProperties(this.element, { task });
-                    this.inputElement.value = e.detail;
+                    this.value = e.detail;
+                    this.codeShow();
                 }
             })
         });
@@ -38,7 +40,20 @@ export class Task extends PanelInput {
 
     onChange(element: Element) {
         super.onChange(element);
-        this.inputElement && (this.inputElement.value = element.businessObject.task?.body || '');
+        this.value = element.businessObject.task?.body || '';
+        this.codeShow();
+    }
+
+    codeShow() {
+        if (this.customElement.children.length) {
+            for (let i = 0; i < this.customElement.children.length; i++) {
+                this.customElement.removeChild(this.customElement.children[i]);
+            }
+        }
+        this.customElement.appendChild(new CodeHighlight({
+            source: this.value,
+            type: 'auto'
+        }));
     }
 
 }

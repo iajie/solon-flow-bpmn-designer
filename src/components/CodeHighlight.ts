@@ -13,14 +13,19 @@ export class CodeHighlight extends HTMLElement {
     constructor(props: CodeHighlightProps) {
         super();
         this.props = props;
+        this.connectedCallback();
     }
 
     connectedCallback() {
         this.classList.add('preview-content');
-        const code = highlight.highlight(this.props.source, {
-            language: this.props.type,
-            ignoreIllegals: false
-        });
+        let code: any;
+        if (this.props.type === 'auto') {
+            code = highlight.highlightAuto(this.props.source);
+        } else {
+            code = highlight.highlight(this.props.source, {
+                language: this.props.type,
+            });
+        }
         this.innerHTML = `<pre>${code.value}</pre>`;
     }
 }

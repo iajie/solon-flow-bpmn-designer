@@ -162,7 +162,6 @@
         margin-bottom: 12px; /*移除margin，使用grid间距*/
         background: var(--easy-bpmn-designer-bg-color);
         border-radius: 4px;
-        border: 1px solid var(--easy-bpmn-designer-button-bg-color);
 
         .group-title {
             height: 36px; /*统一标题高度*/
@@ -274,26 +273,6 @@
                 }
             }
 
-            /*复选框样式优化*/
-
-            input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                margin: 0;
-                position: relative;
-                top: -1px;
-                vertical-align: middle;
-                border: 1px solid var(--easy-bpmn-designer-input-border-color);
-                border-radius: 2px;
-                background-color: var(--easy-bpmn-designer-input-bg-color);
-                cursor: pointer;
-
-                &:checked {
-                    background-color: #409eff;
-                    border-color: #409eff;
-                }
-            }
-
             .help-icon {
                 display: flex;
                 align-items: center;
@@ -311,27 +290,29 @@
                 }
             }
         }
+    }
 
-        /*单位标签优化*/
-
-        .unit {
-            position: absolute;
-            right: 10px;
-            color: #909399;
-            font-size: 13px;
-            line-height: 32px;
-            pointer-events: none;
+    .property-item-code {
+        background-color: var(--easy-bpmn-designer-bg-color);
+        border: 1px solid #dcdfe6;
+        border-radius: 4px;
+        color: var(--easy-bpmn-designer-text-color);
+        max-width: 400px;
+        &:hover {
+            border-color: var(--easy-bpmn-designer-input-border-color);
+            background-color: var(--easy-bpmn-designer-content-pre-bg-color);
         }
-
-        .help-text {
-            position: absolute;
-            bottom: -20px;
-            left: 0;
-            font-size: 12px;
-            color: #909399;
-            line-height: 1.2;
-            margin-top: 4px;
+        /* 代码自动换行 */
+        & pre {
+            white-space: pre-wrap;
         }
+        overflow-y: auto;
+
+        &::-webkit-scrollbar { width: 4px; height: 4px; }
+        &::-webkit-scrollbar-track-piece { background-color: var(--easy-bpmn-designer-content-scrollbar-track-piece) ; }  /* 轨道颜色 */
+        &::-webkit-scrollbar-thumb {   border-radius: 10px;  background-color: var(--easy-bpmn-designer-content-scrollbar-thumb);  }
+        &::-webkit-scrollbar-thumb:hover { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-hover);  }
+        &::-webkit-scrollbar-thumb:active { border-radius: 10px; background-color:var(--easy-bpmn-designer-content-scrollbar-thumb-active);  }
     }
 
     .switch-wrapper {
@@ -384,282 +365,6 @@
                 background-color: white;
                 transition: 0.3s;
                 border-radius: 50%;
-            }
-        }
-    }
-
-    .timeout-picker {
-        position: relative;
-        width: 100%;
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-
-            input {
-                width: 100%;
-                /*height: 32px;*/
-                padding-right: 30px;
-            }
-
-            .picker-trigger {
-                position: absolute;
-                right: 8px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                color: #999;
-
-                &:hover {
-                    color: #409eff;
-                }
-
-                .icon {
-                    width: 16px;
-                    height: 16px;
-                }
-            }
-        }
-
-        .picker-panel {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--easy-bpmn-designer-input-bg-color);
-            border: 1px solid var(--easy-bpmn-designer-input-border-color);
-            border-radius: 4px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            margin-top: 4px;
-            padding: 12px;
-
-            .panel-row {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 8px;
-
-                .label {
-                    font-size: 13px;
-                    color: var(--easy-bpmn-designer-menus-text-color);
-                }
-
-                .number-input {
-                    display: flex;
-                    align-items: center;
-
-                    input {
-                        width: 50px;
-                        text-align: center;
-                        margin: 0 4px;
-                        height: 24px;
-                        background-color: var(--easy-bpmn-designer-input-bg-color);
-                        border: 1px solid var(--easy-bpmn-designer-input-border-color);
-                        border-radius: 4px;
-
-                        &:hover {
-                            background-color: var(--easy-bpmn-designer-button-hover-bg-color);
-                        }
-
-                        &:focus {
-                            border-color: var(--easy-bpmn-designer-input-focus-bg-color);
-                        }
-
-                        &::-webkit-inner-spin-button {
-                            display: none;
-                        }
-                    }
-
-                    button {
-                        width: 28px;
-                        height: 28px;
-                        border: 1px solid var(--easy-bpmn-designer-button-border-color);
-                        background: var(--easy-bpmn-designer-button-bg-color);
-                        color: var(--easy-bpmn-designer-text-color);
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border-radius: 4px;
-
-                        &:hover {
-                            background: var(--easy-bpmn-designer-button-hover-bg-color);
-                            color: #409eff;
-                        }
-                    }
-                }
-            }
-
-            .panel-footer {
-                display: flex;
-                justify-content: flex-end;
-                margin-top: 12px;
-                gap: 8px;
-
-                button {
-                    padding: 6px 12px;
-                    border-radius: 4px;
-                    border: 1px solid var(--easy-bpmn-designer-button-border-color);
-                    cursor: pointer;
-                    font-size: 12px;
-
-                    &.btn-clear {
-                        background: var(--easy-bpmn-designer-button-bg-color);
-                        color: var(--easy-bpmn-designer-text-color);
-
-                        &:hover {
-                            color: var(--easy-bpmn-designer-dialog-title-color);
-                            border-color: #c6e2ff;
-                            background-color: var(--easy-bpmn-designer-button-hover-bg-color);
-                        }
-                    }
-
-                    &.btn-confirm {
-                        background: #409eff;
-                        color: white;
-                        border-color: #409eff;
-
-                        &:hover {
-                            background: #66b1ff;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .radio-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 4px 0;
-
-        .radio-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            user-select: none;
-            padding: 2px 8px;
-            border-radius: 3px;
-            transition: background-color 0.2s;
-
-            &:hover {
-                background-color: var(--easy-bpmn-designer-input-bg-color);
-            }
-
-            input[type="radio"] {
-                width: 14px;
-                height: 14px;
-                margin: 0;
-                cursor: pointer;
-
-                &:checked {
-                    accent-color: #409eff;
-                }
-            }
-
-            span {
-                font-size: 12px;
-                color: var(--easy-bpmn-designer-dialog-title-color);
-            }
-        }
-    }
-
-    .button-config {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /*减小最小宽度*/
-        gap: 4px; /*减小间距*/
-        padding: 8px; /*减小内边距*/
-        background: var(--easy-bpmn-designer-panel-button-config-bg-color);
-        border-radius: 4px;
-        margin: 4px 0;
-
-        .button-item {
-            display: flex;
-            align-items: center;
-            padding: 4px 6px; /*减小内边距*/
-            border-radius: 3px;
-            transition: background-color 0.2s;
-            position: relative; /*添加相对定位*/
-            cursor: pointer; /*添加手型光标*/
-            user-select: none; /*防止文字被选中*/
-
-            input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                margin: 0 6px 0 0; /*减小右边距*/
-                position: relative;
-                cursor: pointer;
-                border: 1px solid #dcdfe6;
-                border-radius: 2px;
-                background-color: #fff;
-                transition: all 0.3s;
-
-                &:checked {
-                    background-color: #409eff;
-                    border-color: #409eff;
-
-                    &:after {
-                        content: "";
-                        position: absolute;
-                        left: 4px;
-                        top: 1px;
-                        width: 6px;
-                        height: 9px;
-                        border: 2px solid #fff;
-                        border-left: 0;
-                        border-top: 0;
-                        transform: rotate(45deg);
-                    }
-                }
-
-                &:hover {
-                    border-color: #409eff;
-                }
-            }
-
-            span {
-                font-size: 12px; /*稍微减小字号*/
-                color: var(--easy-bpmn-designer-text-color);
-                white-space: nowrap;
-                cursor: pointer; /*添加手型光标*/
-            }
-
-            &:hover {
-                background-color: var(--easy-bpmn-designer-panel-button-config-bg-hover-color);
-            }
-        }
-    }
-
-    .auto-skip-config {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 6px;
-        background: var(--easy-bpmn-designer-panel-button-config-bg-color);
-        border-radius: 4px;
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            padding: 4px 6px;
-
-            &:hover {
-                background: var(--easy-bpmn-designer-panel-button-config-bg-hover-color);
-            }
-
-            input[type="checkbox"] {
-                margin: 0;
-            }
-
-            span {
-                font-size: 12px;
-                color: var(--easy-bpmn-designer-text-color);
             }
         }
     }
