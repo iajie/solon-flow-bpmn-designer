@@ -42,7 +42,6 @@ export class PreviewCode extends AbstractToolBar {
             title: type === 'yaml' ? t('preview-yaml') : t('preview-json'),
             content: code,
             text: code,
-            type: type
         });
     }
 
