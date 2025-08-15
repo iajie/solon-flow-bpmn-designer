@@ -162,6 +162,7 @@
         margin-bottom: 12px; /*移除margin，使用grid间距*/
         background: var(--easy-bpmn-designer-bg-color);
         border-radius: 4px;
+        padding: 5px;
 
         .group-title {
             height: 36px; /*统一标题高度*/
