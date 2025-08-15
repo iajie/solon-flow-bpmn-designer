@@ -9,13 +9,11 @@ interface EasyBpmnDialogProps {
     text?: string;
     isMask?: boolean;
     clickMaskClose?: boolean;
-    type?: 'yaml' | 'json';
 }
 
 const defaultOptions: EasyBpmnDialogProps = {
     content: '',
     title: '',
-    type: 'yaml',
     edit: false,
     isMask: true,
     clickMaskClose: false
@@ -74,7 +72,6 @@ export class EasyBpmnDialog extends HTMLElement {
                 previewHeader.children[0].appendChild(span);
                 const codeHighlight = new CodeHighlight({
                     source: this.options.content,
-                    type: this.options.type || 'yaml',
                 });
                 previewDialog?.appendChild(codeHighlight);
             }

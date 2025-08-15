@@ -183,6 +183,7 @@
 
         .preview-content, textarea {
             &:focus {
+                color: var(--easy-bpmn-designer-content-pre-text-color);
                 border-color: var(--easy-bpmn-designer-content-pre-bg-color);
                 outline: none;
                 box-shadow: 0 0 0 1px rgba(64, 158, 255, 0.2);
@@ -206,6 +207,7 @@
             /* 代码自动换行 */
             & pre {
                 white-space: pre-wrap;
+                color: var(--easy-bpmn-designer-content-pre-text-color);
             }
         }
     }

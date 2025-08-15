@@ -18,7 +18,7 @@ export class Meta extends PanelInput {
 
     init() {
         this.customElement = document.createElement('div');
-        this.customElement.style.minHeight = '180px';
+        this.customElement.style.height = '150px';
         this.customElement.classList.add('property-item-code');
         this.customElement.addEventListener('click', () => {
             const dialog = new EasyBpmnDialog({
@@ -59,7 +59,6 @@ export class Meta extends PanelInput {
         }
         this.customElement.appendChild(new CodeHighlight({
             source: this.value,
-            type: 'javascript'
         }));
     }
 

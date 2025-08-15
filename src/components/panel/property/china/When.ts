@@ -52,7 +52,6 @@ export class When extends PanelInput {
         }
         this.customElement.appendChild(new CodeHighlight({
             source: this.value,
-            type: 'auto'
         }));
     }
 
