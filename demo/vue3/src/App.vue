@@ -25,7 +25,6 @@ const lang = ref<"en" | "zh">('zh');
 const setProps = (type: "theme" | "lang") => {
     if (type === "theme") {
         theme.value = theme.value === 'dark' ? 'light' : 'dark';
-        console.log(theme.value);
     }else {
         lang.value = lang.value === 'zh' ? 'en' : 'zh'
     }
