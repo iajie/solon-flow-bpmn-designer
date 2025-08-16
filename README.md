@@ -36,9 +36,240 @@ https://www.easy-flowable.online/component/designer
 ## 已完善
 
 - [x] **基础**：网格、颜色设置、小地图导航、导入文件（JSON/YAML）、下载文件、预览YAML、预览JSON、撤销、重做、放大缩小、重置、
-- [x] **属性面板**：基础属性、条件属性
+- [x] **属性面板**：基础属性、条件属性、SolonFlow链、元数据、脚本
 - [x] **更多**：国际化、亮色主题、暗色主题...
 
 ## 快速开始
 
-访问官网：https://easy-flowable.online/component
+### [React集成](https://gitee.com/iajie/solon-flow-bpmn-designer/tree/master/demo/react)
+```jsx
+import React from "react";
+import { SolonFlowBpmnDesigner } from "solon-flow-bpmn-designer";
+import "solon-flow-bpmn-designer/style.css";
+
+interface SolonFlowDesignerProps {
+    value: string;
+    theme?: "light" | "dark";
+    lang?: "en" | "zh";
+    type?: "yaml" | "json";
+    height?: number;
+    onChange?: (value: string) => void;
+}
+
+export interface SolonFlowDesignerRef {
+    /**
+     * 属性面板显隐控制
+     */
+    panelShow: () => boolean;
+    /**
+     * 清除设计器
+     */
+    clear: () => void;
+    /**
+     * 获取值
+     */
+    getValue: () => string | undefined;
+}
+
+const SolonFlowDesigner = React.forwardRef<SolonFlowDesignerRef, SolonFlowDesignerProps>((props, ref) => {
+    const designerRef = React.useRef(null);
+    const [designer, setDesigner] = React.useState<SolonFlowBpmnDesigner>();
+
+    React.useImperativeHandle(ref, () => ({
+        panelShow: () => designer?.showPanel() || false,
+        clear: () => designer?.clear(),
+        getValue: () => designer?.getValue(),
+    }));
+
+    React.useEffect(() => {
+        if (!!designerRef.current) {
+            if (designer) return;
+            const solonFlowBpmnDesigner = new SolonFlowBpmnDesigner({
+                container: designerRef.current,
+                height: props.height || 60,
+                lang: props.lang || 'zh',
+                theme: props.theme || 'light',
+                value: props.value,
+                onChange: (callback) => {
+                    props.onChange?.(callback(props.type || 'yaml'));
+                },
+            });
+            setDesigner(solonFlowBpmnDesigner);
+            return () => solonFlowBpmnDesigner.destroy();
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (designer) {
+            designer.changeLocal(props.lang || 'cn');
+        }
+    }, [props.lang]);
+
+    React.useEffect(() => {
+        if (designer) {
+            designer.changeTheme();
+        }
+    }, [props.theme]);
+
+    return <div ref={designerRef}/>
+});
+
+export default SolonFlowDesigner;
+```
+
+## [Vue3集成](https://gitee.com/iajie/solon-flow-bpmn-designer/tree/master/demo/vue3)
+```vue
+<template>
+    <div ref="designer"></div>
+</template>
+<script setup lang="ts">
+import { onMounted, ref, onUnmounted, watch } from "vue";
+import "solon-flow-bpmn-designer/style.css";
+import { SolonFlowBpmnDesigner } from "solon-flow-bpmn-designer";
+
+interface SolonFlowDesignerProps {
+    value: string;
+    theme?: "light" | "dark";
+    lang?: "en" | "zh";
+    type?: "yaml" | "json";
+    height?: number;
+}
+
+interface SolonFlowDesignerRef {
+    /** 属性面板显隐控制 */
+    panelShow: () => boolean;
+    /** 清除设计器 */
+    clear: () => void;
+    /** 获取值 */
+    getValue: () => string | undefined;
+}
+
+const props = withDefaults(defineProps<SolonFlowDesignerProps>(), {
+    theme: "light",
+    lang: "zh",
+    type: "yaml",
+    height: 60,
+});
+
+watch(() => props.theme, (newTheme) => {
+    solonDesigner.value?.changeTheme(newTheme);
+});
+watch(() => props.lang, (newLang) => {
+    solonDesigner.value?.changeLocal(newLang);
+});
+
+const designer = ref();
+const solonDesigner = ref<SolonFlowBpmnDesigner>();
+const emit = defineEmits(["change"]);
+
+onMounted(() => {
+    solonDesigner.value = new SolonFlowBpmnDesigner({
+        container: designer.value,
+        height: props.height || 60,
+        lang: props.lang || 'zh',
+        theme: props.theme || 'light',
+        value: props.value,
+        onChange: (callback) => {
+            emit("change", callback(props.type))
+        },
+    });
+});
+
+onUnmounted(() => solonDesigner.value?.destroy())
+
+/**
+ * ref可调用方法
+ */
+defineExpose<SolonFlowDesignerRef>({
+    panelShow: () => solonDesigner.value?.showPanel() || false,
+    clear: () => solonDesigner.value?.clear(),
+    getValue: () => solonDesigner.value?.getValue(),
+});
+
+</script>
+```
+
+## [Vue2集成](https://gitee.com/iajie/solon-flow-bpmn-designer/tree/master/demo/vue)
+
+```vue
+<template>
+    <div id="designer"></div>
+</template>
+<script>
+import "solon-flow-bpmn-designer/style.css";
+import { SolonFlowBpmnDesigner } from "solon-flow-bpmn-designer";
+export default {
+    name: 'SolonFlowDesigner',
+    props: {
+        value: {
+            type: String,
+            required: true
+        },
+        theme: {
+            type: String,
+            default: "light"
+        },
+        lang: {
+            type: String,
+            default: "zh"
+        },
+        type: {
+            type: String,
+            default: "yaml"
+        },
+        height: {
+            type: Number,
+            default: 60
+        },
+    },
+    data() {
+        return {
+            designer: null,
+        }
+    },
+    mounted() {
+        this.designer = new SolonFlowBpmnDesigner({
+            container: '#designer',
+            height: this.height,
+            lang: this.lang,
+            theme: this.theme,
+            value: this.value,
+            onChange: (callback) => {
+                this.$emit("change", callback(this.type))
+            },
+        });
+    },
+    methods: {
+        panelShow() {
+            this.designer?.showPanel();
+        },
+        clear() {
+            this.designer?.clear();
+        },
+        getValue() {
+            return this.designer?.getValue();
+        }
+    },
+    watch: {
+        lang: {
+            handler(val) {
+                if (val && this.designer) {
+                    this.designer.changeLocal(val);
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+        theme: {
+            handler(val) {
+                if (val && this.designer) {
+                    this.designer.changeTheme(val);
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+    },
+}
+</script>
+```
