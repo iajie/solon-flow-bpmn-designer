@@ -24,7 +24,10 @@
 
     .djs-container {
         background-color: transparent !important;
-
+        /* 去除画布聚集后的边框 */
+        svg:focus {
+            outline: none;
+        }
         .djs-popup {
             color: var(--easy-bpmn-designer-text-color);
             background-color: var(--easy-bpmn-designer-bg-color);
