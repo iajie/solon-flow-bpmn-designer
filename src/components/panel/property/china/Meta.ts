@@ -21,6 +21,12 @@ export class Meta extends PanelInput {
         this.customElement.style.height = '150px';
         this.customElement.classList.add('property-item-code');
         this.customElement.addEventListener('click', () => {
+            if (this.element.type === "bpmn:ComplexGateway" && this.value === '{}') {
+                this.value = JSON.stringify({
+                    "$for": "",
+                    "$in": ""
+                }, null, 4);
+            }
             const dialog = new EasyBpmnDialog({
                 edit: true,
                 title: t('metaTitle'),

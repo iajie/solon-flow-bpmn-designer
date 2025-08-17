@@ -22,6 +22,12 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
             show: "UserTask"
         },
         {
+            title: 'china',
+            items: [],
+            easy: ['meta'],
+            show: "ComplexGateway"
+        },
+        {
             title: 'conditionProps',
             items: [],
             easy: ['condition-type', 'condition-expression'],

@@ -124,6 +124,8 @@ const getNodeType = (type: string) => {
             return "inclusive";
         case "bpmn:ExclusiveGateway":
             return "exclusive";
+        case "bpmn:ComplexGateway":
+            return "iterator";
         case "start":
             return "startEvent";
         case "end":
@@ -134,6 +136,8 @@ const getNodeType = (type: string) => {
             return "inclusiveGateway";
         case "exclusive":
             return "exclusiveGateway";
+        case "iterator":
+            return "complexGateway";
         case "activity":
             return "userTask";
         default:
@@ -153,6 +157,8 @@ const getBpmnNode = (type: string) => {
             return "bpmn:InclusiveGateway";
         case "exclusive":
             return "bpmn:ExclusiveGateway";
+        case "iterator":
+            return "bpmn:ComplexGateway";
         default:
             return "bpmn:UserTask";
     }
