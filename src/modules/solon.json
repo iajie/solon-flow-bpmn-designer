@@ -25,6 +25,17 @@
             ]
         },
         {
+            "name": "ComplexGateway",
+            "extends": ["bpmn:ComplexGateway"],
+            "properties": [
+                {
+                    "name": "meta",
+                    "type": "solon:Meta",
+                    "isMany": false
+                }
+            ]
+        },
+        {
             "name": "Meta",
             "superClass": ["Element"],
             "properties": [

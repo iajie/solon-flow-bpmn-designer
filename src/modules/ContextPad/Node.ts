@@ -82,15 +82,19 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
             };
         }
 
-        if (!isType(element.type, ['bpmn:EndEvent', "bpmn:SequenceFlow", "bpmn:StartEvent", "bpmn:TextAnnotation", "bpmn:Association"])) {
-            Object.assign(actions, {
-                'append.end-event': this.appendAction('bpmn:EndEvent', 'bpmn-icon-end-event-none', 'Append end event'),
-            });
-        }
-        if (!isType(element.type, ["bpmn:EndEvent", "bpmn:SequenceFlow", "bpmn:TextAnnotation", "bpmn:Association"])) {
-            Object.assign(actions, {
-                'append.gateway': this.appendAction('bpmn:ExclusiveGateway', 'bpmn-icon-gateway-none', 'Append gateway'),
-            });
+        if (isType(element.type, ["bpmn:ExclusiveGateway", "bpmn:ComplexGateway", "bpmn:StartEvent"]) && element.outgoing.length > 0) {
+
+        } else {
+            if (!isType(element.type, ['bpmn:EndEvent', "bpmn:SequenceFlow", "bpmn:StartEvent", "bpmn:TextAnnotation", "bpmn:Association"])) {
+                Object.assign(actions, {
+                    'append.end-event': this.appendAction('bpmn:EndEvent', 'bpmn-icon-end-event-none', 'Append end event'),
+                });
+            }
+            if (!isType(element.type, ["bpmn:EndEvent", "bpmn:SequenceFlow", "bpmn:TextAnnotation", "bpmn:Association"])) {
+                Object.assign(actions, {
+                    'append.gateway': this.appendAction('bpmn:ExclusiveGateway', 'bpmn-icon-gateway-none', 'Append gateway'),
+                });
+            }
         }
         if (!this.popupMenu.isEmpty(element, 'bpmn-replace')) {
             // Replace menu entry
@@ -115,18 +119,22 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
             });
         }
 
-        if (isType(element.type, ['bpmn:TextAnnotation', "bpmn:EventBasedGateway", "bpmn:UserTask"])) {
-            Object.assign(actions, {
-                'connect': {
-                    group: 'edit',
-                    className: 'bpmn-icon-connection-multi',
-                    title: this.translate('Connect using association'),
-                    action: {
-                        click: startConnect,
-                        dragstart: startConnect,
+        if (isType(element.type, ['bpmn:TextAnnotation', "bpmn:EventBasedGateway", "bpmn:UserTask", "bpmn:StartEvent"])) {
+            if (isType(element.type, ["bpmn:StartEvent", ""]) && element.outgoing.length > 0) {
+
+            } else {
+                Object.assign(actions, {
+                    'connect': {
+                        group: 'edit',
+                        className: 'bpmn-icon-connection-multi',
+                        title: this.translate('Connect using association'),
+                        action: {
+                            click: startConnect,
+                            dragstart: startConnect,
+                        },
                     },
-                },
-            });
+                });
+            }
         } else if (!isType(element.type, ["bpmn:Association"])) {
             // Object.assign(actions, {
             //     'append.text-annotation': this.appendAction('bpmn:TextAnnotation', 'bpmn-icon-text-annotation', 'Add text annotation')
@@ -136,7 +144,6 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
         if (this.isDeleteAllowed([element])) {
             Object.assign(actions, deleteAction());
         }
-
         return actions;
     }
 

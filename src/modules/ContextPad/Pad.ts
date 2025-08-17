@@ -55,16 +55,21 @@ export class EasyBpmnContextPadProvider extends ContextPadProvider {
             : null;
         if (!isType(element.type, ["bpmn:EndEvent", "bpmn:SequenceFlow", "bpmn:TextAnnotation", "bpmn:Association", "label"])) {
             // 添加创建用户任务按钮
-            actions["append.append-task"] = {
-                group: "model",
-                className: "bpmn-icon-user-task",
-                title: this.translate("Append user task"),
-                action: {
-                    dragstart: appendUserTask,
-                    click: append,
-                    hover: previewAppend,
-                },
-            };
+            // 排他网关只能有一个流出连接
+            if (isType(element.type, ["bpmn:ExclusiveGateway", "bpmn:ComplexGateway", "bpmn:StartEvent"]) && element.outgoing.length > 0) {
+
+            } else {
+                actions["append.append-task"] = {
+                    group: "model",
+                    className: "bpmn-icon-user-task",
+                    title: this.translate("Append user task"),
+                    action: {
+                        dragstart: appendUserTask,
+                        click: append,
+                        hover: previewAppend,
+                    },
+                };
+            }
         }
         return actions;
     }

@@ -49,7 +49,6 @@ export class EasyBpmnColorPopupMenuProvider {
 
     constructor(config: { colors: Color[] }, bpmnRendererConfig: BpmnRendererConfig, popupMenu: PopupMenu,
                 modeling: Modeling, translate: Translate) {
-        console.log(config);
         this.modeling = modeling;
         this.popupMenu = popupMenu;
         this.translate = translate;

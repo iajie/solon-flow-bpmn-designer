@@ -41,7 +41,7 @@ export class EasyBpmnPopupMenuProvider extends ReplaceMenuProvider {
         if (target.type.endsWith('Gateway')) {
             // 只有网关才会切换属性
             const options = replaceOptions.GATEWAY.filter(item => {
-                return item.label !== "Event-based gateway" && item.label !== "Complex gateway" && item.target?.type !== target.type;
+                return item.label !== "Event-based gateway" && item.target?.type !== target.type;
             });
             return this.createEntries(target, options);
         }
