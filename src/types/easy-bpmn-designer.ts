@@ -2,6 +2,7 @@ import { BaseViewerOptions } from "bpmn-js/lib/BaseViewer";
 import { SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
 import { DefaultToolbarKey } from "../components/toolbar/DefaultToolbarKeys.ts";
 import { Modeler, Element, ModuleDeclaration } from "bpmn-js";
+import { Color } from "../modules/PopupMenu/Color.ts";
 
 export interface CustomMenu {
     id?: string
@@ -90,6 +91,10 @@ export type EasyBpmnDesignerOptions = {
         open: boolean;
         position: { x: number; y: 'bottom' | number },
     };
+    /**
+     * @description 自定义颜色组件
+     */
+    colors?: Color[];
     toolbarKeys?: (string | CustomMenu | MenuGroup)[],
     toolbarExcludeKeys?: DefaultToolbarKey[];
     toolbarSize?: string | 'small' | 'medium' | 'large';

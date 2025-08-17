@@ -60,6 +60,14 @@
                 background-color: var(--easy-bpmn-designer-bg-color);
             }
         }
+        /*颜色选择器*/
+        .color-picker .entry {
+            margin: 0;
+        }
+        .color-picker .djs-popup-group {
+            display: grid;
+            grid: auto-flow / 1fr 1fr 1fr;
+        }
 
     }
 

@@ -16,6 +16,7 @@ declare module 'bpmn-js' {
     export type Injector = import("didi").Injector;
     export type ModuleDeclaration = import("didi").ModuleDeclaration;
     export type ContextPad = import("diagram-js/lib/features/context-pad/ContextPad").default;
+    export type PopupMenuEntry = import("diagram-js/lib/features/popup-menu/PopupMenuProvider").PopupMenuEntry;
     export type ContextPadConfig = import("bpmn-js/lib/features/context-pad/ContextPadProvider").ContextPadConfig;
     export type AppendPreview = import("bpmn-js/lib/features/append-preview/AppendPreview").default;
     export type ReplaceOption = import("bpmn-js/lib/features/replace/ReplaceOptions").ReplaceOption;
@@ -24,6 +25,7 @@ declare module 'bpmn-js' {
     export type Moddle = import("bpmn-js/lib/model/Types").Moddle;
     export type ModdleCopy = import("bpmn-js/lib/features/copy-paste/ModdleCopy").default;
     export type TargetElement = import("bpmn-js/lib/features/replace/BpmnReplace").TargetElement;
+    export type BpmnRendererConfig = import("bpmn-js/lib/draw/BpmnRenderer").BpmnRendererConfig;
 
     export type Palette = import("diagram-js/lib/features/palette/Palette").default;
     export type SpaceTool = import("bpmn-js/lib/features/space-tool/BpmnSpaceTool").default;
@@ -122,13 +124,13 @@ declare module 'bpmn-js' {
 }
 
 declare module 'bpmn-js/lib/Viewer' {
-    import {Viewer} from 'bpmn-js';
+    import { Viewer } from 'bpmn-js';
     export = Viewer;
 }
 
-export type {Canvas, Modeling, Selection, Clipboard, CommandStack,
-    BpmnElement, Modeler, Element, Shape, ElementFactory,
+export type {
+    Canvas, Modeling, Selection, Clipboard, CommandStack, BpmnElement, Modeler, Element, Shape, ElementFactory,
     Create, Connect, ContextPad, EventBus, Injector, Palette, PopupMenu, BpmnFactory, Rules, Translate,
     Moddle, ModdleCopy, BpmnReplace, ElementRegistry, AppendPreview, SpaceTool, HandTool, LassoTool, GlobalConnect,
-    ModuleDeclaration, ShapeLike, Connection, ContextPadConfig, ReplaceOption, TargetElement
+    ModuleDeclaration, ShapeLike, Connection, ContextPadConfig, ReplaceOption, TargetElement, BpmnRendererConfig
 } from 'bpmn-js';
