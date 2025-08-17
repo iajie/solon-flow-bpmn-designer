@@ -1,4 +1,4 @@
-export { EasyBpmnDesignerContextPad, EasyBpmnDesignerNodeContextPad } from './ContextPad/index';
+export { EasyBpmnDesignerContextPad } from './ContextPad';
 export { EasyBpmnDesignerPalette } from './Palette';
 export { EasyBpmnDesignerPopupMenu } from './PopupMenu';
 export { default as zhTranslate } from './Translate';

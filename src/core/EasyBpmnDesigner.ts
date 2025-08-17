@@ -22,7 +22,7 @@ import minimapModule from "diagram-js-minimap"; //小地图
 import "diagram-js-minimap/assets/diagram-js-minimap.css";
 import BpmnColorPickerModule from "bpmn-js-color-picker"; // 颜色选择器
 import "bpmn-js-color-picker/colors/color-picker.css";
-import { EasyBpmnDesignerPalette, EasyBpmnDesignerNodeContextPad, EasyBpmnDesignerPopupMenu,
+import { EasyBpmnDesignerPalette, EasyBpmnDesignerPopupMenu,
     EasyBpmnDesignerContextPad, zhTranslate, SolonModdle } from "../modules";
 // 标签解析 Moddle
 import { defineCustomElement, switchPanel } from "../utils/domUtils.ts";
@@ -365,13 +365,12 @@ export class SolonFlowBpmnDesigner {
      */
     private additionalModules() {
         const Modules: ModuleDeclaration[] = [
-            EasyBpmnDesignerPalette,
-            EasyBpmnDesignerContextPad,
-            EasyBpmnDesignerNodeContextPad,
-            EasyBpmnDesignerPopupMenu,
             minimapModule,
             GridLineModule,
             BpmnColorPickerModule,
+            EasyBpmnDesignerPalette,
+            EasyBpmnDesignerContextPad,
+            EasyBpmnDesignerPopupMenu,
         ];
         // 汉化
         if (this.options.lang === "zh") {
