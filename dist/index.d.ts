@@ -39,6 +39,12 @@ declare class AbstractToolBar extends HTMLElement implements DesignerEventListen
     onCreate(modeler: Modeler, options: SolonFlowBpmnDesignerOptions): void;
 }
 
+declare interface Color {
+    label: string;
+    fill?: string;
+    stroke?: string;
+}
+
 declare interface CustomMenu {
     id?: string;
     className?: string;
@@ -205,6 +211,10 @@ export declare type SolonFlowBpmnDesignerOptions = {
             y: 'bottom' | number;
         };
     };
+    /**
+     * @description 自定义颜色组件
+     */
+    colors?: Color[];
     toolbarKeys?: (string | CustomMenu | MenuGroup)[];
     toolbarExcludeKeys?: DefaultToolbarKey[];
     toolbarSize?: string | 'small' | 'medium' | 'large';
