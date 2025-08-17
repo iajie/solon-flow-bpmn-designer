@@ -3,12 +3,12 @@ import { Palette, Create, ElementFactory, SpaceTool, LassoTool, HandTool, Global
 import { createAction } from '../../utils/bpmnUtils.ts';
 
 class EasyBpmnPaletteProvider extends PaletteProvider {
-    private create: Create;
-    private elementFactory: ElementFactory;
+    private readonly create: Create;
+    private readonly elementFactory: ElementFactory;
     private lassoTool: LassoTool;
     private handTool: HandTool;
     private globalConnect: GlobalConnect;
-    private translate: Translate;
+    private readonly translate: Translate;
     constructor(
         palette: Palette, create: Create, elementFactory: ElementFactory,
         spaceTool: SpaceTool, lassoTool: LassoTool, handTool: HandTool,

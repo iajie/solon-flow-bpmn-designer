@@ -1,13 +1,13 @@
-import ContextPadProvider, {Canvas, ContextPadConfig} from "bpmn-js/lib/features/context-pad/ContextPadProvider";
-import {isType} from "../../utils/bpmnUtils.ts";
-import { Injector, EventBus, ContextPad, Modeling, Connect,
-    Create, PopupMenu, Rules, Translate, Element, Shape, AppendPreview } from 'bpmn-js';
-
-type ElementFactory = import("bpmn-js/lib/features/modeling/ElementFactory").default;
+import ContextPadProvider from "bpmn-js/lib/features/context-pad/ContextPadProvider";
+import { isType } from "../../utils/bpmnUtils.ts";
+import {
+    Injector, EventBus, ContextPad, Modeling, Connect, Canvas, ContextPadConfig, ElementFactory,
+    Create, PopupMenu, Rules, Translate, Element, Shape, AppendPreview
+} from 'bpmn-js';
 
 export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
     private elementFactory: ElementFactory;
-    private autoPlace: any;
+    private readonly autoPlace: any;
     private create: Create;
     private appendPreview: AppendPreview;
     private readonly translate: Translate;
@@ -22,7 +22,6 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
                 canvas: Canvas, rules: Rules, translate: Translate, appendPreview: AppendPreview) {
         super(config, injector, eventBus, contextPad, modeling, elementFactory, connect, create, popupMenu,
             canvas, rules, translate, appendPreview);
-        this.elementFactory = elementFactory;
         this.elementFactory = elementFactory;
         this.create = create;
         this.appendPreview = appendPreview;
@@ -75,7 +74,7 @@ export class EasyBpmnNodeContextPadProvider extends ContextPadProvider {
 
         const getReplaceMenuPosition = (_: Element) => {
             const Y_OFFSET = 5;
-            const pad = this.canvas.getContainer().querySelector('.djs-context-pad');
+            const pad = this.canvas.getContainer().querySelector('.djs-context-pad')!;
             const padRect = pad.getBoundingClientRect();
             return {
                 x: padRect.left,

@@ -1,13 +1,10 @@
-import ContextPadProvider, {
-    Canvas,
-    ContextPadConfig,
-} from "bpmn-js/lib/features/context-pad/ContextPadProvider";
-import { Injector, EventBus, ContextPad, Modeling, AppendPreview, Connect, Create, PopupMenu,
-    Rules, Translate, Element, Shape
+import ContextPadProvider from "bpmn-js/lib/features/context-pad/ContextPadProvider";
+import {
+    Injector, EventBus, ContextPad, Modeling, AppendPreview, Connect, Create, PopupMenu,
+    Rules, Translate, Element, Shape, Canvas, ContextPadConfig, ElementFactory
 } from 'bpmn-js';
-type ElementFactory = import("bpmn-js/lib/features/modeling/ElementFactory").default;
-import {EasyBpmnNodeContextPadProvider} from './Node.ts';
-import {isType} from "../../utils/bpmnUtils.ts";
+import { EasyBpmnNodeContextPadProvider } from './Node.ts';
+import { isType } from "../../utils/bpmnUtils.ts";
 
 class EasyBpmnContextPadProvider extends ContextPadProvider {
     private elementFactory: ElementFactory;
@@ -17,11 +14,10 @@ class EasyBpmnContextPadProvider extends ContextPadProvider {
     private readonly translate: Translate;
 
     constructor(config: ContextPadConfig, injector: Injector, eventBus: EventBus, contextPad: ContextPad,
-        modeling: Modeling, elementFactory: ElementFactory, connect: Connect, create: Create, popupMenu: PopupMenu,
-        canvas: Canvas, rules: Rules, translate: Translate, appendPreview: AppendPreview) {
+                modeling: Modeling, elementFactory: ElementFactory, connect: Connect, create: Create, popupMenu: PopupMenu,
+                canvas: Canvas, rules: Rules, translate: Translate, appendPreview: AppendPreview) {
         super(config, injector, eventBus, contextPad, modeling, elementFactory, connect, create, popupMenu,
             canvas, rules, translate, appendPreview);
-        this.elementFactory = elementFactory;
         this.elementFactory = elementFactory;
         this.create = create;
         this.appendPreview = appendPreview;

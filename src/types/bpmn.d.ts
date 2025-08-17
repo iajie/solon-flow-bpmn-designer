@@ -3,7 +3,7 @@ declare module 'bpmn-js' {
     export type Canvas = import('diagram-js/lib/core/Canvas').default;
     export type ShapeLike = import('diagram-js/lib/core/Types').ShapeLike;
     export type ElementRegistry = import('diagram-js/lib/core/ElementRegistry').default;
-    export type ElementFactory = import("diagram-js/lib/core/ElementFactory").default;
+    export type ElementFactory = import("bpmn-js/lib/features/modeling/ElementFactory").default;
     export type EventBus = import("diagram-js/lib/core/EventBus").default;
     export type Connect = import("diagram-js/lib/features/connect/Connect").default;
     export type Create = import("diagram-js/lib/features/create/Create").default;
@@ -16,12 +16,14 @@ declare module 'bpmn-js' {
     export type Injector = import("didi").Injector;
     export type ModuleDeclaration = import("didi").ModuleDeclaration;
     export type ContextPad = import("diagram-js/lib/features/context-pad/ContextPad").default;
+    export type ContextPadConfig = import("bpmn-js/lib/features/context-pad/ContextPadProvider").ContextPadConfig;
     export type AppendPreview = import("bpmn-js/lib/features/append-preview/AppendPreview").default;
-
+    export type ReplaceOption = import("bpmn-js/lib/features/replace/ReplaceOptions").ReplaceOption;
     export type BpmnFactory = import("bpmn-js/lib/features/modeling/BpmnFactory").default;
     export type BpmnReplace = import("bpmn-js/lib/features/replace/BpmnReplace").default;
     export type Moddle = import("bpmn-js/lib/model/Types").Moddle;
     export type ModdleCopy = import("bpmn-js/lib/features/copy-paste/ModdleCopy").default;
+    export type TargetElement = import("bpmn-js/lib/features/replace/BpmnReplace").TargetElement;
 
     export type Palette = import("diagram-js/lib/features/palette/Palette").default;
     export type SpaceTool = import("bpmn-js/lib/features/space-tool/BpmnSpaceTool").default;
@@ -29,8 +31,6 @@ declare module 'bpmn-js' {
     export type HandTool = import("diagram-js/lib/features/hand-tool/HandTool").default;
     export type GlobalConnect = import("diagram-js/lib/features/global-connect/GlobalConnect").default;
     export type Connection = import("diagram-js/lib/model/Types").Connection;
-
-    export type BpmnJSOptions = import('bpmn-js/lib/BaseModeler').BaseViewerOptions;
 
     export type Selection = import('diagram-js/lib/features/selection/Selection').default;
 
@@ -130,5 +130,5 @@ export type {Canvas, Modeling, Selection, Clipboard, CommandStack,
     BpmnElement, Modeler, Element, Shape, ElementFactory,
     Create, Connect, ContextPad, EventBus, Injector, Palette, PopupMenu, BpmnFactory, Rules, Translate,
     Moddle, ModdleCopy, BpmnReplace, ElementRegistry, AppendPreview, SpaceTool, HandTool, LassoTool, GlobalConnect,
-    ModuleDeclaration, ShapeLike, Connection
+    ModuleDeclaration, ShapeLike, Connection, ContextPadConfig, ReplaceOption, TargetElement
 } from 'bpmn-js';

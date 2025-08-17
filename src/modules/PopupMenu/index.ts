@@ -1,8 +1,9 @@
 import ReplaceMenuProvider from 'bpmn-js/lib/features/popup-menu/ReplaceMenuProvider';
 import * as replaceOptions from "bpmn-js/lib/features/replace/ReplaceOptions";
-import {TargetElement} from "bpmn-js/lib/features/replace/BpmnReplace";
-type ReplaceOption = import("bpmn-js/lib/features/replace/ReplaceOptions").ReplaceOption;
-import { BpmnFactory, BpmnReplace, Moddle, ModdleCopy, Modeling, PopupMenu, Rules, Translate, Element } from 'bpmn-js';
+import {
+    BpmnFactory, BpmnReplace, Moddle, ModdleCopy, Modeling, PopupMenu,
+    Rules, Translate, Element, ReplaceOption, TargetElement
+} from 'bpmn-js';
 
 class EasyBpmnPopupMenuProvider extends ReplaceMenuProvider {
 
@@ -39,7 +40,7 @@ class EasyBpmnPopupMenuProvider extends ReplaceMenuProvider {
     getPopupMenuEntries(target: Element) {
         if (target.type.endsWith('Gateway')) {
             // 只有网关才会切换属性
-            const options= replaceOptions.GATEWAY.filter(item => {
+            const options = replaceOptions.GATEWAY.filter(item => {
                 return item.label !== "Event-based gateway" && item.label !== "Complex gateway" && item.target?.type !== target.type;
             });
             return this.createEntries(target, options);

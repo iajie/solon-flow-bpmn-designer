@@ -1,7 +1,7 @@
 import { BaseViewerOptions } from "bpmn-js/lib/BaseViewer";
 import { SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
-import {DefaultToolbarKey} from "../components/toolbar/DefaultToolbarKeys.ts";
-import {Modeler, Element, ModuleDeclaration } from "bpmn-js";
+import { DefaultToolbarKey } from "../components/toolbar/DefaultToolbarKeys.ts";
+import { Modeler, Element, ModuleDeclaration } from "bpmn-js";
 
 export interface CustomMenu {
     id?: string
@@ -225,5 +225,6 @@ export interface SolonFlowLink {
      * @description 存储bpmn节点id
      */
     id: string;
+
     [key: string]: any;
 }
