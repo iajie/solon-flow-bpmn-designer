@@ -381,6 +381,7 @@ export const createNodeXml = (nodes: SolonFlowNode[]) => {
                     type: "sequenceFlow",
                     id: item.id,
                     name: item.title,
+                    when: item.when,
                     sourceRef: node.id,
                     targetRef: item.nextId
                 });
