@@ -19,8 +19,13 @@ export class EasyBpmnColorContextPadProvider extends ContextPadProvider {
         this.translate = translate;
     }
 
-    // @ts-ignore
+    // @ts-ignore 单个元素pad菜单
     getContextPadEntries() {
+        return this.createPopupAction();
+    }
+
+    // @ts-ignore 多个元素pad菜单，批量设置元素颜色
+    getMultiElementContextPadEntries() {
         return this.createPopupAction();
     }
 
