@@ -84,11 +84,11 @@ export class SolonFlowBpmnDesigner {
     /**
      * 设计器对象
      */
-    bpmnModeler!: BpmnModeler;
+    private bpmnModeler!: BpmnModeler;
     /**
      * easy-bpmn-designer设计器
      */
-    container!: HTMLDivElement;
+    private container!: HTMLDivElement;
     /**
      * 属性
      */
@@ -96,17 +96,21 @@ export class SolonFlowBpmnDesigner {
     /**
      * 顶部工具栏
      */
-    toolbar!: Toolbar;
+    private toolbar!: Toolbar;
     /**
      * 设计器
      */
-    designer!: HTMLDivElement;
+    private designer!: HTMLDivElement;
     /**
      * 属性面板
      */
-    panel!: Panel;
+    private panel!: Panel;
 
-    eventComponents: DesignerEventListener[] = [];
+    /**
+     * 事件传递组件
+     * @private
+     */
+    private eventComponents: DesignerEventListener[] = [];
 
     constructor(options: SolonFlowBpmnDesignerOptions) {
         this.options = {...defaultOptions, ...options};
@@ -379,11 +383,10 @@ export class SolonFlowBpmnDesigner {
             Modules.push(zhTranslate);
         }
         // 插入用户自定义扩展模块
-        if (Object.prototype.toString.call(this.options.additionalModel) === "[object Array]") {
-            Modules.push(...this.options.additionalModel);
+        if (this.options.additionalModels && this.options.additionalModels.length) {
+            Modules.push(...this.options.additionalModels);
         } else {
-            this.options.additionalModel &&
-            Modules.concat(this.options.additionalModel);
+            this.options.additionalModels && Modules.concat(this.options.additionalModels);
         }
         return Modules;
     }

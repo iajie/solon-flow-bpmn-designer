@@ -1,4 +1,5 @@
 import { SolonFlowBpmnDesigner } from "./core/EasyBpmnDesigner.ts";
+import { Modeler } from "bpmn-js";
 
 // @ts-ignore
 window.easyBpmnDesigner = new SolonFlowBpmnDesigner({
@@ -8,6 +9,13 @@ window.easyBpmnDesigner = new SolonFlowBpmnDesigner({
 
         }
     },
+    toolbarKeys: [{
+        title: `下载json`,
+        tip: `下载json文件`,
+        onClick: (event: MouseEvent, modeler: Modeler) => {
+            console.log(event, modeler);
+        }
+    }]
     // onChange: (callback) => {
     //     console.log("change", callback());
     // },

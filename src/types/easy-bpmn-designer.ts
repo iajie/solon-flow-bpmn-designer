@@ -36,11 +36,6 @@ export type EasyBpmnDesignerOptions = {
      */
     theme?: 'dark' | 'light';
     /**
-     * @description 是否绑定快捷键
-     * @default true
-     */
-    keyboard?: boolean;
-    /**
      * @description bpmn2.0 xml数据
      */
     value?: string;
