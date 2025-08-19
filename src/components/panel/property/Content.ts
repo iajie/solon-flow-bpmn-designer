@@ -1,18 +1,18 @@
-import {AbstractPanel} from "../AbstractPanel.ts";
+import { AbstractPanel } from "../AbstractPanel.ts";
 import { Property } from "../Property.ts";
 import { t } from "i18next";
 import { PanelInput } from "./PanelInput.ts";
 import { defineCustomElement } from "../../../utils/domUtils.ts";
 import { Name } from "./basic/Name.ts";
 import { ID } from "./basic/ID.ts";
-import { EasyBpmnDesignerOptions } from "../../../types/easy-bpmn-designer.ts";
-import {BpmnElement, Modeler} from "bpmn-js";
+import { BpmnElement, Modeler } from "bpmn-js";
 import { ConditionType } from "./sequenceFlow/ConditionType.ts";
 import { ConditionExpression } from "./sequenceFlow/ConditionExpression.ts";
-import {Driver} from "./china/Driver.ts";
-import {Meta} from "./china/Meta.ts";
-import {When} from "./china/When.ts";
-import {Task} from "./china/Task.ts";
+import { Driver } from "./china/Driver.ts";
+import { Meta } from "./china/Meta.ts";
+import { When } from "./china/When.ts";
+import { Task } from "./china/Task.ts";
+import { SolonFlowBpmnDesigner } from "../../../core/EasyBpmnDesigner.ts";
 
 defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);
@@ -56,7 +56,7 @@ export class PanelContent extends AbstractPanel {
         }
     }
 
-    initGroup(modeler: Modeler, options: EasyBpmnDesignerOptions, panelGroup: any) {
+    initGroup(modeler: Modeler, designer: SolonFlowBpmnDesigner, panelGroup: any) {
         for (let group of panelGroup) {
             const groupDom = document.createElement('div');
             groupDom.style.display = group.title == 'basic' ? "block" : "none";
@@ -72,8 +72,8 @@ export class PanelContent extends AbstractPanel {
             // 默认提供的
             if (group.easy) {
                 for (let easyKey of group.easy) {
-                    const input = document.createElement(`easy-panel-${easyKey}`) as PanelInput;
-                    input.onCreate(modeler, options);
+                    const input = document.createElement(`easy-panel-${ easyKey }`) as PanelInput;
+                    input.onCreate(modeler, designer);
                     groupDom.appendChild(input);
                 }
             }

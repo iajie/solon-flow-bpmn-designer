@@ -1,5 +1,5 @@
 import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
-import {DesignerEventListener} from "../../core/EasyBpmnDesigner.ts";
+import { DesignerEventListener, SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
 import {BpmnElement, Modeler} from "bpmn-js";
 
 export class AbstractPanel extends HTMLElement implements DesignerEventListener {
@@ -36,9 +36,9 @@ export class AbstractPanel extends HTMLElement implements DesignerEventListener 
     // @ts-ignore
     updateElement(element: BpmnElement, oldProperties: any, properties: any) {}
 
-    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions): void {
+    onCreate(modeler: Modeler, designer: SolonFlowBpmnDesigner): void {
         this.modeler = modeler;
-        this.options = options;
+        this.options = designer.options;
         if (!this.element) {
             const canvas = modeler?.get("canvas");
             this.element = canvas?.getRootElement();

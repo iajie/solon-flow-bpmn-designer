@@ -35,7 +35,7 @@ defineCustomElement("easy-bpmn-designer-toolbar", Toolbar);
 defineCustomElement("easy-bpmn-designer-panel", Panel);
 
 export interface DesignerEventListener {
-    onCreate: (modeler: Modeler, options: SolonFlowBpmnDesignerOptions) => void;
+    onCreate: (modeler: Modeler, designer: SolonFlowBpmnDesigner) => void;
 }
 
 /**
@@ -209,7 +209,7 @@ export class SolonFlowBpmnDesigner {
 
     protected onCreated() {
         this.eventComponents.forEach((zEvent) => {
-            zEvent.onCreate && zEvent.onCreate(this.bpmnModeler as Modeler, this.options);
+            zEvent.onCreate && zEvent.onCreate(this.bpmnModeler as Modeler, this);
         });
 
         const _header =

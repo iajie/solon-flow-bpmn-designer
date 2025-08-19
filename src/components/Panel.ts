@@ -1,5 +1,4 @@
-import {DesignerEventListener} from "../core/EasyBpmnDesigner.ts";
-import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
+import { DesignerEventListener, SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
 import { initPanelKeys } from "./panel/index.ts";
 import {AbstractPanel} from "./panel/AbstractPanel.ts";
 import {Modeler} from "bpmn-js";
@@ -26,9 +25,9 @@ export class Panel extends HTMLElement implements DesignerEventListener {
         }
     }
 
-    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions): void {
-        initPanelKeys(modeler, options, this.panelDom);
-        this.style.maxHeight = `${options.height || '70'}vh`;
+    onCreate(modeler: Modeler, designer: SolonFlowBpmnDesigner): void {
+        initPanelKeys(modeler, designer, this.panelDom);
+        this.style.maxHeight = `${designer.options.height || '70'}vh`;
     }
 
 }

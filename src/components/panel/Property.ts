@@ -1,7 +1,7 @@
 import { AbstractPanel } from "./AbstractPanel.ts";
 import { Modeling, Modeler } from "bpmn-js";
-import { EasyBpmnDesignerOptions } from "../../types/easy-bpmn-designer.ts";
 import { initPanelContent } from "./index.ts";
+import { SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
 
 export class Property extends AbstractPanel {
 
@@ -26,10 +26,10 @@ export class Property extends AbstractPanel {
         this.activeKey = activeKey;
     }
 
-    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions) {
-        super.onCreate(modeler, options);
+    onCreate(modeler: Modeler, designer: SolonFlowBpmnDesigner) {
+        super.onCreate(modeler, designer);
         this.style.height = `calc(${ this.options?.height } - 90px)`;
-        initPanelContent(modeler, options, this);
+        initPanelContent(modeler, designer, this);
     }
 
     bpmnFactory() {

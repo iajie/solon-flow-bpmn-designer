@@ -10,14 +10,7 @@ export interface CustomMenu {
     icon?: string
     html?: string
     tip?: string
-    onClick?: (event: MouseEvent, modeler: Modeler) => void
-    onCreate?: (button: HTMLElement, modeler: Modeler) => void
-}
-
-export interface MenuGroup {
-    title?: string,
-    icon?: string,
-    toolbarKeys: (string | CustomMenu | MenuGroup)[],
+    onClick?: (event: MouseEvent, designer: SolonFlowBpmnDesigner) => void
 }
 
 export type EasyBpmnDesignerOptions = {
@@ -90,7 +83,7 @@ export type EasyBpmnDesignerOptions = {
      * @description 自定义颜色组件
      */
     colors?: Color[];
-    toolbarKeys?: (string | CustomMenu | MenuGroup)[],
+    toolbarKeys?: CustomMenu[],
     toolbarExcludeKeys?: DefaultToolbarKey[];
     toolbarSize?: string | 'small' | 'medium' | 'large';
     panelTabs?: {

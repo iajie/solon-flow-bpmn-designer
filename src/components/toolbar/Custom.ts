@@ -19,8 +19,8 @@ export class Custom extends AbstractToolBar {
         }
 
         this.addEventListener("click", (e) => {
-            if (this.modeler && this.config && this.config.onClick) {
-                this.config.onClick(e, this.modeler);
+            if (this.config && this.config.onClick && this.designer) {
+                this.config.onClick(e, this.designer);
             }
         })
     }

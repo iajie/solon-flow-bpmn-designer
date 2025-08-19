@@ -1,5 +1,5 @@
 import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
-import {DesignerEventListener} from "../../core/EasyBpmnDesigner.ts";
+import { DesignerEventListener, SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
 import {Modeler} from "bpmn-js";
 
 export class AbstractToolBar extends HTMLElement implements DesignerEventListener {
@@ -7,6 +7,7 @@ export class AbstractToolBar extends HTMLElement implements DesignerEventListene
     template: string = '';
     modeler?: Modeler;
     options?: EasyBpmnDesignerOptions;
+    designer?: SolonFlowBpmnDesigner;
 
     protected constructor() {
         super();
@@ -26,9 +27,10 @@ export class AbstractToolBar extends HTMLElement implements DesignerEventListene
 
     }
 
-    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions): void {
+    onCreate(modeler: Modeler, designer: SolonFlowBpmnDesigner): void {
         this.modeler = modeler;
-        this.options = options;
+        this.options = designer.options;
+        this.designer = designer;
     }
 
 }

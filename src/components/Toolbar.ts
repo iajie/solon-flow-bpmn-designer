@@ -1,10 +1,11 @@
 import {AbstractToolBar} from "./toolbar/AbstractToolBar.ts";
-import {DesignerEventListener} from "../core/EasyBpmnDesigner.ts";
-import {EasyBpmnDesignerOptions} from "../types/easy-bpmn-designer.ts";
+import { DesignerEventListener, SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
 import { Modeler } from 'bpmn-js';
 
-import { Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
-    ZoomIn, ZoomOut, Reset, MiniMap, defaultToolbarKeys  } from "./toolbar/index.ts";
+import {
+    Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
+    ZoomIn, ZoomOut, Reset, MiniMap, defaultToolbarKeys, Custom
+} from "./toolbar/index.ts";
 import {defineCustomElement} from "../utils/domUtils.ts";
 import {initToolbarKeys} from "./toolbar/initToolbarKeys.ts";
 
@@ -19,6 +20,7 @@ defineCustomElement('easy-bpmn-designer-toolbar-zoom-in', ZoomIn);
 defineCustomElement('easy-bpmn-designer-toolbar-zoom-out', ZoomOut);
 defineCustomElement('easy-bpmn-designer-toolbar-reset', Reset);
 defineCustomElement('easy-bpmn-designer-toolbar-minimap', MiniMap);
+defineCustomElement('easy-bpmn-designer-toolbar-custom', Custom);
 
 export class Toolbar extends HTMLElement implements DesignerEventListener {
 
@@ -38,22 +40,23 @@ export class Toolbar extends HTMLElement implements DesignerEventListener {
         }
     }
 
-    onCreate(modeler: Modeler, options: EasyBpmnDesignerOptions): void {
-        let toolbarKeys = options.toolbarKeys || defaultToolbarKeys;
+    onCreate(modeler: Modeler, designer: SolonFlowBpmnDesigner): void {
+        let toolbarKeys = defaultToolbarKeys;
+        const customMenus = designer.options.toolbarKeys || [];
+        if (customMenus.length) {
+            toolbarKeys.push("divider")
+            // @ts-ignore
+            toolbarKeys.push(...customMenus);
+        }
         toolbarKeys = toolbarKeys.filter((tool) => {
-            if (typeof tool === "string") {
-                return !options.toolbarExcludeKeys?.includes(tool);
-            }
-            return true;
+            return !designer.options.toolbarExcludeKeys?.includes(tool);
         }).filter((tool, index, array) => {
             const prevTool = array[index -1];
-            if (typeof tool === "string" && typeof prevTool === "string" || typeof prevTool === "undefined") {
-                const dividers = ['divider', '|', undefined];
-                return dividers.includes(tool as any) ? !dividers.includes(prevTool) : true;
-            }
+            const dividers = ['divider', '|', undefined];
+            return dividers.includes(tool as any) ? !dividers.includes(prevTool) : true;
         });
         // 初始化顶部工具栏
-        initToolbarKeys(modeler, options, this.toolbars, toolbarKeys);
+        initToolbarKeys(modeler, designer, this.toolbars, toolbarKeys);
     }
 
 }
