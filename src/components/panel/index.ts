@@ -39,8 +39,7 @@ export const initPanelKeys = (modeler: Modeler, designer: SolonFlowBpmnDesigner,
 
 export const initPanelContent = (modeler: Modeler, designer: SolonFlowBpmnDesigner, property: Property) => {
     try {
-        const panelTabs = defaultPanelKeys?.concat(designer.options?.panelTabs || []) || [];
-        for (let panelTab of panelTabs) {
+        for (let panelTab of defaultPanelKeys) {
             const panelContent = document.createElement('easy-bpmn-designer-panel-property-content') as PanelContent;
             panelContent.setProperty(property);
             panelContent.onCreate(modeler, designer);

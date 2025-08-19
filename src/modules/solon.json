@@ -36,6 +36,61 @@
             ]
         },
         {
+            "name": "ExclusiveGateway",
+            "extends": ["bpmn:ExclusiveGateway"],
+            "properties": [
+                {
+                    "name": "meta",
+                    "type": "solon:Meta",
+                    "isMany": false
+                }
+            ]
+        },
+        {
+            "name": "ParallelGateway",
+            "extends": ["bpmn:ParallelGateway"],
+            "properties": [
+                {
+                    "name": "meta",
+                    "type": "solon:Meta",
+                    "isMany": false
+                }
+            ]
+        },
+        {
+            "name": "InclusiveGateway",
+            "extends": ["bpmn:InclusiveGateway"],
+            "properties": [
+                {
+                    "name": "meta",
+                    "type": "solon:Meta",
+                    "isMany": false
+                }
+            ]
+        },
+        {
+            "name": "StartEvent",
+            "extends": ["bpmn:StartEvent"],
+            "properties": [
+                {
+                    "name": "meta",
+                    "type": "solon:Meta",
+                    "isMany": false
+                }
+            ]
+        },
+        {
+            "name": "EndEvent",
+            "extends": ["bpmn:EndEvent"],
+            "properties": [
+                {
+                    "name": "meta",
+                    "type": "solon:Meta",
+                    "isMany": false
+                }
+            ]
+        },
+        {
             "name": "Meta",
             "superClass": ["Element"],
             "properties": [

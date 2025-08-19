@@ -86,36 +86,6 @@ export type EasyBpmnDesignerOptions = {
     toolbarKeys?: CustomMenu[],
     toolbarExcludeKeys?: DefaultToolbarKey[];
     toolbarSize?: string | 'small' | 'medium' | 'large';
-    panelTabs?: {
-        /**
-         * @description tabs item项标题
-         */
-        title: string;
-        key: string;
-        hideIn?: boolean | (() => boolean);
-        /**
-         * 风琴组
-         */
-        group: {
-            /**
-             * 组标题
-             */
-            title: string;
-            items: {
-                label: string;
-                /**
-                 * input类型
-                 */
-                type?: string | 'text' | 'password' | 'radio' | 'checkbox' | 'button' |
-                    'image' | 'file' | 'email' | 'url' | 'tel' | 'search' | 'color' | 'number' | 'date' | 'month' | 'week';
-                /**
-                 * 内容
-                 */
-                html?: string;
-            }[];
-            [key: string]: any;
-        }[];
-    }[];
     /**
      * @description 监听选择节点变化
      * @param bpmnModeler

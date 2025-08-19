@@ -6,30 +6,25 @@ export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
     group: [
         {
             title: 'basic',
-            items: [],
             easy: ['id', 'name'],
         },
         {
             title: 'china',
-            items: [],
             easy: ['driver', 'meta'],
             show: "Process"
         },
         {
             title: 'china',
-            items: [],
             easy: ['when', 'task', 'meta'],
             show: "UserTask"
         },
         {
             title: 'china',
-            items: [],
             easy: ['meta'],
             show: "ComplexGateway"
         },
         {
             title: 'conditionProps',
-            items: [],
             easy: ['condition-type', 'condition-expression'],
             show: 'SequenceFlow',
         },
