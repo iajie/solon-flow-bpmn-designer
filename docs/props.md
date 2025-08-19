@@ -20,8 +20,8 @@
 | onXmlError         | (error: Error丨string) => void                          | -     | bpmn导入加载错误                          |  否   |
 | onCreated          | (modeler: Modeler) => void                             | -     | 实例创建完成事件                            |  否   |
 | onDestroy          | (designer: SolonFlowBpmnDesigner) => void              | -     | 销毁实例                                |  否   |
-| panelTabs          | [自定义属性栏案例](toolbar.md#自定义工具栏)                          | -     | 自定义属性栏属性                            |  否   |
-| toolbarKeys        | [自定义工具栏案例](panel.md#自定义属性面板)                               | -     | 自定义工具栏属性                            |  否   |
+| panelTabs          | [自定义属性栏案例](panel.md#自定义属性面板)                            | -     | 自定义属性栏属性                            |  否   |
+| toolbarKeys        | [自定义工具栏案例](toolbar.md#自定义工具栏)                          | -     | 自定义工具栏属性                            |  否   |
 
 
 ### 设计器背景表格
