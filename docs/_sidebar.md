@@ -5,6 +5,5 @@
 - 基本使用
   - [属性](props.md)
   - [工具栏](toolbar.md)
-  - [属性栏](panel.md)
   - [api(事件)](api.md)
 - [变更日志](changelog.md)
