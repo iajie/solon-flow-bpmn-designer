@@ -32,7 +32,7 @@ Solon-Flow-Bpmn-Designer 基于 Web Component 开发，支持与任意主流的�
 - [x] **属性面板**：基础属性、条件属性、SolonFlow链、元数据、脚本
 - [x] **更多**：国际化、亮色主题、暗色主题...
 
-## [Solon-Flow-Bpmn-Designer设计器完整开发文档]()
+## [Solon-Flow-Bpmn-Designer设计器完整开发文档](https://iajie.github.io/solon-flow-bpmn-designer)
 
 ## 快速开始
 
