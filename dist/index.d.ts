@@ -1,43 +1,7 @@
 import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
-import { BpmnElement } from 'bpmn-js';
-import { default as default_2 } from 'bpmn-js/lib/Modeler';
 import { Element as Element_2 } from 'bpmn-js';
 import { Modeler } from 'bpmn-js';
 import { ModuleDeclaration } from 'bpmn-js';
-
-declare class AbstractPanel extends HTMLElement implements DesignerEventListener {
-    template: string;
-    modeler?: Modeler;
-    options?: SolonFlowBpmnDesignerOptions;
-    originalElement?: BpmnElement;
-    element?: BpmnElement & any;
-    protected constructor();
-    protected registerClickListener(): void;
-    connectedCallback(): void;
-    onClick(): void;
-    onChange(element: BpmnElement): void;
-    updateElement(element: BpmnElement, oldProperties: any, properties: any): void;
-    onCreate(modeler: Modeler, options: SolonFlowBpmnDesignerOptions): void;
-    /**
-     * 修改节点
-     * @param e
-     */
-    elementChanged(e: any): void;
-    handleSelectionChange(e: {
-        newSelection: BpmnElement[];
-    }, modeler: Modeler): void;
-}
-
-declare class AbstractToolBar extends HTMLElement implements DesignerEventListener {
-    template: string;
-    modeler?: Modeler;
-    options?: SolonFlowBpmnDesignerOptions;
-    protected constructor();
-    protected registerClickListener(): void;
-    connectedCallback(): void;
-    onClick(): void;
-    onCreate(modeler: Modeler, options: SolonFlowBpmnDesignerOptions): void;
-}
 
 declare interface Color {
     label: string;
@@ -51,40 +15,24 @@ declare interface CustomMenu {
     icon?: string;
     html?: string;
     tip?: string;
-    onClick?: (event: MouseEvent, modeler: Modeler) => void;
-    onCreate?: (button: HTMLElement, modeler: Modeler) => void;
+    onClick?: (event: MouseEvent, designer: SolonFlowBpmnDesigner) => void;
 }
 
 declare type DefaultToolbarKey = (typeof defaultToolbarKeys)[number];
 
 declare const defaultToolbarKeys: string[];
 
-declare interface DesignerEventListener {
-    onCreate: (modeler: Modeler, options: SolonFlowBpmnDesignerOptions) => void;
-}
-
-declare interface MenuGroup {
-    title?: string;
-    icon?: string;
-    toolbarKeys: (string | CustomMenu | MenuGroup)[];
-}
-
-declare class Panel extends HTMLElement implements DesignerEventListener {
-    panelDom: AbstractPanel[];
-    constructor();
-    connectedCallback(): void;
-    onCreate(modeler: Modeler, options: SolonFlowBpmnDesignerOptions): void;
-}
+export declare const downloadFile: (content: string, filename: string, type?: string) => void;
 
 export declare class SolonFlowBpmnDesigner {
     /**
      * 设计器对象
      */
-    bpmnModeler: default_2;
+    private bpmnModeler;
     /**
      * easy-bpmn-designer设计器
      */
-    container: HTMLDivElement;
+    private container;
     /**
      * 属性
      */
@@ -92,16 +40,20 @@ export declare class SolonFlowBpmnDesigner {
     /**
      * 顶部工具栏
      */
-    toolbar: Toolbar;
+    private toolbar;
     /**
      * 设计器
      */
-    designer: HTMLDivElement;
+    private designer;
     /**
      * 属性面板
      */
-    panel: Panel;
-    eventComponents: DesignerEventListener[];
+    private panel;
+    /**
+     * 事件传递组件
+     * @private
+     */
+    private eventComponents;
     constructor(options: SolonFlowBpmnDesignerOptions);
     /**
      * 初始化
@@ -152,11 +104,6 @@ export declare type SolonFlowBpmnDesignerOptions = {
      * @default light
      */
     theme?: 'dark' | 'light';
-    /**
-     * @description 是否绑定快捷键
-     * @default true
-     */
-    keyboard?: boolean;
     /**
      * @description bpmn2.0 xml数据
      */
@@ -215,38 +162,9 @@ export declare type SolonFlowBpmnDesignerOptions = {
      * @description 自定义颜色组件
      */
     colors?: Color[];
-    toolbarKeys?: (string | CustomMenu | MenuGroup)[];
+    toolbarKeys?: CustomMenu[];
     toolbarExcludeKeys?: DefaultToolbarKey[];
     toolbarSize?: string | 'small' | 'medium' | 'large';
-    panelTabs?: {
-        /**
-         * @description tabs item项标题
-         */
-        title: string;
-        key: string;
-        hideIn?: boolean | (() => boolean);
-        /**
-         * 风琴组
-         */
-        group: {
-            /**
-             * 组标题
-             */
-            title: string;
-            items: {
-                label: string;
-                /**
-                 * input类型
-                 */
-                type?: string | 'text' | 'password' | 'radio' | 'checkbox' | 'button' | 'image' | 'file' | 'email' | 'url' | 'tel' | 'search' | 'color' | 'number' | 'date' | 'month' | 'week';
-                /**
-                 * 内容
-                 */
-                html?: string;
-            }[];
-            [key: string]: any;
-        }[];
-    }[];
     /**
      * @description 监听选择节点变化
      * @param bpmnModeler
@@ -274,11 +192,84 @@ export declare type SolonFlowBpmnDesignerOptions = {
     onDestroy?: (designer: SolonFlowBpmnDesigner) => void;
 } & Partial<Omit<BaseViewerOptions, "element">>;
 
-declare class Toolbar extends HTMLElement implements DesignerEventListener {
-    toolbars: AbstractToolBar[];
-    constructor();
-    connectedCallback(): void;
-    onCreate(modeler: Modeler, options: SolonFlowBpmnDesignerOptions): void;
+declare interface SolonFlowChina {
+    /**
+     * @description 标识
+     */
+    id: string;
+    /**
+     * @description 标题
+     */
+    title?: string;
+    /**
+     * @description 驱动器（缺省为默认驱动器）
+     */
+    driver?: string;
+    /**
+     * @description 元数据，存储bpmn节点信息
+     */
+    meta?: Record<string, any>;
+    /**
+     * @description 子节点
+     */
+    layout: SolonFlowNode[];
+    /**
+     * @description 存储bpmn节点样式位置等信息
+     */
+    bpmn: Record<string, any>;
 }
+
+declare interface SolonFlowLink {
+    /**
+     * @description 下一节点ID
+     */
+    nextId?: string;
+    /**
+     * @description 分支流出条件描述（会触发驱动的 handleTest 处理）
+     */
+    when?: string;
+    /**
+     * @description 标题
+     */
+    title: string;
+    /**
+     * @description 存储bpmn节点id
+     */
+    id: string;
+    [key: string]: any;
+}
+
+declare interface SolonFlowNode {
+    /**
+     * @description 节点ID
+     */
+    id?: string;
+    /**
+     * @description 节点类型
+     */
+    type: string;
+    /**
+     * @description 节点标题
+     */
+    title?: string;
+    /**
+     * @description 任务执行条件描述（会触发驱动的 handleTest 处理）
+     */
+    when?: string;
+    /**
+     * @description 任务描述（会触发驱动的 handleTask 处理）
+     */
+    task?: string;
+    /**
+     * @description 元数据
+     */
+    meta?: Record<string, any>;
+    /**
+     * @description 连接
+     */
+    link: SolonFlowLink[] | string | string[] | SolonFlowLink;
+}
+
+export declare const toBpmnXml: (json: SolonFlowChina) => string;
 
 export { }
