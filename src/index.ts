@@ -1,3 +1,5 @@
-export { SolonFlowBpmnDesigner } from './core/EasyBpmnDesigner';
+export { SolonFlowBpmnDesigner } from './core/designer';
+export { SolonFlowBpmnViewer } from './core/viewer';
 export { downloadFile, toBpmnXml } from "./utils/bpmnUtils.ts";
-export type { EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions } from './types/easy-bpmn-designer.ts';
+export type { SolonFlowBpmnDesignerOptions } from './core/designer/props';
+export type { SolonFlowBpmnViewerProps } from './core/viewer/props';

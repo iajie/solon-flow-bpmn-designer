@@ -1,4 +1,4 @@
-import {AbstractToolBar} from "../AbstractToolBar.ts";
+import { AbstractToolBar } from "../AbstractToolBar.ts";
 
 export class MiniMap extends AbstractToolBar {
 

@@ -5,28 +5,28 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 import { isUndo, isRedo } from "diagram-js/lib/features/keyboard/KeyboardUtil";
 import { event as domEvent } from "min-dom";
-import { Toolbar } from "../components/Toolbar.ts";
-import { Panel } from "../components/Panel.ts";
-import { en } from "../i18n/en.ts";
-import { zh } from "../i18n/zh.ts";
+import { Toolbar } from "../../components/Toolbar.ts";
+import { Panel } from "../../components/Panel.ts";
+import { en } from "../../i18n/en.ts";
+import { zh } from "../../i18n/zh.ts";
 import i18next, { Resource } from "i18next";
+import { defaultOptions, SolonFlowBpmnDesignerOptions } from "./props";
 
-import "../styles/variable.css";
-import "../styles/designer.css";
-import "../styles/toolbar.css";
-import "../styles/panel.css";
-import "../styles/index.css";
+import "../../styles/variable.css";
+import "../../styles/designer.css";
+import "../../styles/toolbar.css";
+import "../../styles/panel.css";
+import "../../styles/index.css";
 
 import GridLineModule from "diagram-js-grid-bg";
 import minimapModule from "diagram-js-minimap"; //小地图
 import "diagram-js-minimap/assets/diagram-js-minimap.css";
 import { EasyBpmnDesignerPalette, EasyBpmnDesignerPopupMenu,
-    EasyBpmnDesignerContextPad, zhTranslate, SolonModdle } from "../modules";
+    EasyBpmnDesignerContextPad, zhTranslate, SolonModdle } from "../../modules";
 // 标签解析 Moddle
-import { defineCustomElement, switchPanel } from "../utils/domUtils.ts";
-import { initModelerStr, toBpmnXml, toSolonJson } from "../utils/bpmnUtils.ts";
-import {
-    EasyBpmnDesignerOptions as SolonFlowBpmnDesignerOptions, SolonFlowChina } from "../types/easy-bpmn-designer.ts";
+import { defineCustomElement, switchPanel } from "../../utils/domUtils.ts";
+import { initModelerStr, toBpmnXml, toSolonJson } from "../../utils/bpmnUtils.ts";
+import { SolonFlowChina } from "../../types/easy-bpmn-designer.ts";
 import { CommandStack, EventBus, Modeler, Element, ModuleDeclaration } from "bpmn-js";
 
 import jsYaml from "js-yaml";
@@ -37,48 +37,6 @@ defineCustomElement("easy-bpmn-designer-panel", Panel);
 export interface DesignerEventListener {
     onCreate: (modeler: Modeler, designer: SolonFlowBpmnDesigner) => void;
 }
-
-/**
- * @description 默认属性
- */
-const defaultOptions: Partial<SolonFlowBpmnDesignerOptions> = {
-    lang: "zh",
-    theme: "light",
-    valueType: 'yaml',
-    height: 70,
-    gridLine: {
-        smallGridSpacing: 20,
-        gridSpacing: 80,
-        gridLineStroke: 0.5,
-        gridLineOpacity: 0.6,
-        gridLineColor: "#ccc",
-    },
-    lightBpmnRenderer: {
-        defaultLabelColor: "#000",
-        defaultFillColor: "#eef4ff",
-        defaultStrokeColor: "#349afa",
-    },
-    darkBpmnRenderer: {
-        defaultLabelColor: "#eef4ff",
-        defaultFillColor: "hsl(225, 10%, 15%)",
-        defaultStrokeColor: "#349afa",
-    },
-    textRenderer: {
-        defaultStyle: {
-            fontFamily: '"Inter, system-ui, Avenir, Helvetica, Arial, sans-serif"',
-            fontSize: "14px",
-            fontWeight: 400,
-            lineHeight: "20px",
-        },
-    },
-    minimap: {
-        open: false,
-        position: {
-            x: 20,
-            y: "bottom",
-        },
-    },
-};
 
 export class SolonFlowBpmnDesigner {
     /**

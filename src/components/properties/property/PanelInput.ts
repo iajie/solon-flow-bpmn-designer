@@ -2,7 +2,7 @@ import { AbstractPanel } from "../AbstractPanel.ts";
 import {BpmnElement, Modeler} from "bpmn-js";
 import { t } from "i18next";
 import tippy from "tippy.js";
-import { SolonFlowBpmnDesigner } from "../../../core/EasyBpmnDesigner.ts";
+import { SolonFlowBpmnDesigner } from "../../../core";
 
 export class PanelInput extends AbstractPanel {
 

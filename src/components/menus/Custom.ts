@@ -1,5 +1,5 @@
-import {AbstractToolBar} from "./AbstractToolBar.ts";
-import {CustomMenu} from "../../types/easy-bpmn-designer.ts";
+import { AbstractToolBar } from "./AbstractToolBar.ts";
+import { CustomMenu } from "../../types/easy-bpmn-designer.ts";
 
 export class Custom extends AbstractToolBar {
 

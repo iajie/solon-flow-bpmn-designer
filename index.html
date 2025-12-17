@@ -8,19 +8,19 @@
     <script>
         let isDark = false;
         function changeTheme() {
-            easyBpmnDesigner.changeTheme();
+            designer.changeTheme();
             isDark = !isDark;
         }
         function changeLanguage() {
-            const options = easyBpmnDesigner.getOptions();
+            const options = designer.getOptions();
             if (options.lang === 'en') {
-                easyBpmnDesigner.changeLocal("zh");
+                designer.changeLocal("zh");
             } else {
-                easyBpmnDesigner.changeLocal("en");
+                designer.changeLocal("en");
             }
         }
         function showPanel() {
-            easyBpmnDesigner.showPanel();
+            designer.showPanel();
         }
     </script>
 </head>
@@ -30,6 +30,7 @@
     <button onclick="changeTheme()">切换主题</button>
     <button onclick="changeLanguage()">切换语言</button>
     <button onclick="showPanel()">属性面板开关</button>
+    <a href="./viewer.html" target="_blank">流程图</a>
 </div>
 <div id="easy-bpmn-designer"></div>
 <script type="module" src="/src/main.ts"></script>

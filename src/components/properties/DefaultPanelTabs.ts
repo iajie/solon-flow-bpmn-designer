@@ -1,6 +1,6 @@
-import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
+import { SolonFlowBpmnDesignerOptions } from "../../core";
 
-export const defaultPanelKeys: EasyBpmnDesignerOptions['panelTabs'] = [{
+export const defaultPanelKeys: SolonFlowBpmnDesignerOptions['panelTabs'] = [{
     title: 'basic',
     key: 'basic',
     group: [

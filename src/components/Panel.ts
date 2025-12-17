@@ -1,7 +1,6 @@
-import { DesignerEventListener, SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
-import { initPanelKeys } from "./panel/index.ts";
-import {AbstractPanel} from "./panel/AbstractPanel.ts";
-import {Modeler} from "bpmn-js";
+import { DesignerEventListener, SolonFlowBpmnDesigner } from "../core";
+import { initPanelKeys, AbstractPanel } from "./properties";
+import { Modeler } from "bpmn-js";
 import { defineCustomElement } from "../utils/domUtils.ts";
 import { CodeHighlight } from "./CodeHighlight.ts";
 

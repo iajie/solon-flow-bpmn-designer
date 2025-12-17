@@ -12,7 +12,7 @@ import { Driver } from "./china/Driver.ts";
 import { Meta } from "./china/Meta.ts";
 import { When } from "./china/When.ts";
 import { Task } from "./china/Task.ts";
-import { SolonFlowBpmnDesigner } from "../../../core/EasyBpmnDesigner.ts";
+import { SolonFlowBpmnDesigner } from "../../../core";
 
 defineCustomElement('easy-panel-id', ID);
 defineCustomElement('easy-panel-name', Name);

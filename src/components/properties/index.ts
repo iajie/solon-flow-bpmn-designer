@@ -7,7 +7,7 @@ import { PanelContent } from "./property/Content.ts";
 import { TabGroup } from "./property/TabGroup.ts";
 import { defaultPanelKeys } from "./DefaultPanelTabs.ts";
 import { Modeler } from "bpmn-js";
-import { SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
+import { SolonFlowBpmnDesigner } from "../../core";
 
 defineCustomElement('easy-bpmn-designer-panel-switch', Switch);
 defineCustomElement('easy-bpmn-designer-panel-bpmn-icon', BpmnIcon);
@@ -15,7 +15,7 @@ defineCustomElement('easy-bpmn-designer-panel-property', Property);
 defineCustomElement('easy-bpmn-designer-panel-property-content', PanelContent);
 defineCustomElement('easy-bpmn-designer-panel-property-group', TabGroup);
 
-export const initPanelKeys = (modeler: Modeler, designer: SolonFlowBpmnDesigner, panelDom: AbstractPanel[]) => {
+const initPanelKeys = (modeler: Modeler, designer: SolonFlowBpmnDesigner, panelDom: AbstractPanel[]) => {
     try {
         // 创建开关
         const panelSwitch = document.createElement('easy-bpmn-designer-panel-switch') as AbstractPanel;
@@ -37,7 +37,7 @@ export const initPanelKeys = (modeler: Modeler, designer: SolonFlowBpmnDesigner,
     }
 }
 
-export const initPanelContent = (modeler: Modeler, designer: SolonFlowBpmnDesigner, property: Property) => {
+const initPanelContent = (modeler: Modeler, designer: SolonFlowBpmnDesigner, property: Property) => {
     try {
         for (let panelTab of defaultPanelKeys) {
             const panelContent = document.createElement('easy-bpmn-designer-panel-property-content') as PanelContent;
@@ -51,4 +51,10 @@ export const initPanelContent = (modeler: Modeler, designer: SolonFlowBpmnDesign
     } catch (e) {
         console.log('tab-content创建失败', e);
     }
+}
+
+export {
+    AbstractPanel,
+    initPanelKeys,
+    initPanelContent
 }

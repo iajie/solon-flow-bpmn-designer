@@ -1,12 +1,11 @@
-import {EasyBpmnDesignerOptions} from "../../types/easy-bpmn-designer.ts";
-import { DesignerEventListener, SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
-import {Modeler} from "bpmn-js";
+import { Modeler } from "bpmn-js";
+import { DesignerEventListener, SolonFlowBpmnDesigner, SolonFlowBpmnDesignerOptions } from "../../core";
 
 export class AbstractToolBar extends HTMLElement implements DesignerEventListener {
 
     template: string = '';
     modeler?: Modeler;
-    options?: EasyBpmnDesignerOptions;
+    options?: SolonFlowBpmnDesignerOptions;
     designer?: SolonFlowBpmnDesigner;
 
     protected constructor() {

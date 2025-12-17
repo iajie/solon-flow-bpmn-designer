@@ -1,13 +1,8 @@
-import {AbstractToolBar} from "./toolbar/AbstractToolBar.ts";
-import { DesignerEventListener, SolonFlowBpmnDesigner } from "../core/EasyBpmnDesigner.ts";
+import { DesignerEventListener, SolonFlowBpmnDesigner } from "../core";
 import { Modeler } from 'bpmn-js';
-
-import {
-    Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
-    ZoomIn, ZoomOut, Reset, MiniMap, defaultToolbarKeys, Custom
-} from "./toolbar/index.ts";
-import {defineCustomElement} from "../utils/domUtils.ts";
-import {initToolbarKeys} from "./toolbar/initToolbarKeys.ts";
+import { defineCustomElement } from "../utils/domUtils.ts";
+import { AbstractToolBar, initToolbarKeys, Divider, Import, Download, PreviewXml, PreviewJson, Undo, Redo,
+    ZoomIn, ZoomOut, Reset, MiniMap, defaultToolbarKeys, Custom } from "./menus";
 
 defineCustomElement('easy-bpmn-designer-toolbar-divider', Divider);
 defineCustomElement('easy-bpmn-designer-toolbar-import', Import);
@@ -44,14 +39,15 @@ export class Toolbar extends HTMLElement implements DesignerEventListener {
         let toolbarKeys = defaultToolbarKeys;
         const customMenus = designer.options.toolbarKeys || [];
         if (customMenus.length) {
-            toolbarKeys.push("divider")
+            toolbarKeys = toolbarKeys.filter((item: any) => !customMenus.includes(item));
+            toolbarKeys.push("divider");
             // @ts-ignore
             toolbarKeys.push(...customMenus);
         }
         toolbarKeys = toolbarKeys.filter((tool) => {
             return !designer.options.toolbarExcludeKeys?.includes(tool);
         }).filter((tool, index, array) => {
-            const prevTool = array[index -1];
+            const prevTool = array[index - 1];
             const dividers = ['divider', '|', undefined];
             return dividers.includes(tool as any) ? !dividers.includes(prevTool) : true;
         });

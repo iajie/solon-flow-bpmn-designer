@@ -1,7 +1,7 @@
 import { AbstractPanel } from "./AbstractPanel.ts";
 import { Modeling, Modeler } from "bpmn-js";
 import { initPanelContent } from "./index.ts";
-import { SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
+import { SolonFlowBpmnDesigner } from "../../core";
 
 export class Property extends AbstractPanel {
 

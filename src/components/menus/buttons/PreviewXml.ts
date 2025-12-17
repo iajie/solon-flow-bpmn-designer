@@ -1,4 +1,4 @@
-import {PreviewCode} from "./PreviewCode.ts";
+import { PreviewCode } from "./PreviewCode.ts";
 
 export class PreviewXml extends PreviewCode {
 

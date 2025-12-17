@@ -120,6 +120,16 @@
     .tippy-box[data-theme~='easy-bpmn-designer-tip'][data-placement^='right'] > .tippy-arrow::before {
         border-right-color: var(--easy-bpmn-designer-menus-tip-bg-color);
     }
+
+    .tippy-box[data-theme~='easy-bpmn-viewer-tip'] {
+        background-color: var(--easy-bpmn-designer-panel-header-bg-color);
+        border-radius: 10px;
+    }
+
+    .tippy-box[data-theme~='easy-bpmn-viewer-tip'][data-placement^='top'] > .tippy-arrow::before {
+        border-top-color: var(--easy-bpmn-designer-panel-header-bg-color);
+    }
+
 }
 
 #easy-bpmn-preview-dialog-container {

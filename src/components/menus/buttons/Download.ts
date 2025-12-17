@@ -1,5 +1,5 @@
-import {AbstractToolBar} from "../AbstractToolBar.ts";
-import {downloadFile} from "../../../utils/bpmnUtils.ts";
+import { AbstractToolBar } from "../AbstractToolBar.ts";
+import { downloadFile } from "../../../utils/bpmnUtils.ts";
 
 export class Download extends AbstractToolBar {
 
@@ -12,7 +12,7 @@ export class Download extends AbstractToolBar {
     }
 
     onClick() {
-        this.modeler?.saveXML({ format: true }).then(({xml}) => {
+        this.modeler?.saveXML({ format: true }).then(({ xml }) => {
             if (xml) {
                 downloadFile(xml, 'easy-bpmn-designer.xml')
             }

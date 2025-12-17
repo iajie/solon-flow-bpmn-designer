@@ -1,6 +1,8 @@
 import { BpmnFactory, Element, ElementFactory, Modeler, Modeling, Shape, Create } from "bpmn-js";
-import {SolonFlowChina, SolonFlowLink, SolonFlowNode} from "../types/easy-bpmn-designer.ts";
+import { SolonFlowChina, SolonFlowLink, SolonFlowNode } from "../types/easy-bpmn-designer.ts";
 import jsYaml from "js-yaml";
+// @ts-ignore
+import { layoutProcess } from "bpmn-auto-layout";
 
 export const initModelerStr = (key?: string, name?: string) => {
     const timestamp = Date.now();
@@ -20,7 +22,7 @@ export const createAction = (
 ) => {
     const createListener = (event: any) => {
         const shape = elementFactory.createShape(
-            Object.assign({type: type}, options)
+            Object.assign({ type: type }, options)
         );
 
         if (options) {
@@ -45,7 +47,7 @@ export const createAction = (
 };
 
 export const downloadFile = (content: string, filename: string, type = "text/xml") => {
-    const blob = new Blob([content], {type});
+    const blob = new Blob([content], { type });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -183,7 +185,7 @@ const sequenceFlows = (nodes: SolonFlowNode[]) => {
                         });
                     }
                 });
-            } else if(typeof node.link === "object") {
+            } else if (typeof node.link === "object") {
                 sequenceFlows.push({
                     id: node.id || `SequenceFlows_${index}`,
                     sourceRef: node.id,
@@ -196,7 +198,11 @@ const sequenceFlows = (nodes: SolonFlowNode[]) => {
             }
         } else {
             if (node.type !== 'end' && index !== nodes.length - 1) {
-                sequenceFlows.push({ id: `SequenceFlows_${index}`, sourceRef: node.id, targetRef: nodes[index+1].id });
+                sequenceFlows.push({
+                    id: `SequenceFlows_${index}`,
+                    sourceRef: node.id,
+                    targetRef: nodes[index + 1].id
+                });
             }
         }
     });
@@ -209,7 +215,7 @@ const sequenceFlows = (nodes: SolonFlowNode[]) => {
  * @param modeler bpmn模型
  * @param nodes 生成节点
  */
-export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[])=> {
+export const createTaskShape = (modeler?: Modeler, nodes?: SolonFlowNode[]) => {
     if (!modeler || !nodes || !nodes.length) {
         return;
     }
@@ -316,7 +322,10 @@ export const toSolonJson = (element: Element) => {
             layout: layouts,
             bpmn: {
                 ...element.di,
-                planeElement: element.di.planeElement.map((node: any) => ({...node, bpmnElement: node.bpmnElement.id}))
+                planeElement: element.di.planeElement.map((node: any) => ({
+                    ...node,
+                    bpmnElement: node.bpmnElement.id
+                }))
             }
         };
         return data;
@@ -352,7 +361,7 @@ const bpmnStr = (key: string, name: string) => {
 </definitions>`;
 };
 
-export const toBpmnXml = (json: SolonFlowChina) => {
+export const toBpmnXml = (json: SolonFlowChina, isColor = true) => {
     return `${xmlHeader}
         <process id="${json.id}" name="${json.title}" isExecutable="true"${json.driver ? ` solon:driver="${json.driver}"` : ``}>
             ${createNodeXml(json.layout)}
@@ -360,7 +369,7 @@ export const toBpmnXml = (json: SolonFlowChina) => {
         </process>
         <bpmndi:BPMNDiagram id="BpmnDiagram_1">
             <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="${json.id}">
-                ${jsonToXml(json.bpmn)}
+                ${jsonToXml(json.bpmn, isColor)}
             </bpmndi:BPMNPlane>
         </bpmndi:BPMNDiagram>
     </definitions>`;
@@ -372,8 +381,8 @@ export const toBpmnXml = (json: SolonFlowChina) => {
  */
 const toXmlStr = (str: string) => {
     return str.replace(/[<>&]/g, (match: string) => {
-        if(match === '<') return "&lt;";
-        if(match === '>') return "&gt;";
+        if (match === '<') return "&lt;";
+        if (match === '>') return "&gt;";
         return "&amp;";
     });
 }
@@ -446,11 +455,11 @@ const createComing = (node: any) => {
     return str;
 }
 
-const jsonToXml = (json: any)=> {
+const jsonToXml = (json: any, isColor: boolean) => {
     let xml = ``;
     if (json.planeElement) {
         json.planeElement.forEach((element: any) => {
-            xml += `<${element.$type} id="${element.id}" bpmnElement="${element.bpmnElement}" ${element['background-color'] ? `background-color="${element['background-color']}"` : ``} ${element['border-color'] ? `border-color="${element['border-color']}"` : ``} ${element['stroke'] ? `stroke="${element['stroke']}"` : ``} ${element['fill'] ? `fill="${element['fill']}"` : ``}>`;
+            xml += `<${element.$type} id="${element.id}" bpmnElement="${element.bpmnElement}" ${isColor && (element['background-color'] ? `background-color="${element['background-color']}"` : ``)} ${isColor && (element['border-color'] ? `border-color="${element['border-color']}"` : ``)} ${isColor && (element['stroke'] ? `stroke="${element['stroke']}"` : ``)} ${isColor && (element['fill'] ? `fill="${element['fill']}"` : ``)}>`;
             if (element.$type === 'bpmndi:BPMNShape') {
                 xml += createBounds(element);
             } else {
@@ -462,7 +471,7 @@ const jsonToXml = (json: any)=> {
     return xml;
 }
 
-const createBounds = (element: any)=> {
+const createBounds = (element: any) => {
     let str = ``;
     if (element.bounds) {
         str += `<omgdc:Bounds x="${element.bounds.x}" y="${element.bounds.y}" width="${element.bounds.width}" height="${element.bounds.height}"/>`;
@@ -473,7 +482,7 @@ const createBounds = (element: any)=> {
     return str;
 }
 
-const createWaypoint = (element: any)=> {
+const createWaypoint = (element: any) => {
     let str = ``;
     if (element.waypoint) {
         if (element.waypoint.length > 1) {
@@ -483,4 +492,78 @@ const createWaypoint = (element: any)=> {
         }
     }
     return str;
+}
+
+export const importStr = (text: string, modeler?: Modeler) => {
+    const yaml = jsYaml.load(text);
+    const solonFlow = yaml as SolonFlowChina;
+    const modeling = modeler?.get("modeling");
+    const canvas = modeler?.get("canvas");
+    const root = canvas?.getRootElement() as Element;
+    const rootElement = canvas?.getRootElements()[0];
+    // 存在bpmn信息
+    if (solonFlow.bpmn) {
+        modeler?.importXML(toBpmnXml(solonFlow)).then(({ warnings }) => {
+            console.debug(warnings);
+        });
+    } else {
+        if (rootElement) {
+            const arr: Element[] = [];
+            rootElement.children.forEach((el: any) => {
+                if (el.label) {
+                    arr.push(el.label);
+                }
+                arr.push(el);
+            });
+            modeling?.removeElements(arr);
+        }
+        updateProperty('id', solonFlow.id, root, modeler);
+        updateProperty('name', solonFlow.title || '', root, modeler);
+        if (solonFlow.driver) {
+            updateProperty('driver', solonFlow.driver, root, modeler);
+        } else {
+            updateProperty('driver', '', root, modeler);
+        }
+        // 定义第一节点位置
+        const nodes = createTaskShape(modeler, solonFlow.layout);
+        const elementRegistry = modeler?.get('elementRegistry');
+        const bpmnFactory = modeler?.get("bpmnFactory");
+        modeler?.saveXML({ format: true }).then(async ({ xml }) => {
+            // 重新布局
+            modeler?.importXML(await layoutProcess(xml)).then(() => {
+                if (nodes && elementRegistry && bpmnFactory) {
+                    // 设置meta
+                    if (solonFlow.meta) {
+                        const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(solonFlow.meta, null, 4) });
+                        const rootNode = elementRegistry.get(solonFlow.id) as Element;
+                        rootNode && modeling?.updateProperties(rootNode, { meta });
+                    }
+                    nodes.forEach(node => {
+                        if (node.id) {
+                            const el = elementRegistry.get(node.id) as Element;
+                            if (el) {
+                                if (node.meta) {
+                                    const meta = bpmnFactory?.create("solon:Meta", { body: JSON.stringify(node.meta, null, 4) });
+                                    modeling?.updateProperties(el, { meta });
+                                }
+                                if (node.when) {
+                                    const when = bpmnFactory?.create("solon:When", { body: node.when });
+                                    modeling?.updateProperties(el, { when });
+                                }
+                                if (node.task) {
+                                    const task = bpmnFactory?.create("solon:Task", { body: node.task });
+                                    modeling?.updateProperties(el, { task });
+                                }
+                            }
+
+                        }
+                    });
+                }
+                // 选中主节点
+                canvas?.scroll({ dx: 0, dy: 0 });
+                // @ts-ignore
+                canvas.zoom('fit-viewport', 'auto');
+            });
+        });
+    }
 }

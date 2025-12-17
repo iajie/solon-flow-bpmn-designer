@@ -4,7 +4,7 @@ import { t } from "i18next";
 import tippy from "tippy.js";
 import { Custom } from "./Custom.ts";
 import { Modeler } from "bpmn-js";
-import { SolonFlowBpmnDesigner } from "../../core/EasyBpmnDesigner.ts";
+import { SolonFlowBpmnDesigner } from "../../core";
 
 export const initToolbarKeys = (modeler: Modeler, designer: SolonFlowBpmnDesigner, menuButtons: AbstractToolBar[], toolbarKeys: (string | CustomMenu)[]) => {
     for (let i = 0; i < toolbarKeys.length; i++) {
