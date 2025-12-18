@@ -8,7 +8,7 @@ import "../../styles/viewer.css";
 import { en } from "../../i18n/en.ts";
 import { zh } from "../../i18n/zh.ts";
 import i18next, { Resource } from "i18next";
-import { SolonFlowBpmnViewerProps, defaultViewerOptions, Color, NodeColor } from "./props";
+import { SolonFlowBpmnViewerProps, defaultViewerOptions, Color, NodeColor, Stateful } from "./props";
 import { SolonModdle } from "../../modules";
 import { EventBus, Element, Modeling, Canvas, ElementRegistry, Modeler } from "bpmn-js";
 import { importStr, initModelerStr } from "../../utils/bpmnUtils.ts";
@@ -110,28 +110,26 @@ export class SolonFlowBpmnViewer {
             }
             // bpmnRenderer: this.options.theme === "dark" ? darkBpmnRenderer : lightBpmnRenderer,
         });
-        let data, executeNode: string[] = [], activeNode: string[] = [];
+        let data, stateful: Stateful[] = [];
         if (typeof value !== 'string') {
             data = value.data;
-            executeNode = value.executeNode;
-            activeNode = value.activeNode;
+            stateful = value?.stateful || [];
         } else {
             data = value;
             // @ts-ignore
             const yaml: SolonFlowChina = jsyaml.load(data);
-            if (mode === "active") {
-                const stateful = yaml.stateful;
-                if (stateful) {
-                    for (let statefulKey in stateful) {
-                        if (stateful[statefulKey] === "COMPLETED") {
-                            executeNode.push(statefulKey);
+            if (mode === "active" && active && active.length) {
+                const state = yaml.stateful;
+                if (state) {
+                    for (let stateKey in state) {
+                        const ful = active.find(ful => ful.stateType.toLowerCase() === String(state[stateKey]).toLowerCase());
+                        if (ful) {
+                            ful.activeNodeIds = [stateKey];
+                            stateful.push(ful);
                         }
                     }
                 } else {
-                    if (active) {
-                        activeNode = active.activeNode || [];
-                        executeNode = active.executeNode || [];
-                    }
+                    stateful = active;
                 }
             }
         }
@@ -145,9 +143,10 @@ export class SolonFlowBpmnViewer {
             }
             importStr(data, this.bpmnModeler as Modeler);
             // 加载完成，加载节点样式
-            if (mode === 'active') {
-                this.setNodeColor(executeNode, active?.executeColor || 'success');
-                this.setNodeColor(activeNode, active?.activeColor || 'process')
+            if (mode === 'active' && stateful.length) {
+                stateful.forEach(ful => {
+                    ful.activeNodeIds && this.setNodeColor(ful.activeNodeIds, ful.activeColor);
+                });
             }
         }).catch((err) => console.log("import xml error: ", err));
 

@@ -30,31 +30,21 @@ const NodeColor = {
     },
 };
 
-type PopoverContent = {
+type Stateful = {
     /**
-     * @description 标题
+     * @description 节点状态
+     * 待完成、已完成、已终止。。
      */
-    title?: string;
+    stateType: 'WAITING' | 'COMPLETED' | 'TERMINATED' | string;
     /**
-     * @description 执行用户
+     * @description 激活的节点ID
      */
-    users?: string[] | HTMLDivElement;
+    activeNodeIds?: string[];
     /**
-     * @description 任务开始时间
+     * @description 激活节点样式
+     * {@link Color}
      */
-    startTime?: string | Date;
-    /**
-     * @description 任务结束时间
-     */
-    endTime?: string | Date;
-    /**
-     * @description 任务状态
-     */
-    status?: string | HTMLDivElement;
-    /**
-     * @description 耗时
-     */
-    duration?: number;
+    activeColor: Color;
 }
 
 type NodeType = {
@@ -63,13 +53,9 @@ type NodeType = {
      */
     data: string;
     /**
-     * 激活节点
+     * 节点状态,当mode=active时生效
      */
-    activeNode: string[];
-    /**
-     * 执行节点
-     */
-    executeNode: string[];
+    stateful?: Stateful[];
 }
 
 type SolonFlowBpmnViewerProps = {
@@ -103,27 +89,7 @@ type SolonFlowBpmnViewerProps = {
      * @default read
      */
     mode?: 'read' | 'active';
-    /**
-     * @description 流程模式
-     */
-    active?: {
-        /**
-         * @description 当前激活的节点
-         */
-        activeNode?: string[];
-        /**
-         * @description 激活节点样式
-         */
-        activeColor?: Color;
-        /**
-         * @description 已完成节点
-         */
-        executeNode?: string[];
-        /**
-         * @description 已完成节点样式
-         */
-        executeColor?: Color;
-    }
+    active?: Stateful[];
     /**
      * @description 排除节点；类型，如果添加点击节点将不会弹出框
      */
@@ -153,5 +119,5 @@ export {
 }
 
 export type {
-    Color, PopoverContent, SolonFlowBpmnViewerProps,
+    Color, SolonFlowBpmnViewerProps, Stateful
 }

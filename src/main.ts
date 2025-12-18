@@ -1,4 +1,4 @@
-import { SolonFlowBpmnDesigner, SolonFlowBpmnViewer } from "./core";
+import { SolonFlowBpmnDesigner } from "./core";
 import { downloadFile } from "./utils/bpmnUtils.ts";
 
 // @ts-ignore
