@@ -108,6 +108,10 @@ type SolonFlowBpmnViewerProps = {
      */
     popoverRender?: (render: any) => HTMLElement;
     /**
+     * 是否显示工具栏
+     */
+    toolbar?: boolean;
+    /**
      * 针对下载图片没有样式，可以通过得到流程图dom配合第三方库进行导出例如html2canvas
      * @param viewer
      */
@@ -120,6 +124,7 @@ const defaultViewerOptions: Partial<SolonFlowBpmnViewerProps> = {
     valueType: 'yaml',
     mode: "read",
     height: 50,
+    toolbar: true,
 }
 
 export {

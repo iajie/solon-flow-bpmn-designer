@@ -173,19 +173,20 @@ export class SolonFlowBpmnViewer {
         }).catch((err) => console.log("import xml error: ", err));
 
         this.container.appendChild(this.viewer);
-
-        const toolbar = new ViewerToolbar(this);
-        // 添加工具栏
-        this.toolbar = tippy(this.container, {
-            appendTo: this.viewer,
-            placement: 'top',
-            content: toolbar,
-            arrow: false,
-            hideOnClick: false,
-            interactive: true,
-            allowHTML: true,
-            theme: 'solon-bpmn-viewer-toolbar',
-        });
+        if (this.options.toolbar) {
+            const toolbar = new ViewerToolbar(this);
+            // 添加工具栏
+            this.toolbar = tippy(this.container, {
+                appendTo: this.viewer,
+                placement: 'top',
+                content: toolbar,
+                arrow: false,
+                hideOnClick: false,
+                interactive: true,
+                allowHTML: true,
+                theme: 'solon-bpmn-viewer-toolbar',
+            });
+        }
     }
 
     getViewer() {
