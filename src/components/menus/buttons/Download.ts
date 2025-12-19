@@ -1,13 +1,12 @@
 import { AbstractToolBar } from "../AbstractToolBar.ts";
 import { downloadFile } from "../../../utils/bpmnUtils.ts";
+import { download } from "../icons.ts";
 
 export class Download extends AbstractToolBar {
 
     constructor() {
         super();
-        this.template = `<div>
-            <svg t="1740199797608" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6512" width="200" height="200"><path d="M731.428571 341.333333h73.142858a73.142857 73.142857 0 0 1 73.142857 73.142857v414.476191a73.142857 73.142857 0 0 1-73.142857 73.142857H219.428571a73.142857 73.142857 0 0 1-73.142857-73.142857V414.47619a73.142857 73.142857 0 0 1 73.142857-73.142857h73.142858v73.142857H219.428571v414.476191h585.142858V414.47619h-73.142858v-73.142857z m-176.90819-242.590476l0.048762 397.092572 84.577524-84.601905 51.687619 51.712-172.373334 172.397714-172.397714-172.373333 51.712-51.736381 83.626667 83.626666V98.742857h73.142857z" p-id="6513"></path></svg>
-        </div>`;
+        this.template = `<div>${download}</div>`;
         this.registerClickListener();
     }
 

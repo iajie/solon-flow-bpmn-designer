@@ -130,6 +130,10 @@
         border-top-color: var(--easy-bpmn-designer-panel-header-bg-color);
     }
 
+    .tippy-box[data-theme~='solon-bpmn-viewer-toolbar'] {
+        bottom: -70px;
+    }
+
 }
 
 #easy-bpmn-preview-dialog-container {

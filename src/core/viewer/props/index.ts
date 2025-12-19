@@ -89,6 +89,9 @@ type SolonFlowBpmnViewerProps = {
      * @default read
      */
     mode?: 'read' | 'active';
+    /**
+     * 活动节点设置
+     */
     active?: Stateful[];
     /**
      * @description 排除节点；类型，如果添加点击节点将不会弹出框
@@ -104,6 +107,11 @@ type SolonFlowBpmnViewerProps = {
      * @param render 点击异步获取的内容
      */
     popoverRender?: (render: any) => HTMLElement;
+    /**
+     * 针对下载图片没有样式，可以通过得到流程图dom配合第三方库进行导出例如html2canvas
+     * @param viewer
+     */
+    customDownload?: (viewer: HTMLElement) => void;
 }
 
 const defaultViewerOptions: Partial<SolonFlowBpmnViewerProps> = {

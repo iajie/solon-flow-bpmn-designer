@@ -4,11 +4,6 @@ import { downloadFile } from "./utils/bpmnUtils.ts";
 // @ts-ignore
 window.designer = new SolonFlowBpmnDesigner({
     container: '#easy-bpmn-designer',
-    i18n: {
-        zh: {
-
-        }
-    },
     toolbarKeys: [{
         html: `下载json`,
         tip: `下载json文件`,
@@ -23,6 +18,17 @@ window.designer = new SolonFlowBpmnDesigner({
 // window.viewer = new SolonFlowBpmnViewer({
 //     container: '#solon-bpmn-viewer',
 //     mode: "active",
+//     height: 88,
+//     active: [{
+//         stateType: "COMPLETED",
+//         activeColor: "success",
+//     }, {
+//         stateType: "WAITING",
+//         activeColor: "process",
+//     }, {
+//         stateType: "TERMINATED",
+//         activeColor: "danger"
+//     }],
 //     onClick: async (node) => {
 //         console.log(node)
 //         return node;
@@ -88,5 +94,5 @@ window.designer = new SolonFlowBpmnDesigner({
 //         "    link:\n" +
 //         "    - {nextId: step6}\n" +
 //         "  - {id: step6, type: end, title: 结束}\n" +
-//         "stateful: {step1: COMPLETED, step2: COMPLETED, step3: COMPLETED, step4: COMPLETED}"
+//         "stateful: {step1: COMPLETED, step2: COMPLETED, step3: COMPLETED, step4: WAITING, step4_1: TERMINATED}"
 // })

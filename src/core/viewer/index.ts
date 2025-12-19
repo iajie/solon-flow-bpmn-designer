@@ -10,11 +10,15 @@ import { zh } from "../../i18n/zh.ts";
 import i18next, { Resource } from "i18next";
 import { SolonFlowBpmnViewerProps, defaultViewerOptions, Color, NodeColor, Stateful } from "./props";
 import { SolonModdle } from "../../modules";
-import { EventBus, Element, Modeling, Canvas, ElementRegistry, Modeler } from "bpmn-js";
+import { EventBus, Element, Canvas, ElementRegistry, Modeler } from "bpmn-js";
 import { importStr, initModelerStr } from "../../utils/bpmnUtils.ts";
 import jsyaml from "js-yaml";
 import { SolonFlowChina } from "../../types/easy-bpmn-designer.ts";
-import tippy from "tippy.js";
+import tippy, { Instance } from "tippy.js";
+import { ViewerToolbar } from "../../components/ViewerToolbar.ts";
+import { defineCustomElement } from "../../utils/domUtils.ts";
+
+defineCustomElement('solon-flow-bpmn-viewer-toolbar', ViewerToolbar);
 
 export class SolonFlowBpmnViewer {
     /**
@@ -33,6 +37,11 @@ export class SolonFlowBpmnViewer {
      * 设计器
      */
     private viewer!: HTMLDivElement;
+    /**
+     * 工具栏
+     * @private
+     */
+    private toolbar!: Instance;
 
     constructor(options: SolonFlowBpmnViewerProps) {
         this.options = { ...defaultViewerOptions, ...options };
@@ -80,7 +89,7 @@ export class SolonFlowBpmnViewer {
         const { height, value, active, mode } = this.options;
         this.bpmnModeler = new BpmnModeler({
             container: this.viewer,
-            height: `${ height }vh`,
+            height: `${ height }dvh`,
             moddleExtensions: {
                 solon: SolonModdle
             },
@@ -124,7 +133,11 @@ export class SolonFlowBpmnViewer {
                     for (let stateKey in state) {
                         const ful = active.find(ful => ful.stateType.toLowerCase() === String(state[stateKey]).toLowerCase());
                         if (ful) {
-                            ful.activeNodeIds = [stateKey];
+                            if (ful.activeNodeIds && ful.activeNodeIds.length) {
+                                ful.activeNodeIds.push(stateKey);
+                            } else {
+                                ful.activeNodeIds = [stateKey];
+                            }
                             stateful.push(ful);
                         }
                     }
@@ -144,13 +157,43 @@ export class SolonFlowBpmnViewer {
             importStr(data, this.bpmnModeler as Modeler);
             // 加载完成，加载节点样式
             if (mode === 'active' && stateful.length) {
-                stateful.forEach(ful => {
+                const fulArr: Map<string, Stateful> = new Map<string, Stateful>();
+                stateful.forEach(item => {
+                    const ful = fulArr.get(item.stateType);
+                    if (ful) {
+                        ful.activeNodeIds?.push(...item?.activeNodeIds || []);
+                    } else {
+                        fulArr.set(item.stateType, item);
+                    }
+                });
+                fulArr.forEach((ful) => {
                     ful.activeNodeIds && this.setNodeColor(ful.activeNodeIds, ful.activeColor);
                 });
             }
         }).catch((err) => console.log("import xml error: ", err));
 
         this.container.appendChild(this.viewer);
+
+        const toolbar = new ViewerToolbar(this);
+        // 添加工具栏
+        this.toolbar = tippy(this.container, {
+            appendTo: this.viewer,
+            placement: 'top',
+            content: toolbar,
+            arrow: false,
+            hideOnClick: false,
+            interactive: true,
+            allowHTML: true,
+            theme: 'solon-bpmn-viewer-toolbar',
+        });
+    }
+
+    getViewer() {
+        return this.viewer;
+    }
+
+    getModeler() {
+        return this.bpmnModeler as Modeler;
     }
 
     /**
@@ -158,24 +201,15 @@ export class SolonFlowBpmnViewer {
      * @param nodeIds 节点集合
      * @param colorClass {@link NodeColor} 样式
      */
-    private setNodeColor(nodeIds: string[], colorClass: Color){
+    setNodeColor(nodeIds: string[], colorClass: Color){
         if (nodeIds && nodeIds.length) {
             const elementRegistry: ElementRegistry = this.bpmnModeler.get('elementRegistry');
-            const modeling: Modeling = this.bpmnModeler.get('modeling');
             const canvas: Canvas = this.bpmnModeler.get('canvas');
             nodeIds.forEach(id => {
                 const element = elementRegistry.get(id) as Element;
-                if (element.type.endsWith('SequenceFlow')) {
-                    setTimeout(() => {
-                        modeling.setColor([element], NodeColor[colorClass]);
-                    }, 10);
-                } else {
-                    setTimeout(() => {
-                        if (!canvas.hasMarker(id, colorClass)) {
-                            canvas.addMarker(id, colorClass);
-                        }
-                    }, 10);
-                }
+                setTimeout(() => {
+                    canvas.addMarker(id, colorClass);
+                }, 10);
                 if (element.incoming && element.incoming.length) {
                     for (let out of element.incoming) {
                         setTimeout(() => {
@@ -218,5 +252,17 @@ export class SolonFlowBpmnViewer {
                 }
             });
         }
+    }
+
+    /**
+     * @description 销毁流程图实例
+     */
+    destroy() {
+        // 销毁设计器对象
+        this.bpmnModeler.destroy();
+        this.toolbar.destroy();
+        // 销毁容器
+        this.viewer.remove();
+        this.container.remove();
     }
 }

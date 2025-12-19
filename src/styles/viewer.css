@@ -10,7 +10,6 @@
 
 .success.djs-connection .djs-visual> :nth-child(2) {
     stroke: #52c41a !important;
-    marker-end: url(#marker)
 }
 
 .process.djs-shape .djs-visual> :nth-child(1) {
@@ -20,6 +19,11 @@
     stroke-dasharray: 4, 4;
     animation: dash 100s linear;
 }
+
+.process.djs-connection .djs-visual> :nth-child(2) {
+    stroke: #4096ff !important;
+}
+
 @keyframes dash {
     to {
         stroke-dashoffset: 1500;
@@ -32,10 +36,18 @@
     fill-opacity: 0.2 !important;
 }
 
+.danger.djs-connection .djs-visual> :nth-child(2) {
+    stroke: #ff4d4f !important;
+}
+
 .warning.djs-shape .djs-visual> :nth-child(1) {
     fill: #ffd591 !important;
     stroke: #ffa940 !important;
     fill-opacity: 0.2 !important;
+}
+
+.warning.djs-connection .djs-visual> :nth-child(2) {
+    stroke: #ffa940 !important;
 }
 
 .cyan.djs-shape .djs-visual> :nth-child(1) {
@@ -43,12 +55,31 @@
     stroke: #36cfc9 !important;
     fill-opacity: 0.2 !important;
 }
+.warning.djs-connection .djs-visual> :nth-child(2) {
+    stroke: #36cfc9 !important;
+}
 
 .purple.djs-shape .djs-visual> :nth-child(1) {
     fill: #d3adf7 !important;
     stroke: #9254de !important;
     fill-opacity: 0.2 !important;
 }
+.warning.djs-connection .djs-visual> :nth-child(2) {
+    stroke: #9254de !important;
+}
 
-.element-popover {
+.solon-flow-bpmn-viewer-container-toolbar {
+    width: auto;
+    border: 2px dashed #cdc3c3;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+
+    svg {
+        margin: 5px 15px 0 15px;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
 }
