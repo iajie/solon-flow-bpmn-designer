@@ -18,6 +18,8 @@ window.designer = new SolonFlowBpmnDesigner({
 // window.viewer = new SolonFlowBpmnViewer({
 //     container: '#solon-bpmn-viewer',
 //     mode: "active",
+//     toolbar: false,
+//     excludeType: ["SequenceFlow"],
 //     height: 88,
 //     active: [{
 //         stateType: "COMPLETED",

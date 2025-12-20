@@ -1,5 +1,7 @@
 import React from 'react';
 import SolonFlowDesigner, { SolonFlowDesignerRef } from './components/SolonFlowDesigner';
+import { Button, Space } from "antd";
+import Viewer from "./Viewer.tsx";
 
 const App: React.FC = () => {
 
@@ -86,15 +88,36 @@ const App: React.FC = () => {
         type: 'yaml',
     });
 
+    const [viewer, setViewer] = React.useState<boolean>(false);
+    const [mode, setMode] = React.useState<boolean>(false);
+
+    const active = React.useMemo(() => mode ? 'active' : 'read', [mode]);
+
     return <div>
-        <button onClick={() => setOptions({ ...options, lang: options.lang === 'en' ? 'zh' : 'en' })}>切换语言</button>
-        <button onClick={() => setOptions({ ...options, theme: options.theme === 'dark' ? 'light' : 'dark' })}>切换主题</button>
-        <button onClick={() => ref.current?.panelShow()}>属性面板显隐</button>
-        <SolonFlowDesigner ref={ref} value={value} onChange={(value) => {
-            console.log(value);
-            setValue(value)
-        }} height={95}
-                           lang={options.lang} theme={options.theme} type={options.type} />
+        {!viewer && <Space.Compact title="设计器">
+            <Button onClick={() => setOptions({ ...options, lang: options.lang === 'en' ? 'zh' : 'en' })}>切换语言</Button>
+            <Button onClick={() => setOptions({ ...options, theme: options.theme === 'dark' ? 'light' : 'dark' })}>切换主题</Button>
+            <Button onClick={() => ref.current?.panelShow()}>属性面板显隐</Button>
+        </Space.Compact>}
+        <Space.Compact title="流程图">
+            <Button onClick={() => {
+                setViewer(true);
+                setMode(false);
+            }} type="dashed">普通流程图</Button>
+            <Button onClick={() => setMode(true)} type="dashed">活动流程图</Button>
+            {viewer && <Button type="dashed" onClick={() => setViewer(false)}>流程设计器</Button>}
+        </Space.Compact>
+        { viewer ? <Viewer mode={active}/> : <SolonFlowDesigner
+            ref={ref}
+            value={value}
+            onChange={(value) => {
+                setValue(value)
+            }}
+            height={92}
+            lang={options.lang}
+            theme={options.theme}
+            type={options.type} /> }
+
     </div>;
 }
 

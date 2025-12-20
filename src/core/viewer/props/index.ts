@@ -1,4 +1,5 @@
 import { BpmnElement } from "bpmn-js";
+import { Instance } from "tippy.js";
 
 type Color = 'success' | 'process' | 'danger' | 'warning' | 'cyan' | 'purple';
 
@@ -101,12 +102,12 @@ type SolonFlowBpmnViewerProps = {
      * @description 点击事件
      * @param node 节点信息
      */
-    onClick?: (node: BpmnElement['businessObject']) => Promise<any>;
+    onClick?: (node: BpmnElement['businessObject'], graphics: SVGElement) => Promise<void>;
     /**
      * 自定义渲染点击弹出框
      * @param render 点击异步获取的内容
      */
-    popoverRender?: (render: any) => HTMLElement;
+    popoverRender?: (render: any, tippy: Instance) => void;
     /**
      * 是否显示工具栏
      */

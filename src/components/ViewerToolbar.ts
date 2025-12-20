@@ -40,7 +40,10 @@ export class ViewerToolbar extends HTMLElement {
         dom.innerHTML = download;
         dom.addEventListener('click', () => {
             if (this.viewer.options.customDownload) {
+                // 防止下载的图片存在工具栏，此处隐藏
+                this.viewer.getToolbar().hide();
                 this.viewer.options.customDownload(this.viewer.getViewer());
+                this.viewer.getToolbar().show();
             } else {
                 downloadSvg(this.viewer.getModeler());
             }

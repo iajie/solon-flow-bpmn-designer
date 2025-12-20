@@ -148,7 +148,7 @@ export class SolonFlowBpmnViewer {
         }
         // 装载xml
         this.bpmnModeler.importXML(initModelerStr()).then(() => {
-            if (this.options.onClick) {
+            if (this.options.onClick && mode === 'active') {
                 // 点击事件
                 const eventBus: EventBus = this.bpmnModeler.get('eventBus');
                 // 加载后绑定监听
@@ -170,7 +170,7 @@ export class SolonFlowBpmnViewer {
                     ful.activeNodeIds && this.setNodeColor(ful.activeNodeIds, ful.activeColor);
                 });
             }
-        }).catch((err) => console.log("import xml error: ", err));
+        }).catch((err) => console.debug("import xml error: ", err));
 
         this.container.appendChild(this.viewer);
         if (this.options.toolbar) {
@@ -187,6 +187,10 @@ export class SolonFlowBpmnViewer {
                 theme: 'solon-bpmn-viewer-toolbar',
             });
         }
+    }
+
+    getToolbar() {
+        return this.toolbar;
     }
 
     getViewer() {
@@ -233,25 +237,10 @@ export class SolonFlowBpmnViewer {
             excludes = this.options.excludeType.some(item => element.businessObject.$type.endsWith(item));
         }
         if (!element.businessObject.$type.endsWith('Process') && !excludes) {
-            // 判断是否是异步方法
-            this.options.onClick?.(element.businessObject).then((res) => {
-                const canvas: Canvas = this.bpmnModeler.get('canvas');
-                const graphics = canvas.getGraphics(element.id);
-                if (this.options.popoverRender) {
-                    const popover = this.options.popoverRender(res);
-                    const tip = tippy(graphics, {
-                        appendTo: this.viewer,
-                        content: popover,
-                        arrow: true, // 是否显示方向指示
-                        interactive: true, // 是否点击其他地方关闭
-                        theme: 'easy-bpmn-viewer-tip',
-                        placement: 'top',
-                        trigger: 'click'
-                    });
-                    // 点击就显示
-                    tip.show();
-                }
-            });
+            const canvas: Canvas = this.bpmnModeler.get('canvas');
+            const graphics = canvas.getGraphics(element.id);
+            // 将点击的节点信息和节点返回
+            this.options.onClick?.(element.businessObject, graphics);
         }
     }
 
