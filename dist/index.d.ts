@@ -1,13 +1,18 @@
 import { BaseViewerOptions } from 'bpmn-js/lib/BaseViewer';
+import { BpmnElement } from 'bpmn-js';
 import { Element as Element_2 } from 'bpmn-js';
+import { Instance } from 'tippy.js';
 import { Modeler } from 'bpmn-js';
 import { ModuleDeclaration } from 'bpmn-js';
+import { Props } from 'tippy.js';
 
 declare interface Color {
     label: string;
     fill?: string;
     stroke?: string;
 }
+
+declare type Color_2 = 'success' | 'process' | 'danger' | 'warning' | 'cyan' | 'purple';
 
 declare interface CustomMenu {
     id?: string;
@@ -23,6 +28,17 @@ declare type DefaultToolbarKey = (typeof defaultToolbarKeys)[number];
 declare const defaultToolbarKeys: string[];
 
 export declare const downloadFile: (content: string, filename: string, type?: string) => void;
+
+declare type NodeType = {
+    /**
+     * @description 设计器数据yml
+     */
+    data: string;
+    /**
+     * 节点状态,当mode=active时生效
+     */
+    stateful?: Stateful[];
+};
 
 export declare class SolonFlowBpmnDesigner {
     /**
@@ -93,7 +109,7 @@ export declare type SolonFlowBpmnDesignerOptions = {
     /**
      * @description 挂载dom/id
      */
-    container: string | Element_2;
+    container: string | HTMLElement;
     /**
      * @description 值类型
      * @defaultValue yaml
@@ -192,6 +208,86 @@ export declare type SolonFlowBpmnDesignerOptions = {
     onDestroy?: (designer: SolonFlowBpmnDesigner) => void;
 } & Partial<Omit<BaseViewerOptions, "element">>;
 
+export declare class SolonFlowBpmnViewer {
+    /**
+     * 设计器对象
+     */
+    private bpmnModeler;
+    /**
+     * easy-bpmn-designer设计器
+     */
+    private container;
+    /**
+     * 属性
+     */
+    options: SolonFlowBpmnViewerProps;
+    /**
+     * 设计器
+     */
+    private viewer;
+    /**
+     * 工具栏
+     * @private
+     */
+    private toolbar;
+    constructor(options: SolonFlowBpmnViewerProps);
+    private initialize;
+    getToolbar(): Instance<Props>;
+    getViewer(): HTMLDivElement;
+    getModeler(): Modeler;
+    /**
+     * 设置节点颜色
+     * @param nodeIds 节点集合
+     * @param colorClass {@link NodeColor} 样式
+     */
+    setNodeColor(nodeIds: string[], colorClass: Color_2): void;
+    /**
+     * 点击元素节点事件
+     * @param element 节点
+     * @private
+     */
+    private elementClick;
+    /**
+     * @description 销毁流程图实例
+     */
+    destroy(): void;
+}
+
+export declare type SolonFlowBpmnViewerProps = {
+    /**
+     * @description 挂载dom/id
+     */
+    container: string | HTMLElement;
+    /**
+     * @description 流程图值，仅支持solon-flow的yaml/json
+     * 如果是{@link NodeType}则可以展示流程图激活 状态
+     */
+    value: string | NodeType;
+    /**
+     * @description 流程图查看器高度(屏幕可视高度)
+     * @default 60
+     */
+    height?: number;
+    /**
+     * @description 排除节点；类型，如果添加点击节点将不会弹出框
+     */
+    excludeType?: string[];
+    /**
+     * @description 点击事件
+     * @param node 节点信息
+     */
+    onClick?: (node: BpmnElement['businessObject'], graphics: SVGElement) => Promise<void>;
+    /**
+     * 是否显示工具栏
+     */
+    toolbar?: boolean;
+    /**
+     * 针对下载图片没有样式，可以通过得到流程图dom配合第三方库进行导出例如html2canvas
+     * @param viewer
+     */
+    customDownload?: (viewer: HTMLElement) => void;
+};
+
 declare interface SolonFlowChina {
     /**
      * @description 标识
@@ -217,6 +313,10 @@ declare interface SolonFlowChina {
      * @description 存储bpmn节点样式位置等信息
      */
     bpmn: Record<string, any>;
+    /**
+     * @description 节点状态
+     */
+    stateful?: Record<string, any>;
 }
 
 declare interface SolonFlowLink {
@@ -270,6 +370,23 @@ declare interface SolonFlowNode {
     link: SolonFlowLink[] | string | string[] | SolonFlowLink;
 }
 
-export declare const toBpmnXml: (json: SolonFlowChina) => string;
+declare type Stateful = {
+    /**
+     * @description 节点状态
+     * 待完成、已完成、已终止。。
+     */
+    stateType: 'WAITING' | 'COMPLETED' | 'TERMINATED' | string;
+    /**
+     * @description 激活的节点ID
+     */
+    activeNodeIds?: string[];
+    /**
+     * @description 激活节点样式
+     * {@link Color}
+     */
+    activeColor: Color_2;
+};
+
+export declare const toBpmnXml: (json: SolonFlowChina, isColor?: boolean) => string;
 
 export { }
