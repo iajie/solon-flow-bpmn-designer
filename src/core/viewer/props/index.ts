@@ -1,5 +1,4 @@
 import { BpmnElement } from "bpmn-js";
-import { Instance } from "tippy.js";
 
 type Color = 'success' | 'process' | 'danger' | 'warning' | 'cyan' | 'purple';
 
@@ -50,7 +49,7 @@ type Stateful = {
 
 type NodeType = {
     /**
-     * @description 设计器数据xml
+     * @description 设计器数据yml
      */
     data: string;
     /**
@@ -64,36 +63,16 @@ type SolonFlowBpmnViewerProps = {
      * @description 挂载dom/id
      */
     container: string | HTMLElement;
+    /**
+     * @description 流程图值，仅支持solon-flow的yaml/json
+     * 如果是{@link NodeType}则可以展示流程图激活 状态
+     */
     value: string | NodeType;
-    valueType?: 'bpmn' | 'json' | 'yaml';
-    /**
-     * @description 主题
-     * @default light
-     */
-    theme?: 'dark' | 'light';
-    /**
-     * @description 语言
-     * @default zh
-     */
-    lang?: string | 'zh' | 'en';
-    /**
-     * @description 国际化
-     */
-    i18n?: Record<string, Record<string, string>>;
     /**
      * @description 流程图查看器高度(屏幕可视高度)
      * @default 60
      */
     height?: number;
-    /**
-     * @description 显示模式，read为单显示为设计器样式，active为流程动态
-     * @default read
-     */
-    mode?: 'read' | 'active';
-    /**
-     * 活动节点设置
-     */
-    active?: Stateful[];
     /**
      * @description 排除节点；类型，如果添加点击节点将不会弹出框
      */
@@ -103,11 +82,6 @@ type SolonFlowBpmnViewerProps = {
      * @param node 节点信息
      */
     onClick?: (node: BpmnElement['businessObject'], graphics: SVGElement) => Promise<void>;
-    /**
-     * 自定义渲染点击弹出框
-     * @param render 点击异步获取的内容
-     */
-    popoverRender?: (render: any, tippy: Instance) => void;
     /**
      * 是否显示工具栏
      */
@@ -120,10 +94,6 @@ type SolonFlowBpmnViewerProps = {
 }
 
 const defaultViewerOptions: Partial<SolonFlowBpmnViewerProps> = {
-    lang: "zh",
-    theme: "light",
-    valueType: 'yaml',
-    mode: "read",
     height: 50,
     toolbar: true,
 }

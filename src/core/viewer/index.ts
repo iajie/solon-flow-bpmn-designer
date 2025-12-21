@@ -5,15 +5,10 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 import "../../styles/index.css";
 import "../../styles/viewer.css";
-import { en } from "../../i18n/en.ts";
-import { zh } from "../../i18n/zh.ts";
-import i18next, { Resource } from "i18next";
 import { SolonFlowBpmnViewerProps, defaultViewerOptions, Color, NodeColor, Stateful } from "./props";
 import { SolonModdle } from "../../modules";
 import { EventBus, Element, Canvas, ElementRegistry, Modeler } from "bpmn-js";
 import { importStr, initModelerStr } from "../../utils/bpmnUtils.ts";
-import jsyaml from "js-yaml";
-import { SolonFlowChina } from "../../types/easy-bpmn-designer.ts";
 import tippy, { Instance } from "tippy.js";
 import { ViewerToolbar } from "../../components/ViewerToolbar.ts";
 import { defineCustomElement } from "../../utils/domUtils.ts";
@@ -48,35 +43,11 @@ export class SolonFlowBpmnViewer {
         this.initialize();
     }
 
-    /**
-     * 初始化
-     * @private
-     */
     private initialize() {
-        const i18nConfig = this.options.i18n || {};
-        const resources = {
-            en: { translation: { ...en, ...i18nConfig.en } },
-            zh: { translation: { ...zh, ...i18nConfig.zh } },
-        } as Resource;
-        for (let key of Object.keys(i18nConfig)) {
-            if (key != "en" && key != "zh") {
-                resources[key] = {
-                    translation: { ...i18nConfig[key] },
-                };
-            }
-        }
-        i18next.init({ lng: this.options.lang, resources }, () => {
-            this.initViewer()
-        });
-    }
-
-    private initViewer() {
         // 根据传递container属性获取父级传递的数据是否为id，如果是则转为dom
         const rootEl =
             typeof this.options.container === "string" ? (document.querySelector(this.options.container) as HTMLElement)
                 : this.options.container;
-        // 主题-白/黑
-        rootEl.classList.add(`easy-bpmn-designer-theme-${ this.options.theme }`);
         // 获取父级dom class
         this.container = document.createElement("div");
         this.container.classList.add("easy-bpmn-designer-container");
@@ -86,7 +57,8 @@ export class SolonFlowBpmnViewer {
         this.viewer = document.createElement("div");
         this.viewer.classList.add("easy-bpmn-designer-container-designer");
         // 设计器内容
-        const { height, value, active, mode } = this.options;
+        const { height, value } = this.options;
+        const valueType = typeof value === 'string';
         this.bpmnModeler = new BpmnModeler({
             container: this.viewer,
             height: `${ height }dvh`,
@@ -104,7 +76,7 @@ export class SolonFlowBpmnViewer {
                 // 禁止拖动节点
                 move: ['value', '']
             }],
-            bpmnRenderer: mode === 'read' ? {
+            bpmnRenderer: valueType ? {
                 defaultLabelColor: "#000",
                 defaultFillColor: '#eef4ff',
                 defaultStrokeColor: '#349afa'
@@ -119,36 +91,11 @@ export class SolonFlowBpmnViewer {
             }
             // bpmnRenderer: this.options.theme === "dark" ? darkBpmnRenderer : lightBpmnRenderer,
         });
-        let data, stateful: Stateful[] = [];
-        if (typeof value !== 'string') {
-            data = value.data;
-            stateful = value?.stateful || [];
-        } else {
-            data = value;
-            // @ts-ignore
-            const yaml: SolonFlowChina = jsyaml.load(data);
-            if (mode === "active" && active && active.length) {
-                const state = yaml.stateful;
-                if (state) {
-                    for (let stateKey in state) {
-                        const ful = active.find(ful => ful.stateType.toLowerCase() === String(state[stateKey]).toLowerCase());
-                        if (ful) {
-                            if (ful.activeNodeIds && ful.activeNodeIds.length) {
-                                ful.activeNodeIds.push(stateKey);
-                            } else {
-                                ful.activeNodeIds = [stateKey];
-                            }
-                            stateful.push(ful);
-                        }
-                    }
-                } else {
-                    stateful = active;
-                }
-            }
-        }
+        const stateful: Stateful[] = valueType ? [] : value?.stateful || [];
+        const data = valueType ? value : value.data;
         // 装载xml
         this.bpmnModeler.importXML(initModelerStr()).then(() => {
-            if (this.options.onClick && mode === 'active') {
+            if (this.options.onClick) {
                 // 点击事件
                 const eventBus: EventBus = this.bpmnModeler.get('eventBus');
                 // 加载后绑定监听
@@ -156,17 +103,8 @@ export class SolonFlowBpmnViewer {
             }
             importStr(data, this.bpmnModeler as Modeler);
             // 加载完成，加载节点样式
-            if (mode === 'active' && stateful.length) {
-                const fulArr: Map<string, Stateful> = new Map<string, Stateful>();
-                stateful.forEach(item => {
-                    const ful = fulArr.get(item.stateType);
-                    if (ful) {
-                        ful.activeNodeIds?.push(...item?.activeNodeIds || []);
-                    } else {
-                        fulArr.set(item.stateType, item);
-                    }
-                });
-                fulArr.forEach((ful) => {
+            if (stateful.length) {
+                stateful.forEach((ful) => {
                     ful.activeNodeIds && this.setNodeColor(ful.activeNodeIds, ful.activeColor);
                 });
             }
