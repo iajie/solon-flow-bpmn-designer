@@ -12,16 +12,18 @@ import { Driver } from "./china/Driver.ts";
 import { Meta } from "./china/Meta.ts";
 import { When } from "./china/When.ts";
 import { Task } from "./china/Task.ts";
+import { ExtendAttributes } from "./extend";
 import { SolonFlowBpmnDesigner } from "../../../core";
 
-defineCustomElement('easy-panel-id', ID);
-defineCustomElement('easy-panel-name', Name);
-defineCustomElement('easy-panel-driver', Driver);
-defineCustomElement('easy-panel-meta', Meta);
-defineCustomElement('easy-panel-when', When);
-defineCustomElement('easy-panel-task', Task);
-defineCustomElement('easy-panel-condition-type', ConditionType);
-defineCustomElement('easy-panel-condition-expression', ConditionExpression);
+defineCustomElement('solon-flow-id', ID);
+defineCustomElement('solon-flow-name', Name);
+defineCustomElement('solon-flow-driver', Driver);
+defineCustomElement('solon-flow-meta', Meta);
+defineCustomElement('solon-flow-when', When);
+defineCustomElement('solon-flow-task', Task);
+defineCustomElement('solon-flow-extend', ExtendAttributes);
+defineCustomElement('solon-flow-condition-type', ConditionType);
+defineCustomElement('solon-flow-condition-expression', ConditionExpression);
 
 export class PanelContent extends AbstractPanel {
 
@@ -72,7 +74,7 @@ export class PanelContent extends AbstractPanel {
             // 默认提供的
             if (group.easy) {
                 for (let easyKey of group.easy) {
-                    const input = document.createElement(`easy-panel-${ easyKey }`) as PanelInput;
+                    const input = document.createElement(`solon-flow-${ easyKey }`) as PanelInput;
                     input.onCreate(modeler, designer);
                     groupDom.appendChild(input);
                 }

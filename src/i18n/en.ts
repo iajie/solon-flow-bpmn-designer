@@ -23,5 +23,6 @@ export const en = {
     'task': 'Task',
     'metaTitle': 'Metadata Edit (YAML/JSON)',
     'script': 'Task Script Edit（#subchain、@component、$Script、ScriptCode）',
-    'whenTitle': 'Conditional editing (logical expression)'
+    'whenTitle': 'Conditional editing (logical expression)',
+    'extendedAttributes': 'Extended Attributes',
 }

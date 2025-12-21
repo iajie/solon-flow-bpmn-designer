@@ -1,5 +1,5 @@
 import { PanelInput } from "../PanelInput.ts";
-import { Element } from "bpmn-js";
+import { BpmnElement, Element } from "bpmn-js";
 import { EasyBpmnDialog } from "../../../EasyBpmnDialog.ts";
 import { t } from "i18next";
 import jsYaml from "js-yaml";
@@ -18,7 +18,7 @@ export class Meta extends PanelInput {
 
     init() {
         this.customElement = document.createElement('div');
-        this.customElement.style.height = '150px';
+        this.customElement.style.height = '120px';
         this.customElement.classList.add('property-item-code');
         this.customElement.addEventListener('click', () => {
             if (this.element.type === "bpmn:ComplexGateway" && this.value === '{}') {
@@ -51,8 +51,11 @@ export class Meta extends PanelInput {
         });
     }
 
-    onChange(element: Element) {
-        super.onChange(element);
+    onChange(element: BpmnElement) {
+        this.updateElement(element as Element)
+    }
+
+    updateElement(element: Element) {
         this.value = JSON.stringify(JSON.parse(element.businessObject.meta?.body || '{}'), null, 4);
         this.codeShow();
     }

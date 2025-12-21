@@ -4,6 +4,7 @@ import { downloadFile } from "./utils/bpmnUtils.ts";
 // @ts-ignore
 window.designer = new SolonFlowBpmnDesigner({
     container: '#easy-bpmn-designer',
+    height: 88,
     toolbarKeys: [{
         html: `下载json`,
         tip: `下载json文件`,

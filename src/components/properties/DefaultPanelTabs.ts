@@ -28,5 +28,10 @@ export const defaultPanelKeys: SolonFlowBpmnDesignerOptions['panelTabs'] = [{
             easy: ['condition-type', 'condition-expression'],
             show: 'SequenceFlow',
         },
+        {
+            title: 'extendedAttributes',
+            easy: ['extend'],
+            show: 'UserTask'
+        }
     ]
 }];

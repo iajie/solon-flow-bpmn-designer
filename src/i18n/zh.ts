@@ -32,5 +32,19 @@ export const zh = {
     'task': '执行任务脚本',
     'metaTitle': '元数据编辑（YAML/JSON）',
     'script': '任务编辑（#子链、@组件、$脚本引用、脚本代码）',
-    'whenTitle': '条件编辑（逻辑表达式）'
+    'whenTitle': '条件编辑（逻辑表达式）',
+
+    'extendedAttributes': '拓展属性',
+    'key': '属性',
+    'type': '类型',
+    'value': '值',
+    'action': '操作',
+    'del': '删除',
+
+    'string': '文本',
+    'text': '长文本',
+    'number': '数字',
+    'date': '日期',
+    'boolean': '布尔',
+    'enum': '枚举'
 } as any;
