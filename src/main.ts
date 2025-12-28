@@ -18,84 +18,69 @@ window.designer = new SolonFlowBpmnDesigner({
 // @ts-ignore
 // window.viewer = new SolonFlowBpmnViewer({
 //     container: '#solon-bpmn-viewer',
-//     mode: "active",
-//     toolbar: false,
+//     toolbar: true,
 //     excludeType: ["SequenceFlow"],
-//     height: 88,
-//     active: [{
-//         stateType: "COMPLETED",
-//         activeColor: "success",
-//     }, {
-//         stateType: "WAITING",
-//         activeColor: "process",
-//     }, {
-//         stateType: "TERMINATED",
-//         activeColor: "danger"
-//     }],
-//     onClick: async (node) => {
-//         console.log(node)
-//         return node;
+//     height: 80,
+//     value: {
+//         data: `id: sf1
+// title: sf1
+// layout:
+//   - id: step1
+//     type: activity
+//     title: 发起审批
+//     meta: {actor: 刘涛, form: form1}
+//     link:
+//     - {nextId: step2}
+//   - id: step2
+//     type: activity
+//     title: 抄送
+//     meta: {cc: 吕方}
+//     task: '@OaMetaProcessCom'
+//     link:
+//     - {nextId: step3}
+//   - id: step3
+//     type: activity
+//     title: 审批
+//     meta: {actor: 陈鑫, cc: 吕方}
+//     task: '@OaMetaProcessCom'
+//     link:
+//     - {nextId: step4}
+//   - id: step4
+//     type: parallel
+//     title: 审批
+//     link:
+//     - {nextId: step4_1}
+//     - {nextId: step4_2}
+//   - id: step4_1
+//     type: activity
+//     meta: {actor: 陈宇}
+//     link:
+//     - {nextId: step4_end}
+//   - id: step4_2
+//     type: activity
+//     meta: {actor: 吕方}
+//     link:
+//     - {nextId: step4_end}
+//   - id: step4_end
+//     type: parallel
+//     link:
+//     - {nextId: step5}
+//   - id: step5
+//     type: activity
+//     title: 抄送
+//     meta: {cc: 吕方}
+//     task: '@OaMetaProcessCom'
+//     link:
+//     - {nextId: step6}
+//   - {id: step6, type: end, title: 结束}`,
+//         stateful: [
+//             { stateType: 'WAITING', activeNodeIds: ['step4_1'], activeColor: 'process' },
+//             {
+//                 stateType: 'COMPLETED',
+//                 activeNodeIds: ['step1', 'step2', 'step3', 'step4'],
+//                 activeColor: 'success'
+//             },
+//             { stateType: 'TERMINATED', activeNodeIds: ['step4_2'], activeColor: 'warning' },
+//         ],
 //     },
-//     popoverRender: (render) => {
-//         const pop = document.createElement("div");
-//         const title = document.createElement("p");
-//         title.textContent = `节点ID：${render.id}`;
-//         const title2 = document.createElement("p");
-//         title2.textContent = `节点类型：${render.$type}`;
-//         pop.appendChild(title);
-//         pop.appendChild(title2);
-//         return pop;
-//     },
-//     value: "id: sf1\n" +
-//         "title: sf1\n" +
-//         "layout:\n" +
-//         "  - id: step1\n" +
-//         "    type: activity\n" +
-//         "    title: 发起审批\n" +
-//         "    meta: {actor: 刘涛, form: form1}\n" +
-//         "    link:\n" +
-//         "    - {nextId: step2}\n" +
-//         "  - id: step2\n" +
-//         "    type: activity\n" +
-//         "    title: 抄送\n" +
-//         "    meta: {cc: 吕方}\n" +
-//         "    task: '@OaMetaProcessCom'\n" +
-//         "    link:\n" +
-//         "    - {nextId: step3}\n" +
-//         "  - id: step3\n" +
-//         "    type: activity\n" +
-//         "    title: 审批\n" +
-//         "    meta: {actor: 陈鑫, cc: 吕方}\n" +
-//         "    task: '@OaMetaProcessCom'\n" +
-//         "    link:\n" +
-//         "    - {nextId: step4}\n" +
-//         "  - id: step4\n" +
-//         "    type: parallel\n" +
-//         "    title: 审批\n" +
-//         "    link:\n" +
-//         "    - {nextId: step4_1}\n" +
-//         "    - {nextId: step4_2}\n" +
-//         "  - id: step4_1\n" +
-//         "    type: activity\n" +
-//         "    meta: {actor: 陈宇}\n" +
-//         "    link:\n" +
-//         "    - {nextId: step4_end}\n" +
-//         "  - id: step4_2\n" +
-//         "    type: activity\n" +
-//         "    meta: {actor: 吕方}\n" +
-//         "    link:\n" +
-//         "    - {nextId: step4_end}\n" +
-//         "  - id: step4_end\n" +
-//         "    type: parallel\n" +
-//         "    link:\n" +
-//         "    - {nextId: step5}\n" +
-//         "  - id: step5\n" +
-//         "    type: activity\n" +
-//         "    title: 抄送\n" +
-//         "    meta: {cc: 吕方}\n" +
-//         "    task: '@OaMetaProcessCom'\n" +
-//         "    link:\n" +
-//         "    - {nextId: step6}\n" +
-//         "  - {id: step6, type: end, title: 结束}\n" +
-//         "stateful: {step1: COMPLETED, step2: COMPLETED, step3: COMPLETED, step4: WAITING, step4_1: TERMINATED}"
 // })

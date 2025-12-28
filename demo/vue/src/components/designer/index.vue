@@ -1,5 +1,5 @@
 <template>
-    <div id="designer"></div>
+    <div id="solon-flow-bpmn-designer"></div>
 </template>
 <script>
 import "solon-flow-bpmn-designer/style.css";
@@ -19,10 +19,6 @@ export default {
             type: String,
             default: "zh"
         },
-        type: {
-            type: String,
-            default: "yaml"
-        },
         height: {
             type: Number,
             default: 60
@@ -35,13 +31,13 @@ export default {
     },
     mounted() {
         this.designer = new SolonFlowBpmnDesigner({
-            container: '#designer',
+            container: '#solon-flow-bpmn-designer',
             height: this.height,
             lang: this.lang,
             theme: this.theme,
             value: this.value,
             onChange: (callback) => {
-                this.$emit("change", callback(this.type))
+                this.$emit("input", callback())
             },
         });
     },

@@ -98,7 +98,6 @@ const App: React.FC = () => {
         <button onClick={() => setOptions({ ...options, theme: options.theme === 'dark' ? 'light' : 'dark' })}>切换主题</button>
         <button onClick={() => ref.current?.panelShow()}>属性面板显隐</button>
         <SolonFlowDesigner ref={ref} value={value} onChange={(value) => {
-            console.log(value);
             setValue(value)
         }} height={95}
                            lang={options.lang} theme={options.theme} type={options.type} />

@@ -1,15 +1,6 @@
 import React from "react";
-import { SolonFlowBpmnDesigner } from "solon-flow-bpmn-designer";
+import { SolonFlowBpmnDesigner, SolonFlowBpmnDesignerOptions } from 'solon-flow-bpmn-designer';
 import "solon-flow-bpmn-designer/style.css";
-
-interface SolonFlowDesignerProps {
-    value: string;
-    theme?: "light" | "dark";
-    lang?: "en" | "zh";
-    type?: "yaml" | "json";
-    height?: number;
-    onChange?: (value: string) => void;
-}
 
 export interface SolonFlowDesignerRef {
     /**
@@ -26,7 +17,7 @@ export interface SolonFlowDesignerRef {
     getValue: () => string | undefined;
 }
 
-const SolonFlowDesigner = React.forwardRef<SolonFlowDesignerRef, SolonFlowDesignerProps>((props, ref) => {
+const SolonFlowDesigner = React.forwardRef<SolonFlowDesignerRef, SolonFlowBpmnDesignerOptions>((props, ref) => {
     const designerRef = React.useRef(null);
     const [designer, setDesigner] = React.useState<SolonFlowBpmnDesigner>();
 
@@ -37,14 +28,15 @@ const SolonFlowDesigner = React.forwardRef<SolonFlowDesignerRef, SolonFlowDesign
     }));
 
     React.useEffect(() => {
-        if (!!designerRef.current) {
-            if (designer) return;
+        if (!!designerRef.current && !designer) {
             const solonFlowBpmnDesigner = new SolonFlowBpmnDesigner({
+                ...props,
                 container: designerRef.current,
                 height: props.height || 60,
                 lang: props.lang || 'zh',
                 theme: props.theme || 'light',
                 value: props.value,
+                valueType: props.type,
                 onChange: (callback) => {
                     props.onChange?.(callback(props.type || 'yaml'));
                 },

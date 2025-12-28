@@ -133,6 +133,9 @@
     .tippy-box[data-theme~='solon-bpmn-viewer-toolbar'] {
         bottom: -70px;
     }
+    .tippy-box[data-theme~='solon-bpmn-viewer-toolbar'][data-placement^='bottom'] {
+        top: -70px;
+    }
 
 }
 

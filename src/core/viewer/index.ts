@@ -115,7 +115,7 @@ export class SolonFlowBpmnViewer {
             const toolbar = new ViewerToolbar(this);
             // 添加工具栏
             this.toolbar = tippy(this.container, {
-                appendTo: this.viewer,
+                appendTo: this.viewer.children[0],
                 placement: 'top',
                 content: toolbar,
                 arrow: false,
@@ -187,10 +187,10 @@ export class SolonFlowBpmnViewer {
      */
     destroy() {
         // 销毁设计器对象
-        this.bpmnModeler.destroy();
-        this.toolbar.destroy();
+        this.bpmnModeler?.destroy();
+        this.toolbar?.destroy();
         // 销毁容器
-        this.viewer.remove();
-        this.container.remove();
+        this.viewer?.remove();
+        this.container?.remove();
     }
 }
