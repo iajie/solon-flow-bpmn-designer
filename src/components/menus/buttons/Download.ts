@@ -11,10 +11,7 @@ export class Download extends AbstractToolBar {
     }
 
     onClick() {
-        this.modeler?.saveXML({ format: true }).then(({ xml }) => {
-            if (xml) {
-                downloadFile(xml, 'easy-bpmn-designer.xml')
-            }
-        });
+        const yaml = this.designer?.getValue();
+        yaml && downloadFile(yaml, `solon-flow-bpmn-designer-${new Date().getTime()}.yaml`);
     }
 }

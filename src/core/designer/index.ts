@@ -25,7 +25,7 @@ import { EasyBpmnDesignerPalette, EasyBpmnDesignerPopupMenu,
     EasyBpmnDesignerContextPad, zhTranslate, SolonModdle } from "../../modules";
 // 标签解析 Moddle
 import { defineCustomElement, switchPanel } from "../../utils/domUtils.ts";
-import { initModelerStr, toBpmnXml, toSolonJson } from "../../utils/bpmnUtils.ts";
+import { importStr, initModelerStr, toBpmnXml, toSolonJson } from "../../utils/bpmnUtils.ts";
 import { SolonFlowChina } from "../../types/easy-bpmn-designer.ts";
 import { CommandStack, EventBus, Modeler, Element, ModuleDeclaration } from "bpmn-js";
 
@@ -151,11 +151,22 @@ export class SolonFlowBpmnDesigner {
         const xml = initModelerStr();
         let valueStr = value;
         if (this.options.valueType !== 'bpmn' && value) {
-            valueStr = toBpmnXml(jsYaml.load(value) as SolonFlowChina);
+            const bpmnYaml = jsYaml.load(value) as SolonFlowChina;
+            if (bpmnYaml.bpmn) {
+                valueStr = toBpmnXml(bpmnYaml);
+            } else {
+                valueStr = ``;
+            }
         }
         this.bpmnModeler.importXML(valueStr || xml).then(({warnings}) => {
             if (warnings && warnings.length) {
                 warnings.forEach((warn) => console.warn(warn));
+            }
+            if (this.options.valueType !== 'bpmn' && value) {
+                const bpmnYaml = jsYaml.load(value) as SolonFlowChina;
+                if (!bpmnYaml.bpmn) {
+                    importStr(value, this.bpmnModeler as Modeler);
+                }
             }
             this.onCreated();
             // 添加监听事件
