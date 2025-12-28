@@ -83558,7 +83558,7 @@ class XV {
         interactive: !0,
         allowHTML: !0,
         theme: "solon-bpmn-viewer-toolbar"
-      }), console.log(this.toolbar);
+      });
     }
   }
   getToolbar() {

@@ -2,8 +2,11 @@
   - [React](react.md)
   - [Vue3](vue3.md)
   - [Vue2](vue2.md)
-- 基本使用
-  - [属性](props.md)
-  - [工具栏](toolbar.md)
-  - [api(事件)](api.md)
+- 设计器
+  - [属性](designer/props.md)
+  - [工具栏](designer/toolbar.md)
+  - [api(事件)](designer/api.md)
+- 流程图
+  - [属性](viewer/props.md)
+  - [api(方法)](viewer/api.md)
 - [变更日志](changelog.md)
