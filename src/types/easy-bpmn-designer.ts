@@ -33,7 +33,7 @@ export interface SolonFlowChina {
     /**
      * @description 存储bpmn节点样式位置等信息
      */
-    bpmn: Record<string, any>;
+    v_bpmn: Record<string, any>;
     /**
      * @description 节点状态
      */

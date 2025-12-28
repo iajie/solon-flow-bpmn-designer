@@ -320,7 +320,7 @@ export const toSolonJson = (element: Element) => {
             driver: element.businessObject.driver,
             meta: element.businessObject.meta?.body ? jsYaml.load(element.businessObject.meta?.body) as any : undefined,
             layout: layouts,
-            bpmn: {
+            v_bpmn: {
                 ...element.di,
                 planeElement: element.di.planeElement.map((node: any) => ({
                     ...node,
@@ -369,7 +369,7 @@ export const toBpmnXml = (json: SolonFlowChina, isColor = true) => {
         </process>
         <bpmndi:BPMNDiagram id="BpmnDiagram_1">
             <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="${json.id}">
-                ${jsonToXml(json.bpmn, isColor)}
+                ${jsonToXml(json.v_bpmn, isColor)}
             </bpmndi:BPMNPlane>
         </bpmndi:BPMNDiagram>
     </definitions>`;
@@ -502,7 +502,7 @@ export const importStr = (text: string, modeler?: Modeler) => {
     const root = canvas?.getRootElement() as Element;
     const rootElement = canvas?.getRootElements()[0];
     // 存在bpmn信息
-    if (solonFlow.bpmn) {
+    if (solonFlow.v_bpmn) {
         modeler?.importXML(toBpmnXml(solonFlow)).then(({ warnings }) => {
             console.debug(warnings);
         });

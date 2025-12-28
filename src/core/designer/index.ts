@@ -152,7 +152,7 @@ export class SolonFlowBpmnDesigner {
         let valueStr = value;
         if (this.options.valueType !== 'bpmn' && value) {
             const bpmnYaml = jsYaml.load(value) as SolonFlowChina;
-            if (bpmnYaml.bpmn) {
+            if (bpmnYaml.v_bpmn) {
                 valueStr = toBpmnXml(bpmnYaml);
             } else {
                 valueStr = ``;
@@ -164,7 +164,7 @@ export class SolonFlowBpmnDesigner {
             }
             if (this.options.valueType !== 'bpmn' && value) {
                 const bpmnYaml = jsYaml.load(value) as SolonFlowChina;
-                if (!bpmnYaml.bpmn) {
+                if (!bpmnYaml.v_bpmn) {
                     importStr(value, this.bpmnModeler as Modeler);
                 }
             }
