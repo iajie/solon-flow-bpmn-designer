@@ -1,6 +1,6 @@
 var Xw = Object.defineProperty;
 var Zw = (e, t, n) => t in e ? Xw(e, t, { enumerable: !0, configurable: !0, writable: !0, value: n }) : e[t] = n;
-var j = (e, t, n) => Zw(e, typeof t != "symbol" ? t + "" : t, n);
+var Q = (e, t, n) => Zw(e, typeof t != "symbol" ? t + "" : t, n);
 function ae(e, t) {
   t && (e.super_ = t, e.prototype = Object.create(t.prototype, { constructor: { value: e, enumerable: !1, writable: !0, configurable: !0 } }));
 }
@@ -530,7 +530,7 @@ function N0(e, t) {
   for (i = 0, r; r = n[i]; i++)
     EO(e, r, t[r]);
 }
-function Q(e, t, n) {
+function j(e, t, n) {
   if (typeof t == "string")
     if (n !== void 0)
       EO(e, t, n);
@@ -597,7 +597,7 @@ function x0(e) {
 }
 function ne(e, t) {
   var n;
-  return e = e.trim(), e.charAt(0) === "<" ? (n = I0(e).firstChild, n = document.importNode(n, !0)) : n = document.createElementNS(ag.svg, e), t && Q(n, t), n;
+  return e = e.trim(), e.charAt(0) === "<" ? (n = I0(e).firstChild, n = document.importNode(n, !0)) : n = document.createElementNS(ag.svg, e), t && j(n, t), n;
 }
 var zu = null;
 function SO() {
@@ -939,7 +939,7 @@ function As(e, t, n) {
 }
 function sg(e, t) {
   const n = parseInt(e.dataset.cornerRadius, 10) || 0;
-  return Q(e, {
+  return j(e, {
     d: da(W0(t, n))
   }), e;
 }
@@ -1046,12 +1046,12 @@ Rr.prototype.canRender = function() {
 };
 Rr.prototype.drawShape = function(t, n, i) {
   var r = ne("rect");
-  return Q(r, {
+  return j(r, {
     x: 0,
     y: 0,
     width: n.width || 0,
     height: n.height || 0
-  }), RO(n) ? Q(r, P({}, this.FRAME_STYLE, i || {})) : Q(r, P({}, this.SHAPE_STYLE, i || {})), de(t, r), r;
+  }), RO(n) ? j(r, P({}, this.FRAME_STYLE, i || {})) : j(r, P({}, this.SHAPE_STYLE, i || {})), de(t, r), r;
 };
 Rr.prototype.drawConnection = function(t, n, i) {
   var r = As(n.waypoints, P({}, this.CONNECTION_STYLE, i || {}));
@@ -1638,7 +1638,7 @@ Ce.$inject = [
 ];
 Ce.prototype._init = function(e) {
   const t = this._eventBus, n = this._container = ED(e), i = this._svg = ne("svg");
-  Q(i, {
+  j(i, {
     width: "100%",
     height: "100%"
   }), zt(i, "tabindex", 0), e.autoFocus && t.on("element.hover", () => {
@@ -2003,11 +2003,11 @@ function Ln(e) {
 Ln.$inject = ["eventBus"];
 Ln.prototype.add = function(e, t, n) {
   var i = e.id;
-  this._validateId(i), Q(t, Ha, i), n && Q(n, Ha, i), this._elements[i] = { element: e, gfx: t, secondaryGfx: n };
+  this._validateId(i), j(t, Ha, i), n && j(n, Ha, i), this._elements[i] = { element: e, gfx: t, secondaryGfx: n };
 };
 Ln.prototype.remove = function(e) {
   var t = this._elements, n = e.id || e, i = n && t[n];
-  i && (Q(i.gfx, Ha, ""), i.secondaryGfx && Q(i.secondaryGfx, Ha, ""), delete t[n]);
+  i && (j(i.gfx, Ha, ""), i.secondaryGfx && j(i.secondaryGfx, Ha, ""), delete t[n]);
 };
 Ln.prototype.updateId = function(e, t) {
   this._validateId(t), typeof e == "string" && (e = this.get(e)), this._eventBus.fire("element.updateId", {
@@ -2019,11 +2019,11 @@ Ln.prototype.updateId = function(e, t) {
 };
 Ln.prototype.updateGraphics = function(e, t, n) {
   var i = e.id || e, r = this._elements[i];
-  return n ? r.secondaryGfx = t : r.gfx = t, t && Q(t, Ha, i), t;
+  return n ? r.secondaryGfx = t : r.gfx = t, t && j(t, Ha, i), t;
 };
 Ln.prototype.get = function(e) {
   var t;
-  typeof e == "string" ? t = e : t = e && Q(e, Ha);
+  typeof e == "string" ? t = e : t = e && j(e, Ha);
   var n = this._elements[t];
   return n && n.element;
 };
@@ -2416,7 +2416,7 @@ Pn.prototype.update = function(e, t, n) {
       this.drawConnection(i, t);
     else
       throw new Error("unknown type: " + e);
-    t.hidden ? Q(n, "display", "none") : Q(n, "display", "block");
+    t.hidden ? j(n, "display", "none") : j(n, "display", "block");
   }
 };
 Pn.prototype.remove = function(e) {
@@ -8948,7 +8948,7 @@ function ma(e, t, n, i, r, a, o) {
   }
   function H(N, S, E = {}) {
     var I = X(N, S, E), M = He(S);
-    if (Qt(S) && (Q(I, {
+    if (Qt(S) && (j(I, {
       strokeDasharray: "0, 5.5",
       strokeWidth: 2.5
     }), !M)) {
@@ -9024,7 +9024,7 @@ function ma(e, t, n, i, r, a, o) {
           y: 8
         }
       }), U = h(N, M);
-      Q(U, {
+      j(U, {
         fill: ke(S, s, E.fill),
         stroke: te(S, c, E.stroke),
         strokeWidth: 1
@@ -9035,7 +9035,7 @@ function ma(e, t, n, i, r, a, o) {
           y: 8
         }
       }), oe = h(N, V);
-      return Q(oe, {
+      return j(oe, {
         fill: te(S, c, E.stroke),
         stroke: te(S, c, E.stroke),
         strokeWidth: 1
@@ -9489,9 +9489,9 @@ function ma(e, t, n, i, r, a, o) {
       }), V = z(S), { source: oe } = S;
       if (oe) {
         var Oe = z(oe);
-        V.get("conditionExpression") && y(Oe, "bpmn:Activity") && Q(U, {
+        V.get("conditionExpression") && y(Oe, "bpmn:Activity") && j(U, {
           markerStart: _(N, "conditional-flow-marker", I, M)
-        }), Oe.get("default") && (y(Oe, "bpmn:Gateway") || y(Oe, "bpmn:Activity")) && Oe.get("default") === V && Q(U, {
+        }), Oe.get("default") && (y(Oe, "bpmn:Gateway") || y(Oe, "bpmn:Activity")) && Oe.get("default") === V && j(U, {
           markerStart: _(N, "conditional-default-flow-marker", I, M)
         });
       }
@@ -9769,7 +9769,7 @@ function WM(e, t, n) {
 }
 function KM() {
   var e = document.getElementById("helper-svg");
-  return e || (e = ne("svg"), Q(e, {
+  return e || (e = ne("svg"), j(e, {
     id: "helper-svg"
   }), tn(e, {
     visibility: "hidden",
@@ -9794,7 +9794,7 @@ Vl.prototype.getDimensions = function(e, t) {
 };
 Vl.prototype.layoutText = function(e, t) {
   var n = P({}, this._config.size, t.box), i = P({}, this._config.style, t.style), r = YM(t.align || this._config.align), a = HM(t.padding !== void 0 ? t.padding : this._config.padding), o = t.fitBox || !1, s = QM(i), c = e.split(/\u00AD?\r?\n/), l = [], u = n.width - a.left - a.right, d = ne("text");
-  Q(d, { x: 0, y: 0 }), Q(d, i);
+  j(d, { x: 0, y: 0 }), j(d, i);
   var p = KM();
   for (de(p, d); c.length; )
     l.push(VM(c, u, d));
@@ -9806,7 +9806,7 @@ Vl.prototype.layoutText = function(e, t) {
   }, 0), f = a.top;
   r.vertical === "middle" && (f += (n.height - _) / 2), f -= (s || l[0].height) / 4;
   var g = ne("text");
-  Q(g, i), w(l, function(T) {
+  j(g, i), w(l, function(T) {
     var v;
     switch (f += s || T.height, r.horizontal) {
       case "left":
@@ -9819,7 +9819,7 @@ Vl.prototype.layoutText = function(e, t) {
         v = Math.max(((o ? m : u) - T.width) / 2 + a.left, 0);
     }
     var h = ne("tspan");
-    Q(h, { x: v, y: f }), h.textContent = T.text, de(g, h);
+    j(h, { x: v, y: f }), h.textContent = T.text, de(g, h);
   }), Et(d);
   var b = {
     width: m,
@@ -11005,7 +11005,7 @@ function CN(e, t, n) {
     var L = h[D];
     if (!L)
       throw new Error("invalid hit type <" + D + ">");
-    return Q(O, L), O;
+    return j(O, L), O;
   }
   function A(O, D) {
     de(O, D);
@@ -11028,11 +11028,11 @@ function CN(e, t, n) {
       y: 0
     }, L);
     var k = ne("rect");
-    return R(k, D), Q(k, L), A(O, k), k;
+    return R(k, D), j(k, L), A(O, k), k;
   }, this.updateDefaultHit = function(O, D) {
     var L = Ke(".djs-hit", D);
     if (L)
-      return O.waypoints ? sg(L, O.waypoints) : Q(L, {
+      return O.waypoints ? sg(L, O.waypoints) : j(L, {
         width: O.width,
         height: O.height
       }), L;
@@ -13931,13 +13931,13 @@ function Rf(e, t) {
   var n = ne("g");
   Ve(n).add(vA), de(e, n);
   var i = ne("circle");
-  Q(i, {
+  j(i, {
     cx: 0,
     cy: 0,
     r: 4
   }), Ve(i).add("djs-visual"), de(n, i);
   var r = ne("circle");
-  return Q(r, {
+  return j(r, {
     cx: 0,
     cy: 0,
     r: 10
@@ -13947,14 +13947,14 @@ function pk(e, t, n, i) {
   var r = ne("g");
   de(e, r);
   var a = 18, o = 6, s = 11, c = mk(t, n, i), l = o + s, u = ne("rect");
-  Q(u, {
+  j(u, {
     x: -a / 2,
     y: -o / 2,
     width: a,
     height: o
   }), Ve(u).add("djs-visual"), de(r, u);
   var d = ne("rect");
-  return Q(d, {
+  return j(d, {
     x: -c / 2,
     y: -l / 2,
     width: c,
@@ -14007,7 +14007,7 @@ function TA(e, t, n, i, r) {
   }
   function l(v, h) {
     var C = t.getLayer("overlays"), R = Ke('.djs-bendpoints[data-element-id="' + ca(v.id) + '"]', C);
-    return !R && h && (R = ne("g"), Q(R, { "data-element-id": v.id }), Ve(R).add("djs-bendpoints"), de(C, R), c(R, "mousedown", v), c(R, "click", v), c(R, "dblclick", v)), R;
+    return !R && h && (R = ne("g"), j(R, { "data-element-id": v.id }), Ve(R).add("djs-bendpoints"), de(C, R), c(R, "mousedown", v), c(R, "click", v), c(R, "dblclick", v)), R;
   }
   function u(v, h) {
     return Ke(
@@ -14023,7 +14023,7 @@ function TA(e, t, n, i, r) {
   }
   function p(v, h) {
     for (var C = h.waypoints, R, A, O, D = 1; D < C.length; D++)
-      R = C[D - 1], A = C[D], Hi(R, A) && (O = yA(v, R, A), Q(O, { "data-segment-idx": D }), c(O, "mousemove", h));
+      R = C[D - 1], A = C[D], Hi(R, A) && (O = yA(v, R, A), j(O, { "data-segment-idx": D }), c(O, "mousemove", h));
   }
   function _(v) {
     w(ss("." + vA, v), function(h) {
@@ -14090,7 +14090,7 @@ function TA(e, t, n, i, r) {
     var h = v.element, C = v.newId;
     if (h.waypoints) {
       var R = l(h);
-      R && Q(R, { "data-element-id": C });
+      R && j(R, { "data-element-id": C });
     }
   }), this.addHandles = f, this.updateHandles = g, this.getBendpointsContainer = l, this.getSegmentDragger = u;
 }
@@ -14634,7 +14634,7 @@ nr.prototype.getConnection = function(e) {
 };
 nr.prototype.createConnectionPreviewGfx = function() {
   var e = ne("g");
-  return Q(e, {
+  return j(e, {
     pointerEvents: "none"
   }), Ve(e).add(Ok), de(this._canvas.getActiveLayer(), e), e;
 };
@@ -14692,10 +14692,10 @@ wr.prototype.getGfx = function(e) {
 wr.prototype.addDragger = function(e, t, n, i = "djs-dragger") {
   n = n || this.getGfx(e);
   var r = rg(n), a = n.getBoundingClientRect();
-  return this._cloneMarkers(mr(r), i), Q(r, this._styles.cls(i, [], {
+  return this._cloneMarkers(mr(r), i), j(r, this._styles.cls(i, [], {
     x: a.top,
     y: a.left
-  })), de(t, r), Q(r, "data-preview-support-element-id", e.id), r;
+  })), de(t, r), j(r, "data-preview-support-element-id", e.id), r;
 };
 wr.prototype.addFrame = function(e, t) {
   var n = ne("rect", {
@@ -14705,14 +14705,14 @@ wr.prototype.addFrame = function(e, t) {
     x: e.x,
     y: e.y
   });
-  return de(t, n), Q(n, "data-preview-support-element-id", e.id), n;
+  return de(t, n), j(n, "data-preview-support-element-id", e.id), n;
 };
 wr.prototype._cloneMarkers = function(e, t = "djs-dragger", n = e) {
   var i = this;
   e.childNodes && e.childNodes.forEach((r) => {
     i._cloneMarkers(r, t, n);
   }), kk(e) && wk.forEach(function(r) {
-    if (Q(e, r)) {
+    if (j(e, r)) {
       var a = Mk(e, r, i._canvas.getContainer());
       a && i._cloneMarker(n, e, a, r, t);
     }
@@ -14726,10 +14726,10 @@ wr.prototype._cloneMarker = function(e, t, n, i, r = "djs-dragger") {
   var c = Ke(":scope > defs", e);
   c || (c = ne("defs"), de(e, c)), de(c, s);
   var l = Pk(s.id);
-  Q(t, i, l);
+  j(t, i, l);
 };
 function Mk(e, t, n) {
-  var i = Lk(Q(e, t));
+  var i = Lk(j(e, t));
   return Ke("marker#" + i, n || document);
 }
 function Lk(e) {
@@ -17835,7 +17835,7 @@ var L3 = 750;
 function EI(e, t, n, i, r) {
   function a(o) {
     var s = ne("g");
-    Q(s, r.cls("djs-drag-group", ["no-events"]));
+    j(s, r.cls("djs-drag-group", ["no-events"]));
     var c = ne("g");
     return o.forEach(function(l) {
       var u;
@@ -18751,11 +18751,11 @@ function RI(e, t, n, i, r) {
       x: "M 0,-10000 L 0,10000",
       y: "M -10000,0 L 10000,0"
     }, u = ne("g");
-    Q(u, i.cls("djs-crosshair-group", ["no-events"])), de(s, u);
+    j(u, i.cls("djs-crosshair-group", ["no-events"])), de(s, u);
     var d = ne("path");
-    Q(d, "d", l.x), Ve(d).add("djs-crosshair"), de(u, d);
+    j(d, "d", l.x), Ve(d).add("djs-crosshair"), de(u, d);
     var p = ne("path");
-    Q(p, "d", l.y), Ve(p).add("djs-crosshair"), de(u, p), c.crosshairGroup = u;
+    j(p, "d", l.y), Ve(p).add("djs-crosshair"), de(u, p), c.crosshairGroup = u;
   }), e.on("spaceTool.selection.move", function(o) {
     var s = o.context.crosshairGroup;
     Kt(s, o.x, o.y);
@@ -18767,9 +18767,9 @@ function RI(e, t, n, i, r) {
     if (s.initialized) {
       if (!s.dragGroup) {
         var p = n.getLayer("space");
-        c = ne("path"), Q(c, "d", "M0,0 L0,0"), Ve(c).add("djs-crosshair"), de(p, c), s.line = c;
+        c = ne("path"), j(c, "d", "M0,0 L0,0"), Ve(c).add("djs-crosshair"), de(p, c), s.line = c;
         var _ = ne("g");
-        Q(_, i.cls("djs-drag-group", ["no-events"])), de(n.getActiveLayer(), _), a(u, _);
+        j(_, i.cls("djs-drag-group", ["no-events"])), de(n.getActiveLayer(), _), a(u, _);
         var m = s.movingConnections = t.filter(function(h) {
           var C = !1;
           w(u, function(D) {
@@ -18800,7 +18800,7 @@ function RI(e, t, n, i, r) {
       }
       if (!s.frameGroup) {
         var f = ne("g");
-        Q(f, i.cls("djs-frame-group", ["no-events"])), de(n.getActiveLayer(), f);
+        j(f, i.cls("djs-frame-group", ["no-events"])), de(n.getActiveLayer(), f);
         var g = [];
         w(d, function(h) {
           var C = r.addFrame(h, f), R = C.getBBox();
@@ -18814,18 +18814,18 @@ function RI(e, t, n, i, r) {
         x: "M" + o.x + ", -10000 L" + o.x + ", 10000",
         y: "M -10000, " + o.y + " L 10000, " + o.y
       };
-      Q(c, { d: b[l] });
+      j(c, { d: b[l] });
       var T = { x: "y", y: "x" }, v = { x: o.dx, y: o.dy };
       v[T[s.axis]] = 0, Kt(s.dragGroup, v.x, v.y), w(s.frames, function(h) {
         var C = h.element, R = h.initialBounds, A, O;
-        s.direction === "e" ? Q(C, {
+        s.direction === "e" ? j(C, {
           width: xc(R.width + v.x, 5)
-        }) : (A = xc(R.width - v.x, 5), Q(C, {
+        }) : (A = xc(R.width - v.x, 5), j(C, {
           width: A,
           x: R.x + R.width - A
-        })), s.direction === "s" ? Q(C, {
+        })), s.direction === "s" ? j(C, {
           height: xc(R.height + v.y, 5)
-        }) : (O = xc(R.height - v.y, 5), Q(C, {
+        }) : (O = xc(R.height - v.y, 5), j(C, {
           height: O,
           y: R.y + R.height - O
         }));
@@ -24319,7 +24319,7 @@ var cb = "djs-resizing", lb = "resize-not-ok", g6 = 500;
 function tx(e, t, n) {
   function i(a) {
     var o = a.shape, s = a.newBounds, c = a.frame;
-    c || (c = a.frame = n.addFrame(o, t.getActiveLayer()), t.addMarker(o, cb)), s.width > 5 && Q(c, { x: s.x, width: s.width }), s.height > 5 && Q(c, { y: s.y, height: s.height }), a.canExecute ? Ve(c).remove(lb) : Ve(c).add(lb);
+    c || (c = a.frame = n.addFrame(o, t.getActiveLayer()), t.addMarker(o, cb)), s.width > 5 && j(c, { x: s.x, width: s.width }), s.height > 5 && j(c, { y: s.y, height: s.height }), a.canExecute ? Ve(c).remove(lb) : Ve(c).add(lb);
   }
   function r(a) {
     var o = a.shape, s = a.frame;
@@ -24359,14 +24359,14 @@ Gr.prototype._createResizer = function(e, t, n, i) {
   var r = this._getResizersParent(), a = E6(i), o = ne("g");
   Ve(o).add(Ho), Ve(o).add(Ho + "-" + e.id), Ve(o).add(Ho + "-" + i), de(r, o);
   var s = ne("rect");
-  Q(s, {
+  j(s, {
     x: -Lc / 2 + a.x,
     y: -Lc / 2 + a.y,
     width: Lc,
     height: Lc
   }), Ve(s).add(Ho + "-visual"), de(o, s);
   var c = ne("rect");
-  return Q(c, {
+  return j(c, {
     x: -Pc / 2 + a.x,
     y: -Pc / 2 + a.y,
     width: Pc,
@@ -24650,7 +24650,7 @@ function ix(e, t, n) {
           my: 0
         }
       }), d = i.path = ne("path");
-      Q(d, {
+      j(d, {
         d: u,
         strokeWidth: 2,
         stroke: C6(a)
@@ -24669,7 +24669,7 @@ function ix(e, t, n) {
           my: 0
         }
       });
-      Q(i.path, {
+      j(i.path, {
         d: p
       });
     }
@@ -24706,7 +24706,7 @@ function Sa(e, t) {
   var n = t.cls("djs-outline", ["no-fill"]), i = this;
   function r(a) {
     var o = ne("rect");
-    return Q(o, P({
+    return j(o, P({
       x: 0,
       y: 0,
       rx: 4,
@@ -24726,7 +24726,7 @@ Sa.prototype.updateShapeOutline = function(e, t) {
   var n = !1, i = this._getProviders();
   i.length && w(i, function(r) {
     n = n || r.updateOutline(t, e);
-  }), n || Q(e, {
+  }), n || j(e, {
     x: -this.offset,
     y: -this.offset,
     width: t.width + this.offset * 2,
@@ -24735,7 +24735,7 @@ Sa.prototype.updateShapeOutline = function(e, t) {
 };
 Sa.prototype.updateConnectionOutline = function(e, t) {
   var n = xt(t);
-  Q(e, {
+  j(e, {
     x: n.x - this.offset,
     y: n.y - this.offset,
     width: n.width + this.offset * 2,
@@ -24778,7 +24778,7 @@ qh.prototype._updateMultiSelectionOutline = function(e) {
   var n = e.length > 1, i = this._canvas.getContainer();
   if (Ve(i)[n ? "add" : "remove"]("djs-multi-select"), !!n) {
     var r = A6(xt(e)), a = ne("rect");
-    Q(a, P({
+    j(a, P({
       rx: 3
     }, r)), Ve(a).add("djs-selection-outline"), de(t, a);
   }
@@ -24877,7 +24877,7 @@ rx.$inject = [
   "selection"
 ];
 function jr(e, t) {
-  return parseFloat(Q(e, t) || 0);
+  return parseFloat(j(e, t) || 0);
 }
 const x6 = {
   __depends__: [
@@ -25136,7 +25136,7 @@ function cx(e, t, n, i) {
     var l = c.context, u = l.shapes, d = l.allDraggedElements, p = r(u);
     if (!l.dragGroup) {
       var _ = ne("g");
-      Q(_, n.cls("djs-drag-group", ["no-events"]));
+      j(_, n.cls("djs-drag-group", ["no-events"]));
       var m = t.getActiveLayer();
       de(m, _), l.dragGroup = _;
     }
@@ -25341,7 +25341,7 @@ function va(e, t, n, i, r, a, o) {
   var s = this, c = {
     create: function(l) {
       var u = t.getActiveLayer(), d;
-      d = l.frame = ne("rect"), Q(d, {
+      d = l.frame = ne("rect"), j(d, {
         class: "djs-lasso-overlay",
         width: 1,
         height: 1,
@@ -25351,7 +25351,7 @@ function va(e, t, n, i, r, a, o) {
     },
     update: function(l) {
       var u = l.frame, d = l.bbox;
-      Q(u, {
+      j(u, {
         x: d.x,
         y: d.y,
         width: d.width,
@@ -25823,7 +25823,7 @@ function Kh(e, t, n, i, r) {
         var _ = n.createShape(d);
         i.addShape(_, p.parent);
         var m = Ke('[data-element-id="' + ca(p.id) + '"]', s.dragGroup);
-        m && Q(m, { display: "none" });
+        m && j(m, { display: "none" });
         var f = r.addDragger(_, s.dragGroup);
         s.visualReplacements[u] = f, i.removeShape(_);
       }
@@ -25833,7 +25833,7 @@ function Kh(e, t, n, i, r) {
     var c = s.visualReplacements;
     w(c, function(l, u) {
       var d = Ke('[data-element-id="' + ca(u) + '"]', s.dragGroup);
-      d && Q(d, { display: "inline" }), l.remove(), c[u] && delete c[u];
+      d && j(d, { display: "inline" }), l.remove(), c[u] && delete c[u];
     });
   }
   e.on("shape.move.move", nU, function(s) {
@@ -26220,15 +26220,15 @@ Hr.prototype.snap = function(e, t) {
 };
 Hr.prototype._createLine = function(e) {
   var t = this._canvas.getLayer("snap"), n = ne("path");
-  return Q(n, { d: "M0,0 L0,0" }), Ve(n).add("djs-snap-line"), de(t, n), {
+  return j(n, { d: "M0,0 L0,0" }), Ve(n).add("djs-snap-line"), de(t, n), {
     update: function(i) {
-      ye(i) ? e === "horizontal" ? Q(n, {
+      ye(i) ? e === "horizontal" ? j(n, {
         d: "M-100000," + i + " L+100000," + i,
         display: ""
-      }) : Q(n, {
+      }) : j(n, {
         d: "M " + i + ",-100000 L " + i + ", +100000",
         display: ""
-      }) : Q(n, { display: "none" });
+      }) : j(n, { display: "none" });
     }
   };
 };
@@ -26510,7 +26510,7 @@ Pu.prototype.getOutline = function(e) {
   const t = this._styles.cls("djs-outline", ["no-fill"]);
   var n;
   if (NM(e))
-    return n = ne("rect"), Q(n, P({
+    return n = ne("rect"), j(n, P({
       x: -Vn,
       y: -Vn,
       rx: 4,
@@ -26522,23 +26522,23 @@ Pu.prototype.getOutline = function(e) {
       "transform-box": "fill-box",
       transform: "rotate(45deg)",
       "transform-origin": "center"
-    }), Q(n, P({
+    }), j(n, P({
       x: 2,
       y: 2,
       rx: 4,
       width: e.width - 4,
       height: e.height - 4
-    }, t))) : De(e, ["bpmn:Task", "bpmn:SubProcess", "bpmn:Group", "bpmn:CallActivity"]) ? (n = ne("rect"), Q(n, P({
+    }, t))) : De(e, ["bpmn:Task", "bpmn:SubProcess", "bpmn:Group", "bpmn:CallActivity"]) ? (n = ne("rect"), j(n, P({
       x: -Vn,
       y: -Vn,
       rx: 14,
       width: e.width + Vn * 2,
       height: e.height + Vn * 2
-    }, t))) : y(e, "bpmn:EndEvent") ? (n = ne("circle"), Q(n, P({
+    }, t))) : y(e, "bpmn:EndEvent") ? (n = ne("circle"), j(n, P({
       cx: e.width / 2,
       cy: e.height / 2,
       r: e.width / 2 + Vn + 1
-    }, t))) : y(e, "bpmn:Event") ? (n = ne("circle"), Q(n, P({
+    }, t))) : y(e, "bpmn:Event") ? (n = ne("circle"), j(n, P({
       cx: e.width / 2,
       cy: e.height / 2,
       r: e.width / 2 + Vn
@@ -26554,7 +26554,7 @@ Pu.prototype.getOutline = function(e) {
 };
 Pu.prototype.updateOutline = function(e, t) {
   if (!Ue(e))
-    return De(e, ["bpmn:SubProcess", "bpmn:Group"]) ? (Q(t, {
+    return De(e, ["bpmn:SubProcess", "bpmn:Group"]) ? (j(t, {
       width: e.width + Vn * 2,
       height: e.height + Vn * 2
     }), !0) : !!De(e, [
@@ -26636,10 +26636,10 @@ const it = (e, t) => {
 class mi extends HTMLElement {
   constructor() {
     super();
-    j(this, "template", "");
-    j(this, "modeler");
-    j(this, "options");
-    j(this, "designer");
+    Q(this, "template", "");
+    Q(this, "modeler");
+    Q(this, "options");
+    Q(this, "designer");
   }
   registerClickListener() {
     this.addEventListener("click", () => {
@@ -26663,7 +26663,7 @@ class YU extends mi {
 class HU extends mi {
   constructor() {
     super();
-    j(this, "config");
+    Q(this, "config");
   }
   onConfig(n) {
     this.config = n, n.html ? this.template = n.html : n.icon && (this.template = `<div style="height: 16px">${n.icon}</div>`), this.addEventListener("click", (i) => {
@@ -32027,13 +32027,13 @@ class G8 extends mi {
 }
 class Ll {
   constructor(t, n = { indentType: { type: "space", count: 4 } }) {
-    j(this, "element");
-    j(this, "indentType");
-    j(this, "isPreventAuto");
-    j(this, "isPreventKEY");
-    j(this, "beforeEnterScrollTop");
-    j(this, "tabChar");
-    j(this, "tabLength");
+    Q(this, "element");
+    Q(this, "indentType");
+    Q(this, "isPreventAuto");
+    Q(this, "isPreventKEY");
+    Q(this, "beforeEnterScrollTop");
+    Q(this, "tabChar");
+    Q(this, "tabLength");
     if (!(this instanceof Ll))
       return new Ll(t, n);
     this.element = typeof t == "string" ? document.querySelector(t) : t, this.indentType = n.indentType || { type: "space", count: 4 }, this.isPreventAuto = !1, this.isPreventKEY = ["Backspace", "Delete", "Meta", "Control", "Ctrl"], this.beforeEnterScrollTop = 0, this.tabChar = "", this.tabLength = 0, this.init();
@@ -81320,7 +81320,7 @@ const b$ = /* @__PURE__ */ Y8(v$);
 class bo extends HTMLElement {
   constructor(n) {
     super();
-    j(this, "props");
+    Q(this, "props");
     this.props = n, this.connectedCallback();
   }
   connectedCallback() {
@@ -81339,8 +81339,8 @@ const y$ = {
 class yo extends HTMLElement {
   constructor(n) {
     super();
-    j(this, "dialogId", "easy-bpmn-preview-dialog-container");
-    j(this, "options");
+    Q(this, "dialogId", "easy-bpmn-preview-dialog-container");
+    Q(this, "options");
     this.options = { ...y$, ...n }, this.connectedCallback();
   }
   connectedCallback() {
@@ -81397,7 +81397,7 @@ it("easy-bpmn-designer-dialog", yo);
 class Gw extends mi {
   constructor() {
     super();
-    j(this, "handlePreview", async (n) => {
+    Q(this, "handlePreview", async (n) => {
       var i;
       if (this.modeler)
         try {
@@ -81504,7 +81504,7 @@ it("easy-bpmn-designer-toolbar-custom", HU);
 class Yw extends HTMLElement {
   constructor() {
     super();
-    j(this, "toolbars", []);
+    Q(this, "toolbars", []);
   }
   connectedCallback() {
     if (!(this.children && this.children.length)) {
@@ -81528,11 +81528,11 @@ class Yw extends HTMLElement {
 class To extends HTMLElement {
   constructor() {
     super();
-    j(this, "template", "");
-    j(this, "modeler");
-    j(this, "options");
-    j(this, "originalElement");
-    j(this, "element");
+    Q(this, "template", "");
+    Q(this, "modeler");
+    Q(this, "options");
+    Q(this, "originalElement");
+    Q(this, "element");
   }
   registerClickListener() {
     this.addEventListener("click", () => {
@@ -81662,8 +81662,8 @@ class F$ extends To {
 class U$ extends To {
   constructor() {
     super();
-    j(this, "content", []);
-    j(this, "activeKey", "basic");
+    Q(this, "content", []);
+    Q(this, "activeKey", "basic");
   }
   connectedCallback() {
     if (!(this.children && this.children.length))
@@ -81689,14 +81689,14 @@ class U$ extends To {
 class ar extends To {
   constructor() {
     super();
-    j(this, "type");
-    j(this, "inputLabel");
-    j(this, "inputLabelTip");
-    j(this, "labelElement");
-    j(this, "inputElement");
-    j(this, "className");
-    j(this, "customElement");
-    j(this, "show", !0);
+    Q(this, "type");
+    Q(this, "inputLabel");
+    Q(this, "inputLabelTip");
+    Q(this, "labelElement");
+    Q(this, "inputElement");
+    Q(this, "className");
+    Q(this, "customElement");
+    Q(this, "show", !0);
   }
   connectedCallback() {
     if (!(this.children && this.children.length)) {
@@ -81786,7 +81786,7 @@ class $$ extends ar {
 class V$ extends ar {
   constructor() {
     super();
-    j(this, "value");
+    Q(this, "value");
     this.inputLabel = "conditionExpression", this.value = "", this.init();
   }
   init() {
@@ -81830,7 +81830,7 @@ class q$ extends ar {
 class z$ extends ar {
   constructor() {
     super();
-    j(this, "value");
+    Q(this, "value");
     this.inputLabel = "meta", this.value = "{}", this.init();
   }
   init() {
@@ -81874,7 +81874,7 @@ class z$ extends ar {
 class W$ extends ar {
   constructor() {
     super();
-    j(this, "value");
+    Q(this, "value");
     this.inputLabel = "when", this.value = "", this.init();
   }
   init() {
@@ -81908,7 +81908,7 @@ class W$ extends ar {
 class K$ extends ar {
   constructor() {
     super();
-    j(this, "value");
+    Q(this, "value");
     this.inputLabel = "task", this.value = "{}", this.init();
   }
   init() {
@@ -81943,9 +81943,10 @@ const Q$ = ["string", "text", "number", "date", "boolean", "enum"];
 class j$ extends ar {
   constructor() {
     super();
-    j(this, "table");
-    j(this, "extendAttributes", []);
-    j(this, "meta", {});
+    Q(this, "table");
+    Q(this, "extendAttributes", []);
+    Q(this, "meta", {});
+    Q(this, "tBody");
   }
   connectedCallback() {
     this.classList.add("property-extend"), this.table = document.createElement("table"), this.table.border = "1", this.createTHead(), this.createAddRow(), this.appendChild(this.table);
@@ -81973,26 +81974,28 @@ class j$ extends ar {
     o.textContent = Vt("action"), o.style.width = "35px", n.appendChild(i), n.appendChild(r), n.appendChild(a), n.appendChild(o), this.table.createTHead().appendChild(n);
   }
   createTBody(n) {
-    console.log(n);
     const i = document.createElement("tr"), r = document.createElement("td"), a = document.createElement("input");
     a.value = (n == null ? void 0 : n.key) || "", a.addEventListener("input", (p) => this.setElement("key", p, i.rowIndex)), r.appendChild(a);
     const o = document.createElement("td"), s = document.createElement("select");
-    s.value = (n == null ? void 0 : n.type) || "string", Q$.forEach((p) => {
+    Q$.forEach((p) => {
       const _ = document.createElement("option");
       _.label = Vt(p), _.value = p, s.add(_);
-    }), s.addEventListener("change", (p) => this.setElement("type", p, i.rowIndex)), o.appendChild(s);
+    }), s.addEventListener("change", (p) => this.setElement("type", p, i.rowIndex)), s.value = (n == null ? void 0 : n.type) || "string", o.appendChild(s);
     const c = document.createElement("td"), l = document.createElement("input");
     l.value = (n == null ? void 0 : n.value) || "", l.addEventListener("input", (p) => this.setElement("value", p, i.rowIndex)), c.appendChild(l);
     const u = document.createElement("td"), d = document.createElement("button");
-    d.textContent = Vt("del"), d.addEventListener("click", () => i.remove()), u.appendChild(d), i.appendChild(r), i.appendChild(o), i.appendChild(c), i.appendChild(u), this.table.createTBody().appendChild(i);
+    d.textContent = Vt("del"), d.addEventListener("click", () => i.remove()), u.appendChild(d), i.appendChild(r), i.appendChild(o), i.appendChild(c), i.appendChild(u), this.tBody.appendChild(i);
+  }
+  tBodyHandler() {
+    this.tBody && this.tBody.remove(), this.table && (this.tBody = this.table.createTBody());
   }
   onChange(n) {
-    this.updateElement(n), this.meta && this.meta.attributes && Array.isArray(this.meta.attributes) && this.meta.attributes.forEach((i) => this.createTBody(i));
+    this.updateElement(n), this.tBodyHandler(), this.extendAttributes && this.extendAttributes.forEach((i) => this.createTBody(i));
   }
   updateElement(n) {
     var r, a;
     const i = (a = (r = n.businessObject) == null ? void 0 : r.meta) == null ? void 0 : a.body;
-    this.meta = JSON.parse(i || "{}");
+    this.meta = JSON.parse(i || "{}"), this.extendAttributes = this.meta.attributes || [];
   }
   setElement(n, i, r) {
     this.extendAttributes[r - 1][n] = i.target.value, this.updateProperties();
@@ -82016,8 +82019,8 @@ it("solon-flow-condition-expression", V$);
 class X$ extends To {
   constructor() {
     super();
-    j(this, "property");
-    j(this, "group", []);
+    Q(this, "property");
+    Q(this, "group", []);
   }
   setProperty(n) {
     this.property = n, this.property.onActiveKeyChange = this.onActiveKeyChange.bind(this);
@@ -82062,7 +82065,7 @@ class X$ extends To {
 class Z$ extends To {
   constructor() {
     super();
-    j(this, "content", []);
+    Q(this, "content", []);
   }
   connectedCallback() {
     this.children && this.children.length || this.classList.add("property-group");
@@ -82133,7 +82136,7 @@ it("easy-bpmn-code-highlight", bo);
 class $w extends HTMLElement {
   constructor() {
     super();
-    j(this, "panelDom", []);
+    Q(this, "panelDom", []);
   }
   connectedCallback() {
     if (!(this.children && this.children.length)) {
@@ -82291,14 +82294,14 @@ var eg = function() {
       var t = Ke("defs", this._canvas._svg);
       t || (t = ne("defs"), de(this._canvas._svg, t));
       var n = ne("pattern"), i = "djs-small-grid-pattern-" + aO();
-      Q(n, {
+      j(n, {
         id: i,
         width: this._config.smallGridSpacing,
         height: this._config.smallGridSpacing,
         patternUnits: "userSpaceOnUse"
       });
       var r = ne("path");
-      Q(r, {
+      j(r, {
         d: "M ".concat(this._config.smallGridSpacing, ",0 L 0,0 0,").concat(this._config.smallGridSpacing, " ").concat(this._config.smallGridSpacing, ",").concat(this._config.smallGridSpacing, " Z"),
         fill: "none",
         stroke: this._config.gridLineColor,
@@ -82306,14 +82309,14 @@ var eg = function() {
         opacity: this._config.gridLineOpacity
       }), de(n, r);
       var a = this._pattern = ne("pattern"), o = "djs-grid-pattern-" + aO();
-      Q(a, {
+      j(a, {
         id: o,
         width: this._config.gridSpacing,
         height: this._config.gridSpacing,
         patternUnits: "userSpaceOnUse"
       });
       var s = ne("path");
-      Q(s, {
+      j(s, {
         d: "M ".concat(this._config.gridSpacing, ",0 L 0,0 0,").concat(this._config.gridSpacing, " ").concat(this._config.gridSpacing, ",").concat(this._config.gridSpacing, " Z"),
         fill: "none",
         stroke: this._config.gridLineColor,
@@ -82321,13 +82324,13 @@ var eg = function() {
         opacity: this._config.gridLineOpacity * 2
       }), de(a, s);
       var c = ne("rect");
-      Q(c, {
+      j(c, {
         width: this._config.gridSpacing,
         height: this._config.gridSpacing,
         fill: "url(#".concat(i, ")")
       }), de(a, c), de(t, n), de(t, a);
       var l = this._gfx = ne("rect");
-      Q(l, {
+      j(l, {
         x: -5e4,
         y: -5e4,
         width: rO.width,
@@ -82337,7 +82340,7 @@ var eg = function() {
     }, e.prototype._centerGridAroundViewbox = function(t) {
       t || (t = this._canvas.viewbox());
       var n = Ee(t);
-      Q(this._gfx, {
+      j(this._gfx, {
         x: -5e4 + ts(n.x, this._config.gridSpacing, "round"),
         y: -5e4 + ts(n.y, this._config.gridSpacing, "round")
       });
@@ -82505,7 +82508,7 @@ dn.prototype._init = function() {
   var r = this._map = document.createElement("div");
   et(r).add("map"), n.appendChild(r);
   var a = this._svg = ne("svg");
-  Q(a, { width: "100%", height: "100%" }), de(r, a);
+  j(a, { width: "100%", height: "100%" }), de(r, a);
   var o = this._elementsGroup = ne("g");
   de(a, o);
   var s = this._viewportGroup = ne("g");
@@ -82528,9 +82531,9 @@ dn.prototype._update = function() {
       y: r,
       width: a,
       height: o
-    }, Q(this._svg, {
+    }, j(this._svg, {
       viewBox: i + ", " + r + ", " + a + ", " + o
-    }), Q(this._viewport, {
+    }), j(this._viewport, {
       x: e.x,
       y: e.y,
       width: e.width,
@@ -82600,7 +82603,7 @@ dn.prototype._addElement = function(e) {
     var n, i, r, a = this._createElement(e), o = Ke("#" + ca(this._prefixId(e.parent.id)), this._elementsGroup);
     if (a) {
       var s = this._elementRegistry.getGraphics(e), c = this._elementRegistry.getGraphics(e.parent), l = SV(s, c);
-      return l !== "undefined" ? o ? o.childNodes.length > l ? cO(a, o, l) : cO(a, o, o.childNodes.length - 1) : this._elementsGroup.appendChild(a) : this._elementsGroup.appendChild(a), gV(e) ? (n = e.parent, i = 0, r = 0, typeof n.x < "u" && typeof n.y < "u" && (i = -n.x, r = -n.y), Q(a, { transform: "translate(" + i + " " + r + ")" })) : (i = e.x, r = e.y, o && (n = e.parent, i -= n.x, r -= n.y), Q(a, { transform: "translate(" + i + " " + r + ")" })), e.children && e.children.length && e.children.forEach(function(u) {
+      return l !== "undefined" ? o ? o.childNodes.length > l ? cO(a, o, l) : cO(a, o, o.childNodes.length - 1) : this._elementsGroup.appendChild(a) : this._elementsGroup.appendChild(a), gV(e) ? (n = e.parent, i = 0, r = 0, typeof n.x < "u" && typeof n.y < "u" && (i = -n.x, r = -n.y), j(a, { transform: "translate(" + i + " " + r + ")" })) : (i = e.x, r = e.y, o && (n = e.parent, i -= n.x, r -= n.y), j(a, { transform: "translate(" + i + " " + r + ")" })), e.children && e.children.length && e.children.forEach(function(u) {
         t._addElement(u);
       }), a;
     }
@@ -82614,7 +82617,7 @@ dn.prototype._createElement = function(e) {
   var t = this._elementRegistry.getGraphics(e), n;
   if (t && (n = mr(t), n)) {
     var i = RV(rg(n));
-    return Q(i, { id: this._prefixId(e.id) }), i;
+    return j(i, { id: this._prefixId(e.id) }), i;
   }
 };
 dn.prototype._clear = function() {
@@ -82766,16 +82769,16 @@ class NV extends Fr {
       _,
       m
     );
-    j(this, "elementFactory");
-    j(this, "autoPlace");
-    j(this, "create");
-    j(this, "appendPreview");
-    j(this, "translate");
-    j(this, "modeling");
-    j(this, "rules");
-    j(this, "popupMenu");
-    j(this, "connect");
-    j(this, "canvas");
+    Q(this, "elementFactory");
+    Q(this, "autoPlace");
+    Q(this, "create");
+    Q(this, "appendPreview");
+    Q(this, "translate");
+    Q(this, "modeling");
+    Q(this, "rules");
+    Q(this, "popupMenu");
+    Q(this, "connect");
+    Q(this, "canvas");
     this.elementFactory = s, this.create = l, this.appendPreview = m, this.translate = _, this.autoPlace = i.get("autoPlace", !1), this.modeling = o, this.rules = p, this.popupMenu = u, this.connect = c, this.canvas = d;
   }
   isDeleteAllowed(n) {
@@ -82884,11 +82887,11 @@ class AV extends Fr {
       _,
       m
     );
-    j(this, "elementFactory");
-    j(this, "autoPlace");
-    j(this, "create");
-    j(this, "appendPreview");
-    j(this, "translate");
+    Q(this, "elementFactory");
+    Q(this, "autoPlace");
+    Q(this, "create");
+    Q(this, "appendPreview");
+    Q(this, "translate");
     this.elementFactory = s, this.create = l, this.appendPreview = m, this.translate = _, this.autoPlace = i.get("autoPlace", !1);
   }
   getContextPadEntries(n) {
@@ -82937,9 +82940,9 @@ class IV extends Fr {
       _,
       m
     );
-    j(this, "popupMenu");
-    j(this, "canvas");
-    j(this, "translate");
+    Q(this, "popupMenu");
+    Q(this, "canvas");
+    Q(this, "translate");
     this.canvas = d, this.popupMenu = u, this.translate = _;
   }
   // @ts-ignore 单个元素pad菜单
@@ -82993,12 +82996,12 @@ const xV = {
 class wV extends Mu {
   constructor(n, i, r, a, o, s, c, l) {
     super(n, i, r, a, o, s, c, l);
-    j(this, "create");
-    j(this, "elementFactory");
-    j(this, "lassoTool");
-    j(this, "handTool");
-    j(this, "globalConnect");
-    j(this, "translate");
+    Q(this, "create");
+    Q(this, "elementFactory");
+    Q(this, "lassoTool");
+    Q(this, "handTool");
+    Q(this, "globalConnect");
+    Q(this, "translate");
     this.create = i, this.elementFactory = r, this.lassoTool = o, this.handTool = s, this.globalConnect = c, this.translate = l;
   }
   getPaletteEntries() {
@@ -83095,13 +83098,13 @@ const DV = {
 class MV extends Bn {
   constructor(n, i, r, a, o, s, c, l) {
     super(n, i, r, a, o, s, c, l);
-    j(this, "translate");
-    j(this, "bpmnReplace");
+    Q(this, "translate");
+    Q(this, "bpmnReplace");
     /**
      * 多实例面板头部
      * @returns
      */
-    j(this, "_getLoopCharacteristicsHeaderEntries", () => ({}));
+    Q(this, "_getLoopCharacteristicsHeaderEntries", () => ({}));
     this.translate = c, this.bpmnReplace = o;
   }
   createEntry(n, i) {
@@ -83131,10 +83134,10 @@ class MV extends Bn {
 }
 class Kw {
   constructor(t, n, i, r, a) {
-    j(this, "modeling");
-    j(this, "popupMenu");
-    j(this, "translate");
-    j(this, "colors", [{
+    Q(this, "modeling");
+    Q(this, "popupMenu");
+    Q(this, "translate");
+    Q(this, "colors", [{
       label: "Default",
       fill: void 0,
       stroke: void 0
@@ -83159,8 +83162,8 @@ class Kw {
       fill: "#E1BEE7",
       stroke: "#5B176D"
     }]);
-    j(this, "defaultFillColor");
-    j(this, "defaultStrokeColor");
+    Q(this, "defaultFillColor");
+    Q(this, "defaultStrokeColor");
     this.modeling = r, this.popupMenu = i, this.translate = a, t && t.colors && (this.colors = t.colors), this.defaultFillColor = n.defaultFillColor || "white", this.defaultStrokeColor = n.defaultStrokeColor || "rgb(34, 36, 42)", this.popupMenu.registerProvider("color-picker", this);
   }
   getEntries(t) {
@@ -83181,7 +83184,7 @@ class Kw {
     }), n;
   }
 }
-j(Kw, "$inject", [
+Q(Kw, "$inject", [
   "config.colorPicker",
   "config.bpmnRenderer",
   "popupMenu",
@@ -83277,32 +83280,32 @@ class jV {
     /**
      * 设计器对象
      */
-    j(this, "bpmnModeler");
+    Q(this, "bpmnModeler");
     /**
      * easy-bpmn-designer设计器
      */
-    j(this, "container");
+    Q(this, "container");
     /**
      * 属性
      */
-    j(this, "options");
+    Q(this, "options");
     /**
      * 顶部工具栏
      */
-    j(this, "toolbar");
+    Q(this, "toolbar");
     /**
      * 设计器
      */
-    j(this, "designer");
+    Q(this, "designer");
     /**
      * 属性面板
      */
-    j(this, "panel");
+    Q(this, "panel");
     /**
      * 事件传递组件
      * @private
      */
-    j(this, "eventComponents", []);
+    Q(this, "eventComponents", []);
     this.options = { ...aV, ...t }, this.initialize();
   }
   /**
@@ -83455,7 +83458,7 @@ const KV = {
 class jw extends HTMLElement {
   constructor(n) {
     super();
-    j(this, "viewer");
+    Q(this, "viewer");
     this.viewer = n;
   }
   connectedCallback() {
@@ -83486,24 +83489,24 @@ class XV {
     /**
      * 设计器对象
      */
-    j(this, "bpmnModeler");
+    Q(this, "bpmnModeler");
     /**
      * easy-bpmn-designer设计器
      */
-    j(this, "container");
+    Q(this, "container");
     /**
      * 属性
      */
-    j(this, "options");
+    Q(this, "options");
     /**
      * 设计器
      */
-    j(this, "viewer");
+    Q(this, "viewer");
     /**
      * 工具栏
      * @private
      */
-    j(this, "toolbar");
+    Q(this, "toolbar");
     this.options = { ...KV, ...t }, this.initialize();
   }
   initialize() {
