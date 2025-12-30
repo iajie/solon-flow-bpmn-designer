@@ -15,6 +15,7 @@ export class ExtendAttributes extends PanelInput {
     table!: HTMLTableElement;
     extendAttributes: attributes[] = [];
     meta: any = {};
+    tBody!: HTMLTableSectionElement;
 
     constructor() {
         super();
@@ -74,7 +75,6 @@ export class ExtendAttributes extends PanelInput {
     }
 
     createTBody(data?: attributes) {
-        console.log(data);
         // 表格->行
         const tr = document.createElement('tr');
         // 表格->行->第一列(属性key)
@@ -86,7 +86,6 @@ export class ExtendAttributes extends PanelInput {
         // 表格->行->第一列(属性value type)
         const type = document.createElement('td');
         const typeCell = document.createElement('select');
-        typeCell.value = data?.type || 'string';
         types.forEach(item => {
             const options = document.createElement('option');
             options.label = t(item);
@@ -94,6 +93,7 @@ export class ExtendAttributes extends PanelInput {
             typeCell.add(options);
         });
         typeCell.addEventListener('change', (e) => this.setElement('type', e, tr.rowIndex));
+        typeCell.value = data?.type || 'string';
         type.appendChild(typeCell);
         // 表格->行->第一列(属性value)
         const value = document.createElement('td');
@@ -112,19 +112,24 @@ export class ExtendAttributes extends PanelInput {
         tr.appendChild(type);
         tr.appendChild(value);
         tr.appendChild(action);
-        this.table.createTBody().appendChild(tr);
+        this.tBody.appendChild(tr);
+    }
+
+    tBodyHandler() {
+        this.tBody && this.tBody.remove();
+        this.table && (this.tBody = this.table.createTBody());
     }
 
     onChange(element: BpmnElement) {
         this.updateElement(element);
-        if (this.meta && this.meta.attributes && Array.isArray(this.meta.attributes)) {
-            this.meta.attributes.forEach((item: any) => this.createTBody(item));
-        }
+        this.tBodyHandler();
+        this.extendAttributes && this.extendAttributes.forEach((item: any) => this.createTBody(item));
     }
 
     updateElement(element: BpmnElement) {
         const meta = element.businessObject?.meta?.body;
         this.meta = JSON.parse(meta || '{}');
+        this.extendAttributes = this.meta.attributes || [];
     }
 
     setElement(key: 'key' | 'value' | 'type', e: any, index: number) {
